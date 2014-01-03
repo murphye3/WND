@@ -1,0 +1,4 @@
+plasma_d_attack-1 = 14 13 37 35
+plasma_d_attack-2 = 77 13 37 35
+plasma_d_attack-3 = 142 13 37 35
+plasma_d_attack-4 = 205 13 37 35
