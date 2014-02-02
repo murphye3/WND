@@ -15,11 +15,10 @@ namespace WizardsNeverDie.Level
         protected KeyboardState keyboardState, lastKeyBoardState;
         protected String levelDetails, levelName, backgroundTextureStr;
         private BackgroundScreen background; 
-
+        public Vector2 ifritPosition = new Vector2(0, -20);
 
         public override void LoadContent()
         {
-
             base.LoadContent();
 
             if (backgroundTextureStr != null)
@@ -50,7 +49,7 @@ namespace WizardsNeverDie.Level
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             lastKeyBoardState = keyboardState;
             keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z)) // toggle debugg view
+            if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Z) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z)) // toggle debugg view
                 DebugView.Enabled = !DebugView.Enabled;
         }
 

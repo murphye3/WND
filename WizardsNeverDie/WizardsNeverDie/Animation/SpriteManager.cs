@@ -5,20 +5,23 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.IO;
+using WizardsNeverDie.Utility;
+using WizardsNeverDie.Level;
 
 namespace WizardsNeverDie.Animation
 {
     public abstract class SpriteManager
     {
+        IfritDemo ifrit = new IfritDemo();
         protected Texture2D _texture;
-        public Vector2 Position = Vector2.Zero;
+        public Vector2 Position;
         private Dictionary<string, AnimationClass> _animations = new Dictionary<string, AnimationClass>();
         protected int _frameIndex = 0;
         protected Vector2 Origin;
-
         private int height;
         private int width;
-
+        public float xCoord;
+        public float yCoord;
         private string animation;
 
         public Dictionary<string, AnimationClass> Animations
@@ -51,6 +54,7 @@ namespace WizardsNeverDie.Animation
             get { return animation; }
             set
             {
+
                 animation = value;
                 //FrameIndex = 0;
             }
@@ -58,6 +62,7 @@ namespace WizardsNeverDie.Animation
 
         protected SpriteManager(Texture2D Texture, int Frames, int animations)
         {
+            this.Position = ifrit.ifritPosition;
             this._texture = Texture;
             width = Texture.Width / Frames;
             height = Texture.Height / animations;
@@ -66,6 +71,7 @@ namespace WizardsNeverDie.Animation
 
         protected SpriteManager(Texture2D Texture, StreamReader sr)
         {
+            this.Position = ifrit.ifritPosition;
             this._texture = Texture;
             AddAnimation(sr);
         }

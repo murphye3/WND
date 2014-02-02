@@ -14,11 +14,13 @@ namespace WizardsNeverDie.Intelligence
 {
     class PlayerIntelligence : AbstractIntelligence
     {
+
         protected Orientation lastOrientation;
         protected TimeSpan swapTimer;
         protected TimeSpan swapCooldown = TimeSpan.FromSeconds(.5d);
         public Player player;
         float speed;
+        KeyboardState keyboardState, lastKeyBoardState;
         public PlayerIntelligence(AbstractCreature player, float speed)
         {
             this.player = (Player)player;
@@ -72,12 +74,15 @@ namespace WizardsNeverDie.Intelligence
 
         public override void Update(GameTime gameTime)
         {
+
             swapTimer = swapTimer.Add(gameTime.ElapsedGameTime);
-            KeyboardState keyboardState = Keyboard.GetState();
+            lastKeyBoardState = keyboardState;
+            keyboardState = Keyboard.GetState();
             PhysicsBody body = player.getBody();
-            if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Space) && (lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space)))
             {
-                spell();
+                    spell();
+
             }
             if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
             {

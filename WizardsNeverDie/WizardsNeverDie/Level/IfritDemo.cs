@@ -1,5 +1,4 @@
-﻿
-using System.IO;
+﻿using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
@@ -9,12 +8,15 @@ using WizardsNeverDie.Level;
 using WizardsNeverDie.Entities;
 using FarseerPhysics.Dynamics;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System;
+using System.Threading;
 
 namespace WizardsNeverDie.Level
 {
     class IfritDemo : BaseLevel
     {
-
+        
         private Player _player;
         private WizardAnimation _wizard;
         private List<Brick> _bricks;
@@ -29,9 +31,17 @@ namespace WizardsNeverDie.Level
         private Vector2 _gameOverVector;
         private bool isGameOver = false;
         private int _creaturesKilled = 0;
+        Stopwatch timer = new Stopwatch();
+        TimeSpan initialTime;
+        TimeSpan animationTimeSpan;
+        int forcePower = 500;
+        Stopwatch animationTimer = new Stopwatch();
+        Boolean animationFinished = true;
 
         public IfritDemo()
         {
+            
+            int test = initialTime.Seconds;
             levelDetails = "Level 1";
             levelName = "Start Game";
             this.backgroundTextureStr = "Materials/ground";
@@ -101,34 +111,75 @@ namespace WizardsNeverDie.Level
 
         }
 
-        public void Spell(Player player)
+        public void Spell(Player player, int forcePower)
         {
+            animationFinished = false;
+            Thread.Sleep(400);
+            Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2);
             PlasmaAnimation plasmaSprite = new PlasmaAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Plasma\\plasma"), new StreamReader(@"Content/Sprites/Plasma/plasma.txt"));
             plasmaSprite.AnimationName = "plasma_d_attack";
             SpriteAnimation animation = (SpriteAnimation)player.SpriteManager;
             Vector2 force = new Vector2();
-            int forcePower = 500;
             if (animation.GetOrientation() == Orientation.Down)
+            {
                 force = new Vector2(0, forcePower);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y + 2);
+            }
             else if (animation.GetOrientation() == Orientation.DownLeft)
+            {
                 force = new Vector2(0, forcePower);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y + 2);
+            }
             else if (animation.GetOrientation() == Orientation.DownRight)
+            {
                 force = new Vector2(0, forcePower);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y + 2);
+            }
             else if (animation.GetOrientation() == Orientation.Left)
+            {
                 force = new Vector2(-forcePower, 0);
+                plasmaPosition = new Vector2(_player.Position.X - 2, _player.Position.Y);
+            }
             else if (animation.GetOrientation() == Orientation.Right)
+            {
                 force = new Vector2(forcePower, 0);
+                plasmaPosition = new Vector2(_player.Position.X + 2, _player.Position.Y);
+            }
             else if (animation.GetOrientation() == Orientation.Up)
+            {
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y - 2);
                 force = new Vector2(0, -forcePower);
+            }
             else if (animation.GetOrientation() == Orientation.UpLeft)
+            {
                 force = new Vector2(0, -forcePower);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y - 2);
+            }
             else if (animation.GetOrientation() == Orientation.UpRight)
+            {
                 force = new Vector2(0, -forcePower);
-            _plasma.Add(new Plasma(plasmaSprite, _player.Position, force));
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y - 2);
+            }
+            _plasma.Add(new Plasma(plasmaSprite, plasmaPosition, force));
+            
+            
         }
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
-        {
+        {          
+            if (!animationTimer.IsRunning)
+            {
+                animationTimer.Start();
+            }
+
+            if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                if (!timer.IsRunning)
+                {
+                    timer.Start();
+                    initialTime = timer.Elapsed;
+                }
+            }
             foreach (Brick b in _bricks)
             {
                 b.Update(gameTime);
@@ -157,15 +208,49 @@ namespace WizardsNeverDie.Level
 
             //if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
             if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.X) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
-            {
+            {              
                 EnemyAnimation _creatureAnimation = new EnemyAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
-                _creatureAnimation.AnimationName = "ifrit_d_attack";
-                _creatures.Add(new Enemy(_creatureAnimation, _player, new Vector2(0, -20)));
+                _creatureAnimation.AnimationName = "ifrit_d_walk";
+                _creatures.Add(new Enemy(_creatureAnimation, _player, ifritPosition));
             }
             if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Space) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
             {
-                if(!isGameOver)
-                    Spell(_player);
+                Thread thread = new Thread(() => Spell(_player, forcePower));
+                
+                animationTimeSpan = animationTimer.Elapsed;
+                timer.Stop();
+                TimeSpan endTime = timer.Elapsed;
+                int totalTime = endTime.Seconds - initialTime.Seconds;
+                timer.Reset();
+                
+                initialTime = timer.Elapsed;
+                if (totalTime < 1)
+                {
+                    forcePower = 500;
+                }
+                else if (totalTime >= 1 && totalTime < 2)
+                {
+                    forcePower = 1000;
+                }
+                else if (totalTime >= 2 && totalTime < 4)
+                {
+                    forcePower = 2000;
+                }
+                else if (totalTime >= 4)
+                {
+                    forcePower = 3000;
+                }
+                if (!isGameOver)
+                {
+                    
+                    if (animationTimeSpan.TotalMilliseconds > 908 || animationFinished == true)
+                    {
+                        thread.Start();
+                        animationTimer.Stop();
+                        animationTimer.Reset();
+                        animationTimeSpan = animationTimer.Elapsed;
+                    }
+                }                                        
             }
             for(int i =0; i<_plasma.Count; i++)//(Plasma p in _plasma)
             {

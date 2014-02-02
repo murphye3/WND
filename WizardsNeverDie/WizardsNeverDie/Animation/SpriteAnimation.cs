@@ -79,7 +79,6 @@ namespace WizardsNeverDie.Animation
             set { _isMoving = value; }
         }
 
-
         public override void Update(GameTime gameTime)
         {
             timeElapsed += (float)
