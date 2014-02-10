@@ -14,7 +14,8 @@ namespace WizardsNeverDie.Level
     {
         protected KeyboardState keyboardState, lastKeyBoardState;
         protected String levelDetails, levelName, backgroundTextureStr;
-        private BackgroundScreen background; 
+        private LevelScreen _background;
+        private BackgroundScreen test;
         public Vector2 ifritPosition = new Vector2(0, -20);
 
         public override void LoadContent()
@@ -23,9 +24,12 @@ namespace WizardsNeverDie.Level
 
             if (backgroundTextureStr != null)
             {
-                background = new BackgroundScreen("Materials/ground");
-                this.ScreenManager.AddScreen(background);
-                this.AttachScreen(background);
+                _background = new LevelScreen(backgroundTextureStr, this.Camera);
+                test = new BackgroundScreen("Materials/Level1Background");
+                this.ScreenManager.AddScreen(test);
+                this.ScreenManager.AddScreen(_background);
+                this.AttachScreen(test);
+                this.AttachScreen(_background);
             }
             base.DebugView = new DebugViewXNA(World);
             DebugView.AppendFlags(DebugViewFlags.Shape);
@@ -53,15 +57,6 @@ namespace WizardsNeverDie.Level
                 DebugView.Enabled = !DebugView.Enabled;
         }
 
-
-
-        //public void updateParent(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
-        //{
-        //    if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z))
-        //        DebugView.Enabled = !DebugView.Enabled;
-        //    base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-        //}
-
         public string GetTitle()
         {
             return levelName;
@@ -86,7 +81,5 @@ namespace WizardsNeverDie.Level
 
             base.Draw(gameTime);
         }
-
-
-}
+    }
 }

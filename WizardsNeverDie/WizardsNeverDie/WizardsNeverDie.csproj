@@ -117,6 +117,7 @@
     <Compile Include="ScreenSystem\GameScreen.cs" />
     <Compile Include="ScreenSystem\IDemoScreen.cs" />
     <Compile Include="ScreenSystem\InputHelper.cs" />
+    <Compile Include="ScreenSystem\LevelScreen.cs" />
     <Compile Include="ScreenSystem\LogoScreen.cs" />
     <Compile Include="ScreenSystem\MenuButton.cs" />
     <Compile Include="ScreenSystem\MenuEntry.cs" />

@@ -19,7 +19,7 @@ namespace WizardsNeverDie.Level
         
         private Player _player;
         private WizardAnimation _wizard;
-        private List<Brick> _bricks;
+        private List<Brick> _bricks = new List<Brick>();
         private List<Enemy> _creatures = new List<Enemy>();
         private List<SpriteAnimation> _wallSprites;
         private List<Plasma> _plasma = new List<Plasma>();
@@ -40,11 +40,10 @@ namespace WizardsNeverDie.Level
 
         public IfritDemo()
         {
-            
             int test = initialTime.Seconds;
-            levelDetails = "Level 1";
-            levelName = "Start Game";
-            this.backgroundTextureStr = "Materials/ground";
+            levelDetails = "Level 0";
+            levelName = "Start Game: 0";
+            this.backgroundTextureStr = "Materials/Level1_0";
         }
 
         public override void LoadContent()
@@ -59,7 +58,7 @@ namespace WizardsNeverDie.Level
             _health = new Health(_healthSprite, _player, _player.Position);
             _gameover = ScreenManager.Content.Load<Texture2D>("Common\\gameover");
 
-            GenerateWalls();
+            //GenerateWalls();
 
             this.Camera.EnableTracking = true;
             this.Camera.TrackingBody = _player.getBody().Bodies[0];

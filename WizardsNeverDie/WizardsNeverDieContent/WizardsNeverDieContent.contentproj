@@ -85,6 +85,16 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Materials\Level1_0.png">
+      <Name>Level1_0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Materials\Level1Background.png">
+      <Name>Level1Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="Sprites\Health\health.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>health</Name>
