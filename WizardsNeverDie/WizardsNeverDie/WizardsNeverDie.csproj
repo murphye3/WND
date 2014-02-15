@@ -108,6 +108,7 @@
     <Compile Include="IntroScreen.cs" />
     <Compile Include="Level\BaseLevel.cs" />
     <Compile Include="Level\IfritDemo.cs" />
+    <Compile Include="Level\Level1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ScreenSystem\BackgroundScreen.cs" />
