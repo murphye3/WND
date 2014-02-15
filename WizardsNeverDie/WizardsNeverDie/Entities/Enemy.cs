@@ -22,7 +22,7 @@ namespace WizardsNeverDie.Entities
         public Enemy(EnemyAnimation spriteManager, AbstractCreature target, Vector2 position)
         {
             this.spriteManager = spriteManager;
-            this.body = new StaticBody(this, position, 1f);
+            this.body = new BasicBody(this, position, 1f);
             this.intelligence = new CreatureIntelligence(this, target, .05f);
         }
         public void Update(GameTime gameTime)

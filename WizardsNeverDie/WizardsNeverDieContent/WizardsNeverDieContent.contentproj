@@ -85,13 +85,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Materials\Level1_0.png">
-      <Name>Level1_0</Name>
+    <Compile Include="Materials\Level1_Background.png">
+      <Name>Level1_Background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Materials\Level1Background.png">
-      <Name>Level1Background</Name>
+    <Compile Include="Materials\Level1_0.png">
+      <Name>Level1_0</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

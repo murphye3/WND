@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System;
 using System.Threading;
+using FarseerPhysics.Factories;
 
 namespace WizardsNeverDie.Level
 {
@@ -58,56 +59,32 @@ namespace WizardsNeverDie.Level
             _health = new Health(_healthSprite, _player, _player.Position);
             _gameover = ScreenManager.Content.Load<Texture2D>("Common\\gameover");
 
-            //GenerateWalls();
+            GenerateWalls();
 
             this.Camera.EnableTracking = true;
             this.Camera.TrackingBody = _player.getBody().Bodies[0];
-            
-
         }
 
         private void GenerateWalls()
         {
-            int w_size = 30;
-            int h_size = 80;
-            float x = -10;
-            float y = 5;
-            _bricks = new List<Brick>();
-            _bricks.Clear();
-            _wallSprites = new List<SpriteAnimation>();
-            for (int i = 0; i < h_size; i++)
-            {
-                _wallSprites.Add(new SpriteAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wall\\wall"), new StreamReader(@"Content/Sprites/Wall/wall.txt")));
-                _wallSprites[i].AnimationName = "wall_n_normal";
-                _bricks.Add(new Brick(_wallSprites[i], new Vector2(x, y)));
-                y -= .7F;
-            }
-            int j = _wallSprites.Count;
-            y = 5;
-            for(int i = 0; i< w_size; i++)
-            {
-                _wallSprites.Add(new SpriteAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wall\\wall"), new StreamReader(@"Content/Sprites/Wall/wall.txt")));
-                _wallSprites[j+i].AnimationName = "wall_n_normal";
-                _bricks.Add(new Brick(_wallSprites[j+i], new Vector2(x, y)));
-                x+=.7F;
-            }
-            j = _wallSprites.Count;
-            for (int i = 0; i < h_size; i++)
-            {
-                _wallSprites.Add(new SpriteAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wall\\wall"), new StreamReader(@"Content/Sprites/Wall/wall.txt")));
-                _wallSprites[j+i].AnimationName = "wall_n_normal";
-                _bricks.Add(new Brick(_wallSprites[j+i], new Vector2(x, y)));
-                y -= .7F;
-            }
-            j = _wallSprites.Count;
-            for (int i = 0; i < w_size+1; i++)
-            {
-                _wallSprites.Add(new SpriteAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wall\\wall"), new StreamReader(@"Content/Sprites/Wall/wall.txt")));
-                _wallSprites[j + i].AnimationName = "wall_n_normal";
-                _bricks.Add(new Brick(_wallSprites[j + i], new Vector2(x, y)));
-                x -= .7F;
-            }
-
+            World world = Farseer.Instance.World;
+            Body wallLeft = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(2048), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 16, 0)));
+            Body wallRight = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(2048), 1f, ConvertUnits.ToSimUnits(new Vector2((2048 / 2) - 16, 0)));
+            Body wallTop = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(2048), ConvertUnits.ToSimUnits(32), 1f, ConvertUnits.ToSimUnits(new Vector2(0, -(2048 / 2) + 16)));
+            Body wallBottom = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(2048), ConvertUnits.ToSimUnits(32), 1f, ConvertUnits.ToSimUnits(new Vector2(0, (2048 / 2) - 16)));
+            Body wall1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(1600), 1f, ConvertUnits.ToSimUnits(new Vector2(-(1024 - 576 - 16), -((2048-1600)/2)+32)));
+            Body houseTop = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(544), ConvertUnits.ToSimUnits(81), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 32 + (544 / 2), -(2048 / 2) + (81 / 2) + 32)));
+            Body bridgeRight = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(59), ConvertUnits.ToSimUnits(90), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 517 + (59 / 2), -(2048 / 2) + (89 / 2) + 1001)));
+            Body bridgeLeft = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(373), ConvertUnits.ToSimUnits(90), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 32 + (373 / 2), -(2048 / 2) + (89 / 2) + 1001)));
+            Body railingLeft = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(208), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 405 + (16 / 2), -(2048 / 2) + (208 / 2) + 939)));
+            Body railingRight = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(208), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 501 + (16 / 2), -(2048 / 2) + (208 / 2) + 939)));
+            Body houseWall1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(434), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 32 + (16 / 2), -(2048 / 2) + (434 / 2) + 32)));
+            Body houseWall2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(434), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 560 + (16 / 2), -(2048 / 2) + (434 / 2) + 32)));
+            Body houseWall3 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(64), ConvertUnits.ToSimUnits(161), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 272 + (64 / 2), -(2048 / 2) + (161 / 2) + 32)));
+            Body houseWall4 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(81), ConvertUnits.ToSimUnits(31), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 32 + (81 / 2), -(2048 / 2) + (31 / 2) + 466)));
+            Body houseWall5 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(368), ConvertUnits.ToSimUnits(31), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 208 + (368 / 2), -(2048 / 2) + (31 / 2) + 466)));
+            Body houseWall6 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(64), ConvertUnits.ToSimUnits(160), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 272 + (64 / 2), -(2048 / 2) + (160 / 2) + 305)));
+            Body houseWall7 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(87), ConvertUnits.ToSimUnits(57), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 116 + (87 / 2), -(2048 / 2) + (57 / 2) + 286)));
         }
 
         public void Spell(Player player, int forcePower)

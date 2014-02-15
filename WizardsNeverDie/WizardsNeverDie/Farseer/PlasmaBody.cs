@@ -38,6 +38,8 @@ namespace WizardsNeverDie.Physics
             body.Friction = float.MaxValue;
             body.Restitution = 0.3f;
             body.BodyType = BodyType.Dynamic;
+            body.SleepingAllowed = false;
+            body.Awake = true;
             body.CollisionCategories = Category.Cat1;
             body.CollidesWith = Category.Cat1;
             body.ApplyForce(force);

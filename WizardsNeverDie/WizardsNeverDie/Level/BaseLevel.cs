@@ -25,7 +25,7 @@ namespace WizardsNeverDie.Level
             if (backgroundTextureStr != null)
             {
                 _background = new LevelScreen(backgroundTextureStr, this.Camera);
-                test = new BackgroundScreen("Materials/Level1Background");
+                test = new BackgroundScreen("Materials/Level1_Background");
                 this.ScreenManager.AddScreen(test);
                 this.ScreenManager.AddScreen(_background);
                 this.AttachScreen(test);
