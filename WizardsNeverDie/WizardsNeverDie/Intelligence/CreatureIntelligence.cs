@@ -19,11 +19,13 @@ namespace WizardsNeverDie.Intelligence
         protected Orientation lastOrientation;
         protected TimeSpan swapTimer;
         protected TimeSpan swapCooldown = TimeSpan.FromSeconds(6d);
-        public CreatureIntelligence(AbstractCreature creature, AbstractCreature target, float speed)
+        protected float _targetDistance;
+        public CreatureIntelligence(AbstractCreature creature, AbstractCreature target, float speed, float targetDistance)
         {
             this.creature = creature;
             this.target = target;
             this.speed = speed;
+            this._targetDistance = targetDistance;
         }
 
         public bool canSwap(Orientation current)
@@ -76,7 +78,7 @@ namespace WizardsNeverDie.Intelligence
             SpriteAnimation sa = (SpriteAnimation) creature.SpriteManager;
             EnemyAnimation e = (EnemyAnimation)creature.SpriteManager;
             PhysicsBody body = creature.getBody();
-            if (canMove == true && targetDistance < 15)
+            if (canMove == true && targetDistance < _targetDistance)
             {
                 if (angle > -Math.PI / 8 && angle < Math.PI / 8) // Right
                 {

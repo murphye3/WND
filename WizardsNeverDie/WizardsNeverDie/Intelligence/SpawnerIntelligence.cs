@@ -28,7 +28,8 @@ namespace WizardsNeverDie.Intelligence
             SpawnerAnimation animation = (SpawnerAnimation)this.spawner.SpriteManager;
             float targetDistance = (float)Math.Sqrt(Math.Pow((spawner.Position.X - target.Position.X), 2) + Math.Pow((spawner.Position.Y - target.Position.Y), 2));
 
-            if (targetDistance < 12)
+            Spawner spawn = (Spawner)spawner;
+            if (targetDistance < 12 && spawn.IsActivated)
             {
                 animation.SetAnimationState(AnimationState.Spawning);
             }

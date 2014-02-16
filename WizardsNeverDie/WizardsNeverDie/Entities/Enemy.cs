@@ -23,12 +23,12 @@ namespace WizardsNeverDie.Entities
     {
         private bool _isDead = false;
         
-        public Enemy(EnemyAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height)
+        public Enemy(EnemyAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height, float targetDistance)
         {
             this.spriteManager = spriteManager;
-            this.body = new StaticBody(this, position, width, height);
-            
-            this.intelligence = new CreatureIntelligence(this, target, .05f);
+            this.body = new BasicBody(this, position, 1f);
+
+            this.intelligence = new CreatureIntelligence(this, target, .05f, targetDistance);
         }
         public void Update(GameTime gameTime)
         {
@@ -71,8 +71,13 @@ namespace WizardsNeverDie.Entities
             {
                 Plasma plasma = (Plasma)collidedWith;
                 animation.SetAnimationState(AnimationState.Death);
+                return false;
             }
-            return false;     
+            if (collidedWith is Enemy)
+            {
+                return true;
+            }
+            return true;     
         }
         
         public bool IsDead

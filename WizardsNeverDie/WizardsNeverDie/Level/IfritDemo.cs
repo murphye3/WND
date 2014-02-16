@@ -177,10 +177,10 @@ namespace WizardsNeverDie.Level
         {
             if (firstTime == true)
             {
-                _spawner.Add(new Spawner(_spawnerSprite, new Vector2(0, -10), _player, 3f, 6f));
-                _spawner.Add(new Spawner(_spawnerSprite2, new Vector2(0, -20), _player, 3f, 6f));
-                _spawner.Add(new Spawner(_spawnerSprite3, new Vector2(5, -15), _player, 3f, 6f));
-                _spawner.Add(new Spawner(_spawnerSprite4, new Vector2(-5, -15), _player, 3f, 6f));
+                _spawner.Add(new Spawner(_spawnerSprite, new Vector2(0, -10), _player, 3f, 6f, true));
+                _spawner.Add(new Spawner(_spawnerSprite2, new Vector2(0, -20), _player, 3f, 6f, true));
+                _spawner.Add(new Spawner(_spawnerSprite3, new Vector2(5, -15), _player, 3f, 6f, true));
+                _spawner.Add(new Spawner(_spawnerSprite4, new Vector2(-5, -15), _player, 3f, 6f, true));
             }
             firstTime = false;
             WizardAnimation wizard = (WizardAnimation)_player.SpriteManager;
@@ -207,15 +207,15 @@ namespace WizardsNeverDie.Level
                     orientation = spawnerAnimation.GetOrientation();
                     if (orientation == Orientation.Down)
                     {
-                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(0, 3), 1.5f, 1.5f));
+                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(0, 3), 1.5f, 1.5f, 15F));
                     }
                     else if (orientation == Orientation.DownRight)
                     {
-                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(-3, 0), 1.5f, 1.5f));
+                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(-3, 0), 1.5f, 1.5f, 15F));
                     }
                     else if (orientation == Orientation.DownLeft)
                     {
-                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(3, 0), 1.5f, 1.5f));
+                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(3, 0), 1.5f, 1.5f, 15F));
                     }
                     
                     
@@ -275,7 +275,7 @@ namespace WizardsNeverDie.Level
             {
                 EnemyAnimation _creatureAnimation = new EnemyAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
                 _creatureAnimation.AnimationName = "ifrit_d_walk";
-                _creatures.Add(new Enemy(_creatureAnimation, _player, ifritPosition, 1.5f, 1.5f));
+                _creatures.Add(new Enemy(_creatureAnimation, _player, ifritPosition, 1.5f, 1.5f, 15F));
             }
 
 

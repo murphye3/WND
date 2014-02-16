@@ -105,6 +105,7 @@
     <Compile Include="Farseer\PhysicsBody.cs" />
     <Compile Include="Farseer\PlasmaBody.cs" />
     <Compile Include="Farseer\StaticBody.cs" />
+    <Compile Include="Farseer\TriggerBody.cs" />
     <Compile Include="Farseer\World.cs" />
     <Compile Include="Intelligence\AbstractIntelligence.cs" />
     <Compile Include="Intelligence\CreatureIntelligence.cs" />

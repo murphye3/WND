@@ -42,6 +42,11 @@ namespace WizardsNeverDie.Entities
                 Enemy enemy = (Enemy)collidedWith;
                 enemy.IsDead = true;
                 this.IsDeadOnEnemy = true;
+                return false;
+            }
+            if (collidedWith is Player)
+            {
+                return false;
             }
             if (collidedWith is Brick)
             {
@@ -51,7 +56,12 @@ namespace WizardsNeverDie.Entities
             {
                 this._isDead = true;
             }
-            return false;
+            if (collidedWith is Plasma)
+            {
+                return false;
+            }
+            this._isDead = true;
+            return true;
         }
 
         public bool IsDead

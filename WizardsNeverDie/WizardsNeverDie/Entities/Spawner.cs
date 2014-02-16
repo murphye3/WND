@@ -20,11 +20,13 @@ namespace WizardsNeverDie.Entities
     public class Spawner : AbstractCreature 
     {
         private bool _isDead;
-        public Spawner(SpriteAnimation animation, Vector2 position, AbstractCreature target, float width, float height)
+        private bool _activated = false;
+        public Spawner(SpriteAnimation animation, Vector2 position, AbstractCreature target, float width, float height, bool activated)
         {
             String widthString = animation.AnimationName;
             this.spriteManager = animation;
             animation.Position = position;
+            _activated = activated;
             this.body = new StaticBody(this, position, width, height);
             this.intelligence = new SpawnerIntelligence(this, target);
         }
@@ -43,6 +45,17 @@ namespace WizardsNeverDie.Entities
             set
             {
                 _isDead = value;
+            }
+        }
+        public bool IsActivated
+        {
+            get
+            {
+                return _activated;
+            }
+            set
+            {
+                _activated = value;
             }
         }
         public override bool WillCollide(AbstractEntity collidedWith)
