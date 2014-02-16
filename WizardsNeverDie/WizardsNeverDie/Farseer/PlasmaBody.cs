@@ -17,7 +17,6 @@ namespace WizardsNeverDie.Physics
 {
     public class PlasmaBody : PhysicsBody
     {
-        BaseLevel level;
         AbstractEntity entity;
         Vector2 position;
         float size;

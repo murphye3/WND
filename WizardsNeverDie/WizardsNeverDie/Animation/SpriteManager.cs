@@ -59,7 +59,10 @@ namespace WizardsNeverDie.Animation
                 //FrameIndex = 0;
             }
         }
+        protected SpriteManager()
+        {
 
+        }
         protected SpriteManager(Texture2D Texture, int Frames, int animations)
         {
             this.Position = ifrit.ifritPosition;
@@ -119,7 +122,7 @@ namespace WizardsNeverDie.Animation
                 strs = line.Split(' ');
 
                 //get the name  <name>_<orientation>_<Action>-<FrameNumber>
-                name = strs[0].Substring(0, strs[0].LastIndexOf('-'));
+                 name = strs[0].Substring(0, strs[0].LastIndexOf('-'));
                 if (currentName == null)
                     currentName = name;
                 else if (name != currentName)    // we got all the frames for the animation
@@ -143,9 +146,8 @@ namespace WizardsNeverDie.Animation
 
         public virtual void Update(GameTime gameTime)
         {
+
         }
-
-
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {

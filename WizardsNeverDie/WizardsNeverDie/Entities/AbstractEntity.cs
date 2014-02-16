@@ -13,8 +13,8 @@ namespace WizardsNeverDie.Entities
 {
     public abstract class AbstractEntity : AbstractSprite
     {
-        protected PhysicsBody body;
-
+        public PhysicsBody body;
+        
         public PhysicsBody getBody()
         {
             return body;
@@ -37,8 +37,9 @@ namespace WizardsNeverDie.Entities
             get { return body.Velocity; }
         }
 
-        public virtual void OnCollision(AbstractEntity collidedWith)
+        public virtual bool OnCollision(AbstractEntity collidedWith)
         {
+            return true;
         }
         public virtual bool WillCollide(AbstractEntity collidedWith)
         {

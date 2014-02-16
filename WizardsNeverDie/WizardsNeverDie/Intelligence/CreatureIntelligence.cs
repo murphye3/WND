@@ -12,12 +12,13 @@ namespace WizardsNeverDie.Intelligence
 {
     public class CreatureIntelligence : AbstractIntelligence
     {
+        EnemyAnimation enemy = new EnemyAnimation();
         public AbstractCreature creature;
         public AbstractCreature target;
         float speed;
         protected Orientation lastOrientation;
         protected TimeSpan swapTimer;
-        protected TimeSpan swapCooldown = TimeSpan.FromSeconds(1d);
+        protected TimeSpan swapCooldown = TimeSpan.FromSeconds(6d);
         public CreatureIntelligence(AbstractCreature creature, AbstractCreature target, float speed)
         {
             this.creature = creature;
@@ -28,7 +29,7 @@ namespace WizardsNeverDie.Intelligence
         public bool canSwap(Orientation current)
         {
             bool canSwap = true;
-            if(swapTimer < swapCooldown)
+            if (swapTimer < swapCooldown)
             {
                 switch (current)
                 {
@@ -45,12 +46,13 @@ namespace WizardsNeverDie.Intelligence
             }
             return canSwap;
         }
+
         public void swapWalkOrientation(Orientation current)
         {
             SpriteAnimation animation = (SpriteAnimation)creature.SpriteManager;
             if (current == Orientation.None)
                 animation.SetAnimationState(AnimationState.Stop);
-            else if (canSwap(current))
+            else if(canSwap(animation.GetOrientation()))
             {
                 animation.SetAnimationState(AnimationState.Walk);
                 animation.SetOrientation(current);
@@ -65,65 +67,69 @@ namespace WizardsNeverDie.Intelligence
                 return;
             bool canMove = true;
             EnemyAnimation animation = (EnemyAnimation)this.creature.SpriteManager;
-            if (animation.GetAnimationState() == AnimationState.Attack)
+            if (animation.GetAnimationState() == AnimationState.Attack || animation.GetAnimationState() == AnimationState.Death)
                 canMove = false;
-
+            float targetDistance = (float)Math.Sqrt(Math.Pow((creature.Position.X - target.Position.X), 2) + Math.Pow((creature.Position.Y - target.Position.Y), 2));
             Vector2 direction = Vector2.Subtract(target.Position, creature.Position);
             direction.Normalize();
             double angle = - Math.Atan2(direction.Y, direction.X);
             SpriteAnimation sa = (SpriteAnimation) creature.SpriteManager;
+            EnemyAnimation e = (EnemyAnimation)creature.SpriteManager;
             PhysicsBody body = creature.getBody();
-            if (angle > -Math.PI / 8 && angle < Math.PI / 8) // Right
+            if (canMove == true && targetDistance < 15)
             {
-                swapWalkOrientation(Orientation.Right);
-                if(canMove)
-                    body.Move(new Vector2(speed, 0));
-            }
-            else if (angle >  Math.PI / 8 && angle < 3 * Math.PI / 8) // Up Right
-            {
-                swapWalkOrientation(Orientation.UpRight);
-                if (canMove)
-                    body.Move(new Vector2(speed, -speed));
-            }
-            else if (angle > 3 * Math.PI / 8 && angle < 5 * Math.PI / 8) // UP
-            {
-                swapWalkOrientation(Orientation.Up);
-                if (canMove)
-                    body.Move(new Vector2(0, -speed));
-            }
-            else if (angle > 5 * Math.PI / 8 && angle < 7 * Math.PI / 8) // Up Left
-            {
-                swapWalkOrientation(Orientation.UpLeft);
-                if (canMove)
-                    body.Move(new Vector2(-speed, -speed));
-            }
-            else if (angle > 7 * Math.PI / 8 || angle < -7 * Math.PI / 8) // Left
-            {
-                swapWalkOrientation(Orientation.Left);
-                if (canMove)
-                    body.Move(new Vector2(-speed, 0));
-            }
-            else if (angle > -7 *  Math.PI / 8 && angle < -5 * Math.PI / 8) // Down Left
-            {
-                swapWalkOrientation(Orientation.DownLeft);
-                if (canMove)
-                    body.Move(new Vector2(-speed, speed));
-            }
-            else if (angle > -5 * Math.PI / 8 && angle < -3 * Math.PI / 8) // Down
-            {
-                swapWalkOrientation(Orientation.Down);
-                if (canMove)
-                    body.Move(new Vector2(0, speed));
-            }
-            else if (angle > -3 * Math.PI / 8 && angle < -Math.PI / 8) // Down Right
-            {
-                swapWalkOrientation(Orientation.DownRight);
-                if (canMove)
-                    body.Move(new Vector2(speed, speed));
+                if (angle > -Math.PI / 8 && angle < Math.PI / 8) // Right
+                {
+                    swapWalkOrientation(Orientation.Right);
+                    if (canMove)
+                        body.Move(new Vector2(speed, 0));
+                }
+                else if (angle > Math.PI / 8 && angle < 3 * Math.PI / 8) // Up Right
+                {
+                    swapWalkOrientation(Orientation.UpRight);
+                    if (canMove)
+                        body.Move(new Vector2(speed, -speed));
+                }
+                else if (angle > 3 * Math.PI / 8 && angle < 5 * Math.PI / 8) // UP
+                {
+                    swapWalkOrientation(Orientation.Up);
+                    if (canMove)
+                        body.Move(new Vector2(0, -speed));
+                }
+                else if (angle > 5 * Math.PI / 8 && angle < 7 * Math.PI / 8) // Up Left
+                {
+                    swapWalkOrientation(Orientation.UpLeft);
+                    if (canMove)
+                        body.Move(new Vector2(-speed, -speed));
+                }
+                else if (angle > 7 * Math.PI / 8 || angle < -7 * Math.PI / 8) // Left
+                {
+                    swapWalkOrientation(Orientation.Left);
+                    if (canMove)
+                        body.Move(new Vector2(-speed, 0));
+                }
+                else if (angle > -7 * Math.PI / 8 && angle < -5 * Math.PI / 8) // Down Left
+                {
+                    swapWalkOrientation(Orientation.DownLeft);
+                    if (canMove)
+                        body.Move(new Vector2(-speed, speed));
+                }
+                else if (angle > -5 * Math.PI / 8 && angle < -3 * Math.PI / 8) // Down
+                {
+                    swapWalkOrientation(Orientation.Down);
+                    if (canMove)
+                        body.Move(new Vector2(0, speed));
+                }
+                else if (angle > -3 * Math.PI / 8 && angle < -Math.PI / 8) // Down Right
+                {
+                    swapWalkOrientation(Orientation.DownRight);
+                    if (canMove)
+                        body.Move(new Vector2(speed, speed));
+                }
             }
             else
             {
-                sa.SetAnimationState(AnimationState.Stop); 
+                e.SetAnimationState(AnimationState.Stop);
             }
         }
     }

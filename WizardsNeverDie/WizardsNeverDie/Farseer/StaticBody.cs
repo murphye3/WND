@@ -21,15 +21,14 @@ namespace WizardsNeverDie.Physics
         AbstractEntity entity;
         Vector2 position;
         float size;
-        public StaticBody(AbstractEntity entity, Vector2 position, float size)
+        public StaticBody(AbstractEntity entity, Vector2 position, float width, float height)
             : base()
         {
             this.entity = entity;
             this.position = position;
             this.size = size;
-
             World world = Farseer.Instance.World;
-            Body body = BodyFactory.CreateRectangle(world, size, 1f, 1f);
+            Body body = BodyFactory.CreateRectangle(world, width, height, size);
             Bodies.Add(body);
             foreach (Fixture fixture in body.FixtureList)
                 fixture.UserData = entity;
@@ -41,6 +40,7 @@ namespace WizardsNeverDie.Physics
             body.CollisionCategories = Category.Cat1;
             body.CollidesWith = Category.Cat1;
             body.OnCollision += new OnCollisionEventHandler(onCollision);
+
         }
         bool onCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
         {

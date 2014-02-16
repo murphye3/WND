@@ -82,9 +82,11 @@
     <Compile Include="Animation\AnimationClass.cs" />
     <Compile Include="Animation\BasicSprite.cs" />
     <Compile Include="Animation\EnemyAnimation.cs" />
+    <Compile Include="Animation\ExplosionAnimation.cs" />
     <Compile Include="Animation\FrameAnimation.cs" />
     <Compile Include="Animation\HealthAnimation.cs" />
     <Compile Include="Animation\PlasmaAnimation.cs" />
+    <Compile Include="Animation\SpawnerAnimation.cs" />
     <Compile Include="Animation\SpriteAnimation.cs" />
     <Compile Include="Animation\SpriteManager.cs" />
     <Compile Include="Animation\WizardAnimation.cs" />
@@ -93,10 +95,12 @@
     <Compile Include="Entities\AbstractEntity.cs" />
     <Compile Include="Entities\AbstractSprite.cs" />
     <Compile Include="Entities\Enemy.cs" />
+    <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\Health.cs" />
     <Compile Include="Entities\Plasma.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Brick.cs" />
+    <Compile Include="Entities\Spawner.cs" />
     <Compile Include="Farseer\BasicBody.cs" />
     <Compile Include="Farseer\PhysicsBody.cs" />
     <Compile Include="Farseer\PlasmaBody.cs" />
@@ -105,6 +109,7 @@
     <Compile Include="Intelligence\AbstractIntelligence.cs" />
     <Compile Include="Intelligence\CreatureIntelligence.cs" />
     <Compile Include="Intelligence\PlayerIntelligence.cs" />
+    <Compile Include="Intelligence\SpawnerIntelligence.cs" />
     <Compile Include="IntroScreen.cs" />
     <Compile Include="Level\BaseLevel.cs" />
     <Compile Include="Level\IfritDemo.cs" />

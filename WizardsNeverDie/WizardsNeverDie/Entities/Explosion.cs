@@ -17,17 +17,18 @@ using System.IO;
 
 namespace WizardsNeverDie.Entities
 {
-    public class Brick : AbstractEntity
+    public class Explosion : AbstractEntity
     {
-        public Brick(SpriteAnimation animation, Vector2 position)
+        public Explosion(SpriteAnimation animation, Vector2 position, float width, float height)
         {
+            
             this.spriteManager = animation;
             animation.Position = position;
-            this.body = new StaticBody(this, position, 1f, 1f);
+            
         }
         public void Update(GameTime gameTime)
         {
-            spriteManager.Position = new Vector2(body.Position.X, body.Position.Y);
+            
             spriteManager.Update(gameTime);
         }
 

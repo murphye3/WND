@@ -13,6 +13,7 @@ namespace WizardsNeverDie.Level
     public abstract class BaseLevel : PhysicsGameScreen, IDemoScreen
     {
         protected KeyboardState keyboardState, lastKeyBoardState;
+        protected GamePadState gamepadState, lastGamepadState;
         protected String levelDetails, levelName, backgroundTextureStr;
         private BackgroundScreen background; 
         public Vector2 ifritPosition = new Vector2(0, -20);

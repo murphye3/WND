@@ -85,6 +85,15 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\Explosion\explosion.png">
+      <Name>explosion</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\Explosion\explosion.txt">
+      <Name>explosion</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Health\health.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>health</Name>
@@ -110,6 +119,15 @@
     </Compile>
     <Content Include="Sprites\Plasma\plasma.txt">
       <Name>plasma</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="Sprites\Spawner\portal.png">
+      <Name>portal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\Spawner\portal.txt">
+      <Name>portal</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\Wall\wall.txt">

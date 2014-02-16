@@ -13,17 +13,24 @@ using WizardsNeverDie.Physics;
 using WizardsNeverDie.Level;
 using WizardsNeverDie.Animation;
 using WizardsNeverDie.Intelligence;
+using WizardsNeverDie.Entities;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Contacts;
 
 namespace WizardsNeverDie.Entities
 {
     class Enemy: AbstractCreature
     {
+
         private bool _isDead = false;
-        public Enemy(EnemyAnimation spriteManager, AbstractCreature target, Vector2 position)
+        
+        public Enemy(EnemyAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height)
         {
             this.spriteManager = spriteManager;
-            this.body = new StaticBody(this, position, 1f);
+            this.body = new StaticBody(this, position, width, height);
+            
             this.intelligence = new CreatureIntelligence(this, target, .05f);
+            
         }
         public void Update(GameTime gameTime)
         {
@@ -44,23 +51,32 @@ namespace WizardsNeverDie.Entities
         }
         public override bool WillCollide(AbstractEntity collidedWith)
         {
-            if (collidedWith is Player)
+            
+            EnemyAnimation animation = (EnemyAnimation)this.SpriteManager;
+            if (collidedWith is Player && animation.GetAnimationState() != AnimationState.Death)
             {
                 Player player = (Player)collidedWith;
-                EnemyAnimation animation = (EnemyAnimation)this.SpriteManager;
                 animation.SetAnimationState(AnimationState.Attack);
-                if (player.Health == HealthAnimation.HealthState.Health100)
-                    player.Health = HealthAnimation.HealthState.Health75;
-                else if (player.Health == HealthAnimation.HealthState.Health75)
-                    player.Health = HealthAnimation.HealthState.Health50;
-                else if (player.Health == HealthAnimation.HealthState.Health50)
-                    player.Health = HealthAnimation.HealthState.Health25;
-                else if (player.Health == HealthAnimation.HealthState.Health25)
-                    player.Health = HealthAnimation.HealthState.Health0;
+                //if (animation.PreviousAnimationState = AnimationState.Walk && animation.GetAnimationState() == AnimationState.Walk)
+                //{
+                    if (player.Health == HealthAnimation.HealthState.Health100)
+                        player.Health = HealthAnimation.HealthState.Health75;
+                    else if (player.Health == HealthAnimation.HealthState.Health75)
+                        player.Health = HealthAnimation.HealthState.Health50;
+                    else if (player.Health == HealthAnimation.HealthState.Health50)
+                        player.Health = HealthAnimation.HealthState.Health25;
+                    else if (player.Health == HealthAnimation.HealthState.Health25)
+                        player.Health = HealthAnimation.HealthState.Health0;
+                //}
             }
-            return false;       
+            if(collidedWith is Plasma)
+            {
+                Plasma plasma = (Plasma)collidedWith;
+                animation.SetAnimationState(AnimationState.Death);
+            }
+            return false;     
         }
-
+        
         public bool IsDead
         {
             get

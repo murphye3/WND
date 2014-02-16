@@ -16,9 +16,14 @@ namespace WizardsNeverDie.Animation
         Run,
         Attack,
         Spell1,
-        Stop
+        Stop,
+        Death,
+        Disentegrated,
+        Explosion,
+        Spawning,
+        NotSpawning
     }
-    //C# enum type is fucking useless
+
     [Flags]
     public enum Orientation
     {
@@ -43,7 +48,10 @@ namespace WizardsNeverDie.Animation
         protected float timeElapsed = 0;
         protected bool  InChainAnimation = false, left = false, right = false;
         private bool _isMoving = false;
+        public SpriteAnimation()
+        {
 
+        }
         public SpriteAnimation(Texture2D Texture, int frames, int animations)
             : base(Texture, frames, animations)
         {
@@ -175,7 +183,7 @@ namespace WizardsNeverDie.Animation
             {
                 case AnimationState.Attack:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "attack";
-                    _isMoving = true;
+                    _isMoving = false;
                     break;
                 case AnimationState.Walk:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "walk";
@@ -184,6 +192,19 @@ namespace WizardsNeverDie.Animation
                 case AnimationState.Stop:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "walk";
                     _isMoving = false;
+                    break;
+                case AnimationState.Death:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "death";
+                    _isMoving = false;
+                    break;
+                case AnimationState.Explosion:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "explosion";
+                    break;
+                case AnimationState.Spawning:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "spawning";
+                    break;
+                case AnimationState.NotSpawning:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "notspawning";
                     break;
             }
         }

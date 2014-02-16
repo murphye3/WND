@@ -38,6 +38,7 @@ namespace WizardsNeverDie.Physics
             body.Friction = float.MaxValue;
             body.Restitution = 0.3f;
             body.BodyType = BodyType.Dynamic;
+            body.SleepingAllowed = false;
             body.CollisionCategories = Category.Cat1;
             body.CollidesWith = Category.Cat1;
             body.OnCollision += new OnCollisionEventHandler(onCollision);

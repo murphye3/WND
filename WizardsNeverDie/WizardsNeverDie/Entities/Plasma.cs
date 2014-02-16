@@ -20,7 +20,7 @@ namespace WizardsNeverDie.Entities
     public class Plasma : AbstractEntity
     {
         private bool _isDead = false;
-
+        private bool _isDeadOnEnemy = false;
         public Plasma(SpriteAnimation animation, Vector2 position, Vector2 force)
         {
             this.spriteManager = animation;
@@ -41,9 +41,13 @@ namespace WizardsNeverDie.Entities
             {
                 Enemy enemy = (Enemy)collidedWith;
                 enemy.IsDead = true;
-                this._isDead = true;
+                this.IsDeadOnEnemy = true;
             }
             if (collidedWith is Brick)
+            {
+                this._isDead = true;
+            }
+            if (collidedWith is Spawner)
             {
                 this._isDead = true;
             }
@@ -59,6 +63,17 @@ namespace WizardsNeverDie.Entities
             set
             {
                 _isDead = value;
+            }
+        }
+        public bool IsDeadOnEnemy
+        {
+            get
+            {
+                return _isDeadOnEnemy;
+            }
+            set
+            {
+                _isDeadOnEnemy = value;
             }
         }
     }
