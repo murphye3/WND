@@ -30,11 +30,6 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Ifrit\ifrit.png">
-      <Name>ifrit</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Materials\blank.png">
       <Name>blank</Name>
       <Importer>TextureImporter</Importer>
@@ -98,6 +93,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>health</Name>
     </Content>
+    <Compile Include="Sprites\Ifrit\ifrit.png">
+      <Name>ifrit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="Sprites\Ifrit\ifrit.txt">
       <Name>ifrit</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

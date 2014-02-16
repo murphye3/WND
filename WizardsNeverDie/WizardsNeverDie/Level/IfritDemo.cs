@@ -206,7 +206,7 @@ namespace WizardsNeverDie.Level
                     orientation = spawnerAnimation.GetOrientation();
                     if (orientation == Orientation.Down)
                     {
-                        //_creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(0, 3), 1.5f, 1.5f));
+                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(0, 3), 1.5f, 1.5f));
                     }
                     else if (orientation == Orientation.DownRight)
                     {
