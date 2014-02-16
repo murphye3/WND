@@ -80,6 +80,16 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Materials\Level1_Background.png">
+      <Name>Level1_Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Materials\Level1_0.png">
+      <Name>Level1_0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Sprites\Explosion\explosion.png">
       <Name>explosion</Name>
       <Importer>TextureImporter</Importer>

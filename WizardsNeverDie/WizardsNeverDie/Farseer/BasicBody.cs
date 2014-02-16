@@ -17,7 +17,6 @@ namespace WizardsNeverDie.Physics
 {
     public class BasicBody : PhysicsBody
     {
-        BaseLevel level;
         AbstractEntity entity;
         Vector2 position;
         float size;
@@ -41,6 +40,7 @@ namespace WizardsNeverDie.Physics
             body.SleepingAllowed = false;
             body.CollisionCategories = Category.Cat1;
             body.CollidesWith = Category.Cat1;
+            body.Awake = true;
             body.OnCollision += new OnCollisionEventHandler(onCollision);
         }
         bool onCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)

@@ -21,7 +21,6 @@ namespace WizardsNeverDie.Entities
 {
     class Enemy: AbstractCreature
     {
-
         private bool _isDead = false;
         
         public Enemy(EnemyAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height)
@@ -30,7 +29,6 @@ namespace WizardsNeverDie.Entities
             this.body = new StaticBody(this, position, width, height);
             
             this.intelligence = new CreatureIntelligence(this, target, .05f);
-            
         }
         public void Update(GameTime gameTime)
         {

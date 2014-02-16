@@ -68,12 +68,12 @@ namespace WizardsNeverDie
             //_textures.Add("CannonBall", Content.Load<Texture2D>("Sprite\\ball")); 
 
             IfritDemo ifritDemo = new IfritDemo();
-
+            Level1 level1 = new Level1();
             MenuScreen menuScreen = new MenuScreen("");
 
             //menuScreen.AddMenuItem("Levels", EntryType.Separator, null);
             menuScreen.AddMenuItem(ifritDemo.GetTitle(), EntryType.Screen, ifritDemo);
-
+            menuScreen.AddMenuItem(level1.GetTitle(), EntryType.Screen, level1);
             ScreenManager.AddScreen(new BackgroundScreen("Common/title_screen"));
             ScreenManager.AddScreen(menuScreen);
             ScreenManager.AddScreen(new LogoScreen(TimeSpan.FromSeconds(3.0)));

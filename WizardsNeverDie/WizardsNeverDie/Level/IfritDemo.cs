@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System;
 using System.Threading;
+using FarseerPhysics.Factories;
 
 namespace WizardsNeverDie.Level
 {
@@ -45,9 +46,9 @@ namespace WizardsNeverDie.Level
         public IfritDemo()
         {
             int test = initialTime.Seconds;
-            levelDetails = "Level 1";
-            levelName = "Start Game";
-            this.backgroundTextureStr = "Materials/ground";
+            levelDetails = "Level 0";
+            levelName = "Start Game: 0";
+            this.backgroundTextureStr = "Materials/Level1_0";
         }
 
         public override void LoadContent()
