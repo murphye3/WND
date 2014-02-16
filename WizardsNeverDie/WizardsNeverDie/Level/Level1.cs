@@ -187,7 +187,7 @@ namespace WizardsNeverDie.Level
             {
                 EnemyAnimation _creatureAnimation = new EnemyAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
                 _creatureAnimation.AnimationName = "ifrit_d_walk";
-                _creatures.Add(new Enemy(_creatureAnimation, _player, ifritPosition));
+                _creatures.Add(new Enemy(_creatureAnimation, _player, ifritPosition, 1.5F, 1.5F));
             }
             if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Space) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
             {
