@@ -27,10 +27,14 @@ namespace WizardsNeverDie.Level
         private List<Plasma> _plasma = new List<Plasma>();
         private List<Spawner> _spawner = new List<Spawner>();
         private List<TriggerBody> _triggers = new List<TriggerBody>();
-
+        private List<Potions> _potion = new List<Potions>();
+        private List<PotionExplosion> _potionExplosion = new List<PotionExplosion>();
         private HealthAnimation _healthSprite;
+        PotionExplosionAnimation potionExplosionAnimation;
         private Health _health;
-
+        private SpriteAnimation _potionSprite;
+        private SpriteAnimation _potionSprite2;
+        private SpriteAnimation _potionSprite3;
         private Texture2D _gameover;
         private Vector2 _gameOverVector;
         private bool isGameOver = false;
@@ -45,8 +49,8 @@ namespace WizardsNeverDie.Level
         public Level1()
         {
             int test = initialTime.Seconds;
-            levelDetails = "Level 0";
-            levelName = "Start Game: 0";
+            levelDetails = "Level 1";
+            levelName = "Start Game: 1";
             this.backgroundTextureStr = "Materials/Level1_0";
         }
 
@@ -57,15 +61,15 @@ namespace WizardsNeverDie.Level
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
             _wizard.AnimationName = "wizard_d_walk";
             _player = new Player(_wizard, ConvertUnits.ToSimUnits(-(2048/2) + 430, -(2048/2)+135));
-
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
             _gameover = ScreenManager.Content.Load<Texture2D>("Common\\gameover");
-
+            
             GenerateWalls();
             GenereateCreatures();
             GenereateSpawners();
+            GeneratePotions();
 
             this.Camera.EnableTracking = true;
             this.Camera.TrackingBody = _player.getBody().Bodies[0];
@@ -134,6 +138,28 @@ namespace WizardsNeverDie.Level
             _spawner.Add(new Spawner(_spawnerAnimation5, ConvertUnits.ToSimUnits(-(2048 / 2) + 1034, -(2048 / 2) + 507), _player, 1.5f, 1.5f, false));
         }
 
+        private void GeneratePotions()
+        {
+            _potionSprite = new SpriteAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Potions\\potions"), new StreamReader(@"Content/Sprites/Potions/potions.txt"));
+            _potionSprite.AnimationName = "potion_d_orange";
+            _potion.Add(new Potions(_potionSprite, ConvertUnits.ToSimUnits(-(2048/2) + 891, -(2048/2)+127), 1f, 1f));
+
+            _potionSprite2 = new SpriteAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Potions\\potions"), new StreamReader(@"Content/Sprites/Potions/potions.txt"));
+            _potionSprite2.AnimationName = "potion_d_orange";
+            _potion.Add(new Potions(_potionSprite2, ConvertUnits.ToSimUnits(-(2048 / 2) + 900, -(2048 / 2) + 127), 1f, 1f));
+            
+            _potionSprite3 = new SpriteAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Potions\\potions"), new StreamReader(@"Content/Sprites/Potions/potions.txt"));
+            _potionSprite3.AnimationName = "potion_d_orange";
+            _potion.Add(new Potions(_potionSprite3, ConvertUnits.ToSimUnits(-(2048 / 2) + 910, -(2048 / 2) + 127), 1f, 1f));
+        }
+
+        public void PotionExplosion(Player player)
+        {
+            potionExplosionAnimation = new PotionExplosionAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PotionExplosion\\potionexplosion"), 
+                new StreamReader(@"Content/Sprites/PotionExplosion/potionexplosion.txt"));
+            potionExplosionAnimation.AnimationName = "potionexplosion_d_kaboom";
+        }
+
         public void Spell(Player player, int forcePower)
         {
             Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2);
@@ -188,6 +214,10 @@ namespace WizardsNeverDie.Level
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
+            if (this.IsActive == true)
+            {
+                Console.WriteLine("Fuck you");
+            }
             WizardAnimation wizard = (WizardAnimation)_player.SpriteManager;
             lastGamepadState = gamepadState;
             gamepadState = GamePad.GetState(PlayerIndex.One);
@@ -312,24 +342,43 @@ namespace WizardsNeverDie.Level
                     Spell(_player, forcePower);
                 }
             }
-            for (int i = 0; i < _plasma.Count; i++)//(Plasma p in _plasma)
-            {
 
-                if (_plasma[i].IsDead)
+            if(keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Q) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q) && potionCount > 0)
+            {
+                PotionExplosion(_player);
+                _potionExplosion.Add(new PotionExplosion(potionExplosionAnimation, _player, _creatures, _player.Position));
+                potionCount--;
+            }
+            for (int i = 0; i < _potionExplosion.Count; i++)
+            {
+                PotionExplosionAnimation potionExplosionAnim = (PotionExplosionAnimation)_potionExplosion[i].SpriteManager;
+                if (potionExplosionAnim.IsDead)
                 {
-                    explosionSprite.AnimationName = "ifrit_d_explosion";
-                    _explosions.Add(new Explosion(explosionSprite, _plasma[i].Position + new Vector2(0, -1), .01f, .01f));
-                    Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
-                    _plasma.Remove(_plasma[i]);
-                }
-                else if (_plasma[i].IsDeadOnEnemy)
-                {
-                    Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
-                    _plasma.Remove(_plasma[i]);
+                    _potionExplosion.Remove(_potionExplosion[i]);
                 }
                 else
-                    _plasma[i].Update(gameTime);
+                {
+                    _potionExplosion[i].Update(gameTime);
+                }
             }
+
+                for (int i = 0; i < _plasma.Count; i++)//(Plasma p in _plasma)
+                {
+                    if (_plasma[i].IsDead)
+                    {
+                        explosionSprite.AnimationName = "ifrit_d_explosion";
+                        _explosions.Add(new Explosion(explosionSprite, _plasma[i].Position + new Vector2(0, -1), .01f, .01f));
+                        Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
+                        _plasma.Remove(_plasma[i]);
+                    }
+                    else if (_plasma[i].IsDeadOnEnemy)
+                    {
+                        Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
+                        _plasma.Remove(_plasma[i]);
+                    }
+                    else
+                        _plasma[i].Update(gameTime);
+                }
             for (int i = 0; i < _spawner.Count; i++)
             {
                 if (_spawner[i].IsDead)
@@ -355,6 +404,20 @@ namespace WizardsNeverDie.Level
                     _triggers.Remove(_triggers[i]);
                 }
             }
+            for (int i = 0; i < _potion.Count; i++)
+            {
+                if (_potion[i].IsCollected == true)
+                {
+                    potionCount++;
+                    Farseer.Instance.World.RemoveBody(_potion[i].getBody().Bodies[0]);
+                    _potion.Remove(_potion[i]);
+                }
+                else
+                {
+                    _potion[i].Update(gameTime);
+                }
+            }
+
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
@@ -366,11 +429,7 @@ namespace WizardsNeverDie.Level
             {
                 b.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
-            if (!isGameOver)
-            {
-                _player.SpriteManager.Draw(ScreenManager.SpriteBatch);
-                _health.SpriteManager.Draw(ScreenManager.SpriteBatch);
-            }
+            
             foreach (Spawner s in _spawner)
             {
                 s.SpriteManager.Draw(ScreenManager.SpriteBatch);
@@ -383,11 +442,24 @@ namespace WizardsNeverDie.Level
             {
                 p.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
+            foreach(PotionExplosion pE in _potionExplosion)
+            {
+                pE.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
+            if (!isGameOver)
+            {
+                _player.SpriteManager.Draw(ScreenManager.SpriteBatch);
+                _health.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
             foreach (Explosion e in _explosions)
             {
                 e.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
-
+            foreach (Potions s in _potion)
+            {
+                s.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
+            
             if (isGameOver)
             {
                 ScreenManager.SpriteBatch.Draw(_gameover, _gameOverVector, Color.White);

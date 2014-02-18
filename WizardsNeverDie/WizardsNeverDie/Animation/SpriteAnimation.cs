@@ -21,7 +21,8 @@ namespace WizardsNeverDie.Animation
         Disentegrated,
         Explosion,
         Spawning,
-        NotSpawning
+        NotSpawning,
+        PotionExplosion
     }
 
     [Flags]
@@ -205,6 +206,9 @@ namespace WizardsNeverDie.Animation
                     break;
                 case AnimationState.NotSpawning:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "notspawning";
+                    break;
+                case AnimationState.PotionExplosion:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "potionexplosion";
                     break;
             }
         }

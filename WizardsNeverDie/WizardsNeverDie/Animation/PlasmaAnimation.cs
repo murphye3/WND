@@ -82,19 +82,7 @@ namespace WizardsNeverDie.Animation
         }
         public override AnimationState GetAnimationState()
         {
-            if (!IsMoving)
-            {
-                return AnimationState.Stop;
-            }
-            string state = AnimationName.Split('_')[2];
-            if (state == "attack")
-            {
                 return AnimationState.Attack;
-            }
-            else
-            {
-                return base.GetAnimationState(state);
-            }
         }
     }
 }

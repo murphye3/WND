@@ -177,6 +177,7 @@ namespace WizardsNeverDie.Level
         {
             if (firstTime == true)
             {
+                
                 _spawner.Add(new Spawner(_spawnerSprite, new Vector2(0, -10), _player, 3f, 6f, true));
                 _spawner.Add(new Spawner(_spawnerSprite2, new Vector2(0, -20), _player, 3f, 6f, true));
                 _spawner.Add(new Spawner(_spawnerSprite3, new Vector2(5, -15), _player, 3f, 6f, true));

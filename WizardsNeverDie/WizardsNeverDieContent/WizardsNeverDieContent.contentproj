@@ -136,6 +136,24 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\Potions\potions.png">
+      <Name>potions</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\PotionExplosion\potionexplosion.png">
+      <Name>potionexplosion</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\PotionExplosion\potionexplosion.txt">
+      <Name>potionexplosion</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sprites\Potions\potions.txt">
+      <Name>potions</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Spawner\portal.txt">
       <Name>portal</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

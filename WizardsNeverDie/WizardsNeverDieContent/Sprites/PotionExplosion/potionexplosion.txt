@@ -1,0 +1,8 @@
+potionexplosion_d_kaboom-1 = 41 38 112 112
+potionexplosion_d_kaboom-2 = 215 23 139 142
+potionexplosion_d_kaboom-3 = 402 23 142 142
+potionexplosion_d_kaboom-4 = 570 6 184 174
+potionexplosion_d_kaboom-5 = 760 9 181 170
+potionexplosion_d_kaboom-6 = 946 6 183 174
+potionexplosion_d_kaboom-7 = 1134 6 184 174
+potionexplosion_d_kaboom-8 = 1322 6 174 170

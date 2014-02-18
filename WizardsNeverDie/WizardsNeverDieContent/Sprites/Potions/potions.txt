@@ -1,0 +1,6 @@
+potion_d_yellow-1 = 2 44 20 23
+potion_d_orange-1 = 25 44 20 23
+potion_d_purple-1 = 47 45 20 23
+potion_d_green-1 = 70 45 20 23
+potion_d_clear-1 = 2 68 20 22
+potion_d_blue-1 = 24 68 21 22

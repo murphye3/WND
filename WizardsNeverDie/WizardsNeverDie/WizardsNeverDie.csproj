@@ -86,6 +86,7 @@
     <Compile Include="Animation\FrameAnimation.cs" />
     <Compile Include="Animation\HealthAnimation.cs" />
     <Compile Include="Animation\PlasmaAnimation.cs" />
+    <Compile Include="Animation\PotionExplosionAnimation.cs" />
     <Compile Include="Animation\SpawnerAnimation.cs" />
     <Compile Include="Animation\SpriteAnimation.cs" />
     <Compile Include="Animation\SpriteManager.cs" />
@@ -100,6 +101,8 @@
     <Compile Include="Entities\Plasma.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Brick.cs" />
+    <Compile Include="Entities\PotionExplosion.cs" />
+    <Compile Include="Entities\Potions.cs" />
     <Compile Include="Entities\Spawner.cs" />
     <Compile Include="Farseer\BasicBody.cs" />
     <Compile Include="Farseer\PhysicsBody.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="Intelligence\AbstractIntelligence.cs" />
     <Compile Include="Intelligence\CreatureIntelligence.cs" />
     <Compile Include="Intelligence\PlayerIntelligence.cs" />
+    <Compile Include="Intelligence\PotionExplosionIntelligence.cs" />
     <Compile Include="Intelligence\SpawnerIntelligence.cs" />
     <Compile Include="IntroScreen.cs" />
     <Compile Include="Level\BaseLevel.cs" />

@@ -9,16 +9,17 @@ using WizardsNeverDie.Entities;
 
 namespace WizardsNeverDie.Animation
 {
-    class ExplosionAnimation : SpriteAnimation
+    class PotionExplosionAnimation : SpriteAnimation
     {
         private bool _isDead = false;
         private bool _onSpawner = false;
-        public ExplosionAnimation()
+        private int i = 0;
+        public PotionExplosionAnimation()
         {
 
         }
 
-        public ExplosionAnimation(Texture2D Texture, int frames, int animations)
+        public PotionExplosionAnimation(Texture2D Texture, int frames, int animations)
             : base(Texture, frames, animations)
         {
             _frameIndex = 0;
@@ -27,7 +28,7 @@ namespace WizardsNeverDie.Animation
             this.TimeToUpdate = 6F;
         }
 
-        public ExplosionAnimation(Texture2D texture, StreamReader sr)
+        public PotionExplosionAnimation(Texture2D texture, StreamReader sr)
             : base(texture, sr)
         {
             _frameIndex = 0;
@@ -42,61 +43,50 @@ namespace WizardsNeverDie.Animation
             //if(timeElapsed>TimeToUpdate)
             base.Update(gameTime);
             this.Explosion(gameTime);
-            
+
         }
         private void Explosion(GameTime gameTime)
         {
-            this.TimeToUpdate = 12f;
-            
-            if (timeElapsed > this.TimeToUpdate)
-            { 
+            if (timeElapsed > TimeToUpdate)
+            {
+                this.TimeToUpdate = 10f;
                 _frameIndex++;
-                if (this.FrameIndex == 20)
+                if (_frameIndex == 7)
                 {
-                    this.IsDead = true;
+                    if(i < 50)
+                    {
+                        _frameIndex-=3;
+                    }
+                    i++;
                 }
                 if (_frameIndex > Animations[AnimationName].NumOfFrames - 1)
                 {
-                    
                     InChainAnimation = false;
                     timeElapsed -= TimeToUpdate;
                     this.IsDead = true;
                 }
                 else
                 {
-                    if (this.ExplodeOnSpawner)
-                    {
-                        this.TimeToUpdate = 7f;
-                    }
                     timeElapsed -= TimeToUpdate;
                     _frameIndex %= Animations[AnimationName].NumOfFrames;
                 }
+
+                
             }
         }
         public override void SetAnimationState(AnimationState state)
         {
-            if (state != GetAnimationState() && !InChainAnimation)
-            {
-                if (state == AnimationState.Explosion)
-                {
+
                     //this.FramesPerSecond = 5f;
-                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "explosion";
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "potionexplosion";
                     _frameIndex = 0;
                     IsMoving = true;
                     InChainAnimation = true;
-                }
-                else
-                {
-                    InChainAnimation = false;
-                    //this.FramesPerSecond = 5f;
-                    base.SetAnimationState(state);
-                }
-            }
         }
 
         public override AnimationState GetAnimationState()
         {
-            return AnimationState.Explosion;
+            return AnimationState.PotionExplosion;
         }
         public bool IsDead
         {
@@ -107,18 +97,6 @@ namespace WizardsNeverDie.Animation
             set
             {
                 _isDead = value;
-            }
-        }
-
-        public bool ExplodeOnSpawner
-        {
-            get
-            {
-                return _onSpawner;
-            }
-            set
-            {
-                _onSpawner = value;
             }
         }
 

@@ -74,6 +74,12 @@ namespace WizardsNeverDie.Intelligence
             animation.SetAnimationState(AnimationState.Spell1);
         }
 
+        public void potionexplode()
+        {
+            SpriteAnimation animation = (SpriteAnimation)player.SpriteManager;
+            animation.SetAnimationState(AnimationState.PotionExplosion);
+        }
+
         public override void Update(GameTime gameTime)
         {
             lastGamepadState = gamepadState;
