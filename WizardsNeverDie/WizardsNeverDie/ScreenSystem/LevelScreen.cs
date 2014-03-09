@@ -53,6 +53,9 @@ namespace WizardsNeverDie.ScreenSystem
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
+            ScreenManager.SpriteBatch.Begin();
+            ScreenManager.SpriteBatch.Draw(_backgroundTexture, new Vector2(0,0), Color.Black);
+            ScreenManager.SpriteBatch.End();
             ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, _camera.View);
             ScreenManager.SpriteBatch.Draw(_backgroundTexture, new Vector2(-_backgroundTexture.Width / 2, -_backgroundTexture.Height / 2), Color.White);
             ScreenManager.SpriteBatch.End();

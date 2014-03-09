@@ -95,6 +95,36 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="SoundEffects\ContinueDialogue.wav">
+      <Name>ContinueDialogue</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Common\BorderImage.png">
+      <Name>BorderImage</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Common\ConversationContinueIcon.png">
+      <Name>ConversationContinueIcon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Common\DialogueBoxBackground.png">
+      <Name>DialogueBoxBackground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Avatar\IfritAvatar.png">
+      <Name>IfritAvatar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Avatar\WizardAvatar.png">
+      <Name>WizardAvatar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="Sprites\Explosion\explosion.txt">
       <Name>explosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -180,6 +210,11 @@
       <Name>wall</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Fonts\Segoe.spritefont">
+      <Name>Segoe</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="Sprites\Tonberry\tonberry.txt">
       <Name>tonberry</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -210,6 +245,9 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Conversations\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

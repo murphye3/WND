@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using WizardsNeverDie.Dialog;
 
 namespace WizardsNeverDie.ScreenSystem
 {
@@ -15,6 +16,7 @@ namespace WizardsNeverDie.ScreenSystem
         private Texture2D _gradientTexture;
         private string _message;
         private Vector2 _textPosition;
+        private Vector2 _textSize;
 
         public MessageBoxScreen(string message)
         {
@@ -42,8 +44,8 @@ namespace WizardsNeverDie.ScreenSystem
             // Center the message text in the viewport.
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
-            Vector2 textSize = font.MeasureString(_message);
-            _textPosition = (viewportSize - textSize) / 2;
+            _textSize = font.MeasureString(_message);
+            //_textPosition = (viewportSize - textSize) / 2;
 
             // The background includes a border somewhat larger than the text itself.
             const int hPad = 32;
@@ -51,8 +53,8 @@ namespace WizardsNeverDie.ScreenSystem
 
             _backgroundRectangle = new Rectangle((int)_textPosition.X - hPad,
                                                  (int)_textPosition.Y - vPad,
-                                                 (int)textSize.X + hPad * 2,
-                                                 (int)textSize.Y + vPad * 2);
+                                                 (int)_textSize.X + hPad * 2,
+                                                 (int)_textSize.Y + vPad * 2);
         }
 
         /// <summary>
@@ -67,6 +69,30 @@ namespace WizardsNeverDie.ScreenSystem
             }
         }
 
+        public Vector2 TextPosition
+        {
+            get
+            {
+                return _textPosition;
+            }
+            set
+            {
+                _textPosition = value;
+            }
+        }
+
+        public Vector2 TextSize
+        {
+            get
+            {
+                return _textSize;
+            }
+            set
+            {
+                _textSize = value;
+            }
+        }
+
         /// <summary>
         /// Draws the message box.
         /// </summary>
@@ -77,16 +103,8 @@ namespace WizardsNeverDie.ScreenSystem
 
             // Fade the popup alpha during transitions.
             Color color = Color.White * TransitionAlpha * (2f / 3f);
-
             spriteBatch.Begin();
-
-            // Draw the background rectangle.
-            spriteBatch.Draw(_gradientTexture, _backgroundRectangle, color);
-
-            // Draw the message box text.
-            spriteBatch.DrawString(font, _message, _textPosition + Vector2.One, Color.Black);
-            spriteBatch.DrawString(font, _message, _textPosition, Color.White);
-
+            Conversation.Draw(ScreenManager);
             spriteBatch.End();
         }
     }

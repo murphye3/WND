@@ -13,6 +13,10 @@ using System.Diagnostics;
 using System;
 using System.Threading;
 using FarseerPhysics.Factories;
+using WizardsNeverDie.ScreenSystem;
+using WizardsNeverDie.Dialog;
+using Microsoft.Xna.Framework.Audio;
+using WizardsNeverDie.Trigger;
 
 namespace WizardsNeverDie.Level
 {
@@ -28,13 +32,16 @@ namespace WizardsNeverDie.Level
         private List<SpriteAnimation> _wallSprites;
         private List<WizardPlasma> _plasma = new List<WizardPlasma>();
         private List<RangedPurplePlasma> _purplePlasma = new List<RangedPurplePlasma>();
-        private List<Spawner> _spawner = new List<Spawner>();
+        private List<Spawner> _spawners = new List<Spawner>();
         private List<TriggerBody> _triggers = new List<TriggerBody>();
         private List<Potions> _potion = new List<Potions>();
         private List<PotionExplosion> _potionExplosion = new List<PotionExplosion>();
         private HealthAnimation _healthSprite;
         PotionExplosionAnimation potionExplosionAnimation;
         private Health _health;
+
+        private MessageBoxScreen _mbs;
+
         private SpriteAnimation _potionSprite;
         private SpriteAnimation _potionSprite2;
         private SpriteAnimation _potionSprite3;
@@ -63,7 +70,7 @@ namespace WizardsNeverDie.Level
             Farseer.Instance.World.ContactManager.OnBroadphaseCollision += MyOnBroadphaseCollision;
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
             _wizard.AnimationName = "wizard_d_walk";
-            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 430, -(2048 / 2) + 135));
+            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048/2) + 430, -(2048/2)+135));
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
@@ -107,8 +114,36 @@ namespace WizardsNeverDie.Level
             Body trees6 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(513), ConvertUnits.ToSimUnits(1126), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1207 + (513 / 2), -(2048 / 2) + (1126 / 2) + 922)));
             Body trees7 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(329), ConvertUnits.ToSimUnits(721), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1719 + (329 / 2), -(2048 / 2) + (721 / 2) + 1327)));
             Body trees8 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(201), ConvertUnits.ToSimUnits(640), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1847 + (201 / 2), -(2048 / 2) + (640 / 2) + 598)));
-            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(552), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 608 + (552 / 2), -(2048 / 2) + (50 / 2) + 1582)), 1f, _spawner));
-            
+            List<IAction> _actions1 = new List<IAction>();
+            List<IAction> _actions2 = new List<IAction>();
+
+            string str1 = "Oh No, I can't believe <INSERT PLOT HERE>!!!\nI better use my magic powers.";
+            string str2 = "Don't worry I have my staff set to stun.";
+            string str3 = "rofl who the hell are these fools voting woot \nas the best demoman?  At what point did smart \nplay and good aim become overlooked in favor of \nrandom mouse flicking and laying stickies ";
+            string str4 = "everywhere in between constant failed jumps on the enemy medic." +
+            "  Obviously a better teammate than destro or solid, " +
+            "who actually attempt to do damage rather than just cleanup garbage frags." +
+
+            "here is a fun game: download a woot demo or stv of his team and attempt to count the number of shots which are aimed. " +
+            "Place bets with friends in mumble over how many times he will stickyjump " +
+            "into the other team to make up for his lack of dming ability. I know it's tempting to spec sureshot " +
+            "carrying him but take the time to truly observe this demoman and try to decipher what exactly he is " +
+            "attempting to do for his team at any given time. and if you still think he is good go to steam, " +
+            "right click tf2, select delete local content and take up a mw2 gaming career.";
+
+            //I got it set to stun
+            MessageAction wAction = new MessageAction(ScreenManager, str1, str2, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"));
+
+            //Best Demoman NA and Enable Spawners
+            MessageAction mAction = new MessageAction(ScreenManager, str3, str4, ScreenManager.Content.Load<Texture2D>(@"Avatar\IfritAvatar"));
+            SpawnerAction sAction = new SpawnerAction(_spawners);
+
+
+            _actions1.Add(mAction);
+            _actions1.Add(sAction);
+            _actions2.Add(wAction);
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(552), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 608 + (552 / 2), -(2048 / 2) + (50 / 2) + 1582)), 1f, _actions1));
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(31), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 111 + (96 / 2), -(2048 / 2) + (31 / 2) + 465)), 1f, _actions2));
         }
 
         private void GenereateCreatures()
@@ -128,23 +163,23 @@ namespace WizardsNeverDie.Level
         {
             SpawnerAnimation _spawnerAnimation = new SpawnerAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Spawner\\portal"), new StreamReader(@"Content/Sprites/Spawner/portal.txt"));
             _spawnerAnimation.AnimationName = "portal_dr_spawning";
-            _spawner.Add(new Spawner(_spawnerAnimation, ConvertUnits.ToSimUnits(-(2048 / 2) + 520, -(2048 / 2) + 1840), _player, 1.5f, 1.5f, true));
+            _spawners.Add(new Spawner(_spawnerAnimation, ConvertUnits.ToSimUnits(-(2048 / 2) + 520, -(2048 / 2) + 1840), _player, 1.5f, 1.5f, true));
 
             SpawnerAnimation _spawnerAnimation2 = new SpawnerAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Spawner\\portal"), new StreamReader(@"Content/Sprites/Spawner/portal.txt"));
             _spawnerAnimation2.AnimationName = "portal_d_spawning";
-            _spawner.Add(new Spawner(_spawnerAnimation2, ConvertUnits.ToSimUnits(-(2048 / 2) + 752, -(2048 / 2) + 1289), _player, 1.5f, 1.5f, false));
+            _spawners.Add(new Spawner(_spawnerAnimation2, ConvertUnits.ToSimUnits(-(2048 / 2) + 752, -(2048 / 2) + 1289), _player, 1.5f, 1.5f, false));
 
             SpawnerAnimation _spawnerAnimation3 = new SpawnerAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Spawner\\portal"), new StreamReader(@"Content/Sprites/Spawner/portal.txt"));
             _spawnerAnimation3.AnimationName = "portal_d_spawning";
-            _spawner.Add(new Spawner(_spawnerAnimation3, ConvertUnits.ToSimUnits(-(2048 / 2) + 1032, -(2048 / 2) + 1032), _player, 1.5f, 1.5f, false));
+            _spawners.Add(new Spawner(_spawnerAnimation3, ConvertUnits.ToSimUnits(-(2048 / 2) + 1032, -(2048 / 2) + 1032), _player, 1.5f, 1.5f, false));
 
             SpawnerAnimation _spawnerAnimation4 = new SpawnerAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Spawner\\portal"), new StreamReader(@"Content/Sprites/Spawner/portal.txt"));
             _spawnerAnimation4.AnimationName = "portal_d_spawning";
-            _spawner.Add(new Spawner(_spawnerAnimation4, ConvertUnits.ToSimUnits(-(2048 / 2) + 749, -(2048 / 2) + 791), _player, 1.5f, 1.5f, false));
+            _spawners.Add(new Spawner(_spawnerAnimation4, ConvertUnits.ToSimUnits(-(2048 / 2) + 749, -(2048 / 2) + 791), _player, 1.5f, 1.5f, false));
 
             SpawnerAnimation _spawnerAnimation5 = new SpawnerAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Spawner\\portal"), new StreamReader(@"Content/Sprites/Spawner/portal.txt"));
             _spawnerAnimation5.AnimationName = "portal_d_spawning";
-            _spawner.Add(new Spawner(_spawnerAnimation5, ConvertUnits.ToSimUnits(-(2048 / 2) + 1034, -(2048 / 2) + 507), _player, 1.5f, 1.5f, false));
+            _spawners.Add(new Spawner(_spawnerAnimation5, ConvertUnits.ToSimUnits(-(2048 / 2) + 1034, -(2048 / 2) + 507), _player, 1.5f, 1.5f, false));
         }
 
         private void GeneratePotions()
@@ -292,11 +327,21 @@ namespace WizardsNeverDie.Level
                     initialTime = timer.Elapsed;
                 }
             }
-
             if (!isGameOver)
             {
                 _player.Update(gameTime);
                 _health.Update(gameTime);
+            }
+            for (int i = 0; i < _triggers.Count; i++)
+            {
+                if (_triggers[i].IsDead == true)
+                {
+                    for (int j = 0; j < _triggers[i].ActionList.Count; j++)
+                    {
+                        if(_triggers[i].ActionList[j].IsDead==false)
+                            _triggers[i].ActionList[j].Update(gameTime);
+                    }
+                }
             }
             if (_player.Health == HealthAnimation.HealthState.Health0 && isGameOver == false)
             {
@@ -355,9 +400,13 @@ namespace WizardsNeverDie.Level
                     _explosions[i].Update(gameTime);
                 }
             }
-            for (int i = 0; i < _spawner.Count; i++)
+            if (_mbs != null)
             {
-                SpawnerAnimation spawnerAnimation = (SpawnerAnimation)_spawner[i].SpriteManager;
+                _mbs.TextPosition = new Vector2(ScreenManager.Game.Window.ClientBounds.Width / 2, ScreenManager.Game.Window.ClientBounds.Height - 200);
+            }
+            for (int i = 0; i < _spawners.Count; i++)
+            {
+                SpawnerAnimation spawnerAnimation = (SpawnerAnimation)_spawners[i].SpriteManager;
                 if (spawnerAnimation.CheckIfrit == true)
                 {
                     Orientation orientation;
@@ -392,6 +441,13 @@ namespace WizardsNeverDie.Level
                 MeleeRedIfritAnimation _creatureAnimation = new MeleeRedIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
                 _creatureAnimation.AnimationName = "ifrit_d_walk";
                 _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, ifritPosition, 1.5f, 1.5f, 15F));
+            }
+            if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Y) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y))
+            {
+                _mbs = new MessageBoxScreen("TESTTESTTEST");
+                _mbs.ScreenManager = this.ScreenManager;
+                SpriteFont font = ScreenManager.Fonts.DetailsFont;
+                _mbs.TextSize = font.MeasureString("TESTTESTTEST");
             }
 
 
@@ -481,26 +537,34 @@ namespace WizardsNeverDie.Level
                 else
                     _purplePlasma[i].Update(gameTime);
             }
-            for (int i = 0; i < _spawner.Count; i++)
             {
-                if (_spawner[i].IsDead)
+                if (_spawners[i].IsDead)
                 {
                     metalSlugExplosionSprite.ExplodeOnSpawner = true;
                     metalSlugExplosionSprite.AnimationName = "metalslug_d_explosion";
                     _explosions.Add(new Explosion(metalSlugExplosionSprite, _spawner[i].Position + new Vector2(-2, -5), .01f, .01f));
                     _explosions[_explosions.Count - 1].SpriteManager.Animations[metalSlugExplosionSprite.AnimationName].Scale = 2f;
                     _explosions[_explosions.Count - 1].Update(gameTime);
-                    Farseer.Instance.World.RemoveBody(_spawner[i].getBody().Bodies[0]);
-                    _spawner.Remove(_spawner[i]);
+                    Farseer.Instance.World.RemoveBody(_spawners[i].getBody().Bodies[0]);
+                    _spawners.Remove(_spawners[i]);
                 }
                 else
                 {
-                    _spawner[i].Update(gameTime);
+                    _spawners[i].Update(gameTime);
                 }
             }
+            
             for (int i = 0; i < _triggers.Count; i++)
             {
-                if (_triggers[i].IsDead)
+                bool removeTrigger = true;
+                for (int j = 0; j < _triggers[i].ActionList.Count; j++)
+                {
+                    if (_triggers[i].ActionList[j].IsDead == false) 
+                    {
+                        removeTrigger = false;
+                    }
+                }
+                if (removeTrigger)
                 {
                     Farseer.Instance.World.RemoveBody(_triggers[i].Bodies[0]);
                     _triggers.Remove(_triggers[i]);
@@ -535,8 +599,7 @@ namespace WizardsNeverDie.Level
             {
                 s.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
-
-            foreach (Spawner s in _spawner)
+            foreach (Spawner s in _spawners)
             {
                 s.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
@@ -575,7 +638,20 @@ namespace WizardsNeverDie.Level
             //    ScreenManager.SpriteBatch.Draw(_gameover, _gameOverVector, Color.White);
             //}
 
+            
             //ScreenManager.SpriteBatch.Draw(_gameover, new Rectangle((int)_player.Position.X, (int)_player.Position.X, 400, 266), Color.White);
+            ScreenManager.SpriteBatch.End();
+            ScreenManager.SpriteBatch.Begin();
+            for (int i = 0; i < _triggers.Count; i++)
+            {
+                if (_triggers[i].IsDead == true)
+                {
+                    for (int j = 0; j < _triggers[i].ActionList.Count; j++)
+                    {
+                        _triggers[i].ActionList[j].Draw();
+                    }
+                }
+            }
             ScreenManager.SpriteBatch.End();
             base.Draw(gameTime);
         }

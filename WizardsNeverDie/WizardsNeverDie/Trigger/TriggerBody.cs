@@ -13,6 +13,9 @@ using FarseerPhysics.Collision;
 using WizardsNeverDie.Entities;
 using WizardsNeverDie.Level;
 using WizardsNeverDie.Physics;
+using WizardsNeverDie.ScreenSystem;
+using WizardsNeverDie.Trigger;
+using WizardsNeverDie.Dialog;
 
 namespace WizardsNeverDie.Physics
 {
@@ -20,15 +23,16 @@ namespace WizardsNeverDie.Physics
     {
         private Vector2 _position;
         private float _size;
-        private List<Spawner> _spawners;
         private bool _isDead = false;
+        private List<IAction> _actions;
 
-        public TriggerBody(float width, float height, Vector2 position, float size, List<Spawner> spawners)
+        public TriggerBody(float width, float height, Vector2 position, float size, List<IAction>actions)
             : base()
         {
             this._position = position;
             this._size = size;
-            this._spawners = spawners;
+            this._actions = actions;
+
 
             World world = Farseer.Instance.World;
             Body body = BodyFactory.CreateRectangle(world, width, height, 1f, position);
@@ -56,13 +60,34 @@ namespace WizardsNeverDie.Physics
                 _isDead = value;
             }
         }
+        
+        public List<IAction> ActionList
+        {
+            get
+            {
+                return _actions;
+            }
+            set
+            {
+                _actions = value;
+            }
+        }
         bool onCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
         { 
-            foreach (Spawner s in _spawners)
-            {
-                s.IsActivated = true;
-            }
             _isDead = true;
+            for (int i = 0; i < _actions.Count; i++)
+            {
+                if (_actions[i] is MessageAction)
+                {
+                    MessageAction test = (MessageAction)_actions[i];
+                    Conversation.ClearConversation();
+                    Conversation.Avatars.Clear();
+                    Conversation.Avatars.Add(test.Avatar);
+                    Conversation.Avatars.Add(test.Avatar);
+                    Conversation.StartConversation(test.Str1, test.Str2);
+                }
+                this.Bodies[0].CollidesWith = Category.None;
+            }
             return false;
         }
 

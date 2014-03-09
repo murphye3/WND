@@ -12,6 +12,8 @@ using System.Diagnostics;
 using System;
 using System.Threading;
 using FarseerPhysics.Factories;
+using WizardsNeverDie.Dialog;
+using Microsoft.Xna.Framework.Audio;
 
 namespace WizardsNeverDie.Level
 {
@@ -49,6 +51,7 @@ namespace WizardsNeverDie.Level
             levelDetails = "Level 0";
             levelName = "Start Game: 0";
             this.backgroundTextureStr = "Materials/Level1_0";
+            
         }
 
         public override void LoadContent()
