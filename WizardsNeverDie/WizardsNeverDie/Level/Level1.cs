@@ -415,15 +415,15 @@ namespace WizardsNeverDie.Level
                     orientation = spawnerAnimation.GetOrientation();
                     if (orientation == Orientation.Down)
                     {
-                        _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawner[i].Position + new Vector2(0, 3), 1.5f, 1.5f, 15F));
+                        _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawners[i].Position + new Vector2(0, 3), 1.5f, 1.5f, 15F));
                     }
                     else if (orientation == Orientation.DownRight)
                     {
-                        _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawner[i].Position + new Vector2(-3, 0), 1.5f, 1.5f, 15F));
+                        _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawners[i].Position + new Vector2(-3, 0), 1.5f, 1.5f, 15F));
                     }
                     else if (orientation == Orientation.DownLeft)
                     {
-                        _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawner[i].Position + new Vector2(3, 0), 1.5f, 1.5f, 15F));
+                        _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawners[i].Position + new Vector2(3, 0), 1.5f, 1.5f, 15F));
                     }
 
 
@@ -537,12 +537,13 @@ namespace WizardsNeverDie.Level
                 else
                     _purplePlasma[i].Update(gameTime);
             }
+            for (int i = 0; i < _spawners.Count; i++ )
             {
                 if (_spawners[i].IsDead)
                 {
                     metalSlugExplosionSprite.ExplodeOnSpawner = true;
                     metalSlugExplosionSprite.AnimationName = "metalslug_d_explosion";
-                    _explosions.Add(new Explosion(metalSlugExplosionSprite, _spawner[i].Position + new Vector2(-2, -5), .01f, .01f));
+                    _explosions.Add(new Explosion(metalSlugExplosionSprite, _spawners[i].Position + new Vector2(-2, -5), .01f, .01f));
                     _explosions[_explosions.Count - 1].SpriteManager.Animations[metalSlugExplosionSprite.AnimationName].Scale = 2f;
                     _explosions[_explosions.Count - 1].Update(gameTime);
                     Farseer.Instance.World.RemoveBody(_spawners[i].getBody().Bodies[0]);
