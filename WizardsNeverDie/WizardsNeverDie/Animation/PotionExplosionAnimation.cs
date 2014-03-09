@@ -53,7 +53,7 @@ namespace WizardsNeverDie.Animation
                 _frameIndex++;
                 if (_frameIndex == 7)
                 {
-                    if(i < 50)
+                    if(i < 20)
                     {
                         _frameIndex-=3;
                     }

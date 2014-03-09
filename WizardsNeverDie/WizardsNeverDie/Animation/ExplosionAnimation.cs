@@ -66,7 +66,7 @@ namespace WizardsNeverDie.Animation
                 {
                     if (this.ExplodeOnSpawner)
                     {
-                        this.TimeToUpdate = 7f;
+                        this.TimeToUpdate = 12f;
                     }
                     timeElapsed -= TimeToUpdate;
                     _frameIndex %= Animations[AnimationName].NumOfFrames;

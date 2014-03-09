@@ -18,13 +18,13 @@ namespace WizardsNeverDie.Intelligence
         protected Orientation lastOrientation;
         protected TimeSpan swapTimer;
         protected TimeSpan swapCooldown = TimeSpan.FromSeconds(.03d);
-        public Player player;
+        public Wizard player;
         float speed;
         KeyboardState keyboardState, lastKeyBoardState;
         GamePadState gamepadState, lastGamepadState;
         public PlayerIntelligence(AbstractCreature player, float speed)
         {
-            this.player = (Player)player;
+            this.player = (Wizard)player;
             this.speed = speed;
             lastOrientation = Orientation.None;
         }

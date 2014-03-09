@@ -17,17 +17,16 @@ using System.IO;
 
 namespace WizardsNeverDie.Entities
 {
-    public class Plasma : AbstractEntity
+    public class RangedPurplePlasma : AbstractEntity
     {
         private bool _isDead = false;
         private bool _isDeadOnEnemy = false;
-        public Plasma(SpriteAnimation animation, Vector2 position, Vector2 force)
+        public RangedPurplePlasma(SpriteAnimation animation, Vector2 position, Vector2 force)
         {
             this.spriteManager = animation;
             animation.Position = position;
             animation.SetAnimationState(AnimationState.Attack);
             this.body = new PlasmaBody(this, position, force, .5f);
-            
         }
         public void Update(GameTime gameTime)
         {
@@ -37,15 +36,34 @@ namespace WizardsNeverDie.Entities
 
         public override bool WillCollide(AbstractEntity collidedWith)
         {
-            if (collidedWith is Enemy)
+            if (collidedWith is MeleeRedIfrit)
             {
-                Enemy enemy = (Enemy)collidedWith;
-                enemy.IsDead = true;
-                this.IsDeadOnEnemy = true;
+                MeleeRedIfrit enemy = (MeleeRedIfrit)collidedWith;
+                enemy.IsDead = false;
+                this.IsDeadOnEnemy = false;
                 return false;
             }
-            if (collidedWith is Player)
+            if (collidedWith is RangedPurpleIfrit)
             {
+                RangedPurpleIfrit enemy = (RangedPurpleIfrit)collidedWith;
+                enemy.IsDead = false;
+                this.IsDeadOnEnemy = false;
+                return false;
+            }
+            if (collidedWith is Wizard)
+            {
+                Wizard player = (Wizard)collidedWith;
+
+                if (player.Health == HealthAnimation.HealthState.Health100)
+                    player.Health = HealthAnimation.HealthState.Health75;
+                else if (player.Health == HealthAnimation.HealthState.Health75)
+                    player.Health = HealthAnimation.HealthState.Health50;
+                else if (player.Health == HealthAnimation.HealthState.Health50)
+                    player.Health = HealthAnimation.HealthState.Health25;
+                else if (player.Health == HealthAnimation.HealthState.Health25)
+                    player.Health = HealthAnimation.HealthState.Health0;
+                
+                this._isDeadOnEnemy = true;
                 return false;
             }
             if (collidedWith is Brick)
@@ -54,10 +72,18 @@ namespace WizardsNeverDie.Entities
             }
             if (collidedWith is Spawner)
             {
-                this._isDead = true;
+                this._isDead = false;
             }
-            if (collidedWith is Plasma)
+            if (collidedWith is WizardPlasma)
             {
+                this._isDead = true;
+                
+                return false;
+            }
+            if (collidedWith is RangedPurplePlasma)
+            {
+                this._isDead = false;
+
                 return false;
             }
             this._isDead = true;

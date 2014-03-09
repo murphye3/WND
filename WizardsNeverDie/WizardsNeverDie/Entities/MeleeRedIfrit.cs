@@ -19,15 +19,14 @@ using FarseerPhysics.Dynamics.Contacts;
 
 namespace WizardsNeverDie.Entities
 {
-    class Enemy: AbstractCreature
+    class MeleeRedIfrit: AbstractCreature
     {
         private bool _isDead = false;
         
-        public Enemy(EnemyAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height, float targetDistance)
+        public MeleeRedIfrit(MeleeRedIfritAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height, float targetDistance)
         {
             this.spriteManager = spriteManager;
             this.body = new BasicBody(this, position, 1f);
-
             this.intelligence = new CreatureIntelligence(this, target, .05f, targetDistance);
         }
         public void Update(GameTime gameTime)
@@ -50,10 +49,10 @@ namespace WizardsNeverDie.Entities
         public override bool WillCollide(AbstractEntity collidedWith)
         {
             
-            EnemyAnimation animation = (EnemyAnimation)this.SpriteManager;
-            if (collidedWith is Player && animation.GetAnimationState() != AnimationState.Death)
+            MeleeRedIfritAnimation animation = (MeleeRedIfritAnimation)this.SpriteManager;
+            if (collidedWith is Wizard && animation.GetAnimationState() != AnimationState.Death)
             {
-                Player player = (Player)collidedWith;
+                Wizard player = (Wizard)collidedWith;
                 animation.SetAnimationState(AnimationState.Attack);
                 //if (animation.PreviousAnimationState = AnimationState.Walk && animation.GetAnimationState() == AnimationState.Walk)
                 //{
@@ -67,13 +66,13 @@ namespace WizardsNeverDie.Entities
                         player.Health = HealthAnimation.HealthState.Health0;
                 //}
             }
-            if(collidedWith is Plasma)
+            if(collidedWith is WizardPlasma)
             {
-                Plasma plasma = (Plasma)collidedWith;
+                WizardPlasma plasma = (WizardPlasma)collidedWith;
                 animation.SetAnimationState(AnimationState.Death);
                 return false;
             }
-            if (collidedWith is Enemy)
+            if (collidedWith is MeleeRedIfrit)
             {
                 return true;
             }

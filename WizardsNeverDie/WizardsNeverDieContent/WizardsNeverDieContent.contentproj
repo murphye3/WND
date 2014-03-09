@@ -99,6 +99,15 @@
       <Name>explosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Sprites\Explosion\metalslugexplosion.png">
+      <Name>metalslugexplosion</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\Explosion\metalslugexplosion.txt">
+      <Name>metalslugexplosion</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Health\health.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>health</Name>
@@ -152,6 +161,15 @@
     </Content>
     <Content Include="Sprites\Potions\potions.txt">
       <Name>potions</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="Sprites\PurpleIfrit\ifrit.png">
+      <Name>ifrit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\PurpleIfrit\ifrit.txt">
+      <Name>ifrit</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\Spawner\portal.txt">

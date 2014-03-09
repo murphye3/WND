@@ -22,7 +22,8 @@ namespace WizardsNeverDie.Animation
         Explosion,
         Spawning,
         NotSpawning,
-        PotionExplosion
+        PotionExplosion,
+        PurpleSpell
     }
 
     [Flags]
@@ -209,6 +210,9 @@ namespace WizardsNeverDie.Animation
                     break;
                 case AnimationState.PotionExplosion:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "potionexplosion";
+                    break;
+                case AnimationState.PurpleSpell:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "purplespell";
                     break;
             }
         }

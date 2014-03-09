@@ -34,7 +34,7 @@ namespace WizardsNeverDie.Entities
 
         public override bool WillCollide(AbstractEntity collidedWith)
         {
-            if (collidedWith is Player)
+            if (collidedWith is Wizard)
             {
                 this.IsCollected = true;
             }

@@ -17,10 +17,10 @@ using System.IO;
 
 namespace WizardsNeverDie.Entities
 {
-    public class Player : AbstractCreature
+    public class Wizard : AbstractCreature
     {
         private HealthAnimation.HealthState _healthState;
-        public Player(SpriteAnimation animation, Vector2 position)
+        public Wizard(SpriteAnimation animation, Vector2 position)
         {
             this.spriteManager = animation;
             this.body = new BasicBody(this, position, 1f);

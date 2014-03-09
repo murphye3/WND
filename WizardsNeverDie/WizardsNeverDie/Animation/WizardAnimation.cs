@@ -16,13 +16,13 @@ namespace WizardsNeverDie.Animation
         public WizardAnimation(Texture2D Texture, int frames, int animations)
             : base(Texture, frames, animations)
         {
-            this.TimeToUpdate = 6F;
+            this.TimeToUpdate = 7F;
         }
 
         public WizardAnimation(Texture2D texture, StreamReader sr)
             : base(texture, sr)
         {
-            this.TimeToUpdate = 6F;
+            this.TimeToUpdate = 7F;
         }
 
         //update current frame 

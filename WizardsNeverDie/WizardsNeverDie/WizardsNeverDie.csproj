@@ -81,12 +81,13 @@
   <ItemGroup>
     <Compile Include="Animation\AnimationClass.cs" />
     <Compile Include="Animation\BasicSprite.cs" />
-    <Compile Include="Animation\EnemyAnimation.cs" />
+    <Compile Include="Animation\MeleeRedIfritAnimation.cs" />
     <Compile Include="Animation\ExplosionAnimation.cs" />
     <Compile Include="Animation\FrameAnimation.cs" />
     <Compile Include="Animation\HealthAnimation.cs" />
-    <Compile Include="Animation\PlasmaAnimation.cs" />
+    <Compile Include="Animation\WizardPlasmaAnimation.cs" />
     <Compile Include="Animation\PotionExplosionAnimation.cs" />
+    <Compile Include="Animation\RangedPurpleIfritAnimation.cs" />
     <Compile Include="Animation\SpawnerAnimation.cs" />
     <Compile Include="Animation\SpriteAnimation.cs" />
     <Compile Include="Animation\SpriteManager.cs" />
@@ -95,14 +96,16 @@
     <Compile Include="Entities\AbstractCreature.cs" />
     <Compile Include="Entities\AbstractEntity.cs" />
     <Compile Include="Entities\AbstractSprite.cs" />
-    <Compile Include="Entities\Enemy.cs" />
+    <Compile Include="Entities\MeleeRedIfrit.cs" />
     <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\Health.cs" />
-    <Compile Include="Entities\Plasma.cs" />
-    <Compile Include="Entities\Player.cs" />
+    <Compile Include="Entities\WizardPlasma.cs" />
+    <Compile Include="Entities\Wizard.cs" />
     <Compile Include="Entities\Brick.cs" />
     <Compile Include="Entities\PotionExplosion.cs" />
     <Compile Include="Entities\Potions.cs" />
+    <Compile Include="Entities\RangedPurpleIfrit.cs" />
+    <Compile Include="Entities\RangedPurplePlasma.cs" />
     <Compile Include="Entities\Spawner.cs" />
     <Compile Include="Farseer\BasicBody.cs" />
     <Compile Include="Farseer\PhysicsBody.cs" />
@@ -114,6 +117,7 @@
     <Compile Include="Intelligence\CreatureIntelligence.cs" />
     <Compile Include="Intelligence\PlayerIntelligence.cs" />
     <Compile Include="Intelligence\PotionExplosionIntelligence.cs" />
+    <Compile Include="Intelligence\PurpleCreatureIntelligence.cs" />
     <Compile Include="Intelligence\SpawnerIntelligence.cs" />
     <Compile Include="IntroScreen.cs" />
     <Compile Include="Level\BaseLevel.cs" />

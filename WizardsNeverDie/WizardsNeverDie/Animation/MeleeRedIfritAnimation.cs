@@ -9,21 +9,21 @@ using WizardsNeverDie.Entities;
 
 namespace WizardsNeverDie.Animation
 {
-    public class EnemyAnimation : SpriteAnimation
+    public class MeleeRedIfritAnimation : SpriteAnimation
     {
         private AnimationState _previousAnimation;
-        public EnemyAnimation()
+        public MeleeRedIfritAnimation()
         {
 
         }
 
-        public EnemyAnimation(Texture2D Texture, int frames, int animations)
+        public MeleeRedIfritAnimation(Texture2D Texture, int frames, int animations)
             : base(Texture, frames, animations)
         {
-            this.TimeToUpdate = 6F;
+            this.TimeToUpdate = 10F;
         }
 
-        public EnemyAnimation(Texture2D texture, StreamReader sr)
+        public MeleeRedIfritAnimation(Texture2D texture, StreamReader sr)
             : base(texture, sr)
         {
             this.TimeToUpdate = 6F;
@@ -53,7 +53,7 @@ namespace WizardsNeverDie.Animation
                 explosion.SetAnimationState(AnimationState.Explosion);
             }
         }
-        private void Attack(GameTime gameTime)
+        public void Attack(GameTime gameTime)
         {
             if (timeElapsed > TimeToUpdate)
             {
@@ -81,7 +81,7 @@ namespace WizardsNeverDie.Animation
             }
         }
 
-        private void Death(GameTime gameTime)
+        public void Death(GameTime gameTime)
         {
             
             if (timeElapsed > TimeToUpdate)
@@ -116,7 +116,7 @@ namespace WizardsNeverDie.Animation
             }
         }
 
-        private void Stop(GameTime gameTime)
+        public void Stop(GameTime gameTime)
         {
             _frameIndex = 1;
         }

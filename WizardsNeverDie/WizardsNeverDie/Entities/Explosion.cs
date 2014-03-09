@@ -21,14 +21,11 @@ namespace WizardsNeverDie.Entities
     {
         public Explosion(SpriteAnimation animation, Vector2 position, float width, float height)
         {
-            
             this.spriteManager = animation;
             animation.Position = position;
-            
         }
         public void Update(GameTime gameTime)
-        {
-            
+        {   
             spriteManager.Update(gameTime);
         }
 

@@ -19,9 +19,9 @@ namespace WizardsNeverDie.Entities
 {
     public class Health : AbstractSprite
     {
-        private Player _player;
+        private Wizard _player;
 
-        public Health(HealthAnimation animation, Player player, Vector2 position)
+        public Health(HealthAnimation animation, Wizard player, Vector2 position)
         {
             this.spriteManager = animation;
             animation.Position = position;

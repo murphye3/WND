@@ -60,7 +60,7 @@ namespace WizardsNeverDie.Entities
         }
         public override bool WillCollide(AbstractEntity collidedWith)
         {
-            if (collidedWith is Plasma)
+            if (collidedWith is WizardPlasma)
             {
                 this._isDead = true;
             }

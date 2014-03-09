@@ -25,8 +25,8 @@ namespace WizardsNeverDie.Entities
     class PotionExplosion : AbstractCreature
     {
         private Vector2 _position;
-        private Player player;
-        public PotionExplosion(SpriteAnimation animation, Player player, List<Enemy> enemy, Vector2 position)
+        private Wizard player;
+        public PotionExplosion(SpriteAnimation animation, Wizard player, List<MeleeRedIfrit> enemy, Vector2 position)
         {
             _position = position;
             

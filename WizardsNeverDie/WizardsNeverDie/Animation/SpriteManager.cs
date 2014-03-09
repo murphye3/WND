@@ -122,7 +122,7 @@ namespace WizardsNeverDie.Animation
                 strs = line.Split(' ');
 
                 //get the name  <name>_<orientation>_<Action>-<FrameNumber>
-                 name = strs[0].Substring(0, strs[0].LastIndexOf('-'));
+                name = strs[0].Substring(0, strs[0].LastIndexOf('-'));
                 if (currentName == null)
                     currentName = name;
                 else if (name != currentName)    // we got all the frames for the animation
@@ -151,19 +151,21 @@ namespace WizardsNeverDie.Animation
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            if (_frameIndex < _animations[AnimationName].Rectangles.Count())
-            {
-                Rectangle rec = _animations[AnimationName].Rectangles[_frameIndex];
-                Vector2 pos = new Vector2((int)ConvertUnits.ToDisplayUnits(Position.X), (int)ConvertUnits.ToDisplayUnits(Position.Y));
-                pos = new Vector2(pos.X - (rec.Width/2), pos.Y - (rec.Height/2));
 
-                spriteBatch.Draw(_texture, pos,
-                    rec,
-                    _animations[AnimationName].Color,
-                    _animations[AnimationName].Rotation, Origin,
-                    _animations[AnimationName].Scale,
-                    _animations[AnimationName].SpriteEffect, 0f);
-            }
+                if (_frameIndex < _animations[AnimationName].Rectangles.Count())
+                {
+                    Rectangle rec = _animations[AnimationName].Rectangles[_frameIndex];
+                    Vector2 pos = new Vector2((int)ConvertUnits.ToDisplayUnits(Position.X), (int)ConvertUnits.ToDisplayUnits(Position.Y));
+                    pos = new Vector2(pos.X - (rec.Width / 2), pos.Y - (rec.Height / 2));
+
+                    spriteBatch.Draw(_texture, pos,
+                        rec,
+                        _animations[AnimationName].Color,
+                        _animations[AnimationName].Rotation, Origin,
+                        _animations[AnimationName].Scale,
+                        _animations[AnimationName].SpriteEffect, 0f);
+                }
+            
         }
     }
 }

@@ -18,18 +18,18 @@ namespace WizardsNeverDie.Level
     class IfritDemo : BaseLevel
     {
         bool firstTime = true;
-        private Player _player;
+        private Wizard _player;
         private WizardAnimation _wizard;
         private SpawnerAnimation _spawnerSprite;
         private SpawnerAnimation _spawnerSprite2;
         private SpawnerAnimation _spawnerSprite3;
         private SpawnerAnimation _spawnerSprite4;
         private List<Brick> _bricks;
-        private List<Enemy> _creatures = new List<Enemy>();
+        private List<MeleeRedIfrit> _creatures = new List<MeleeRedIfrit>();
         private List<Explosion> _explosions = new List<Explosion>();
         private List<Spawner> _spawner = new List<Spawner>();
         private List<SpriteAnimation> _wallSprites;
-        private List<Plasma> _plasma = new List<Plasma>();
+        private List<WizardPlasma> _plasma = new List<WizardPlasma>();
 
         private HealthAnimation _healthSprite;
         private Health _health;
@@ -65,7 +65,7 @@ namespace WizardsNeverDie.Level
             _spawnerSprite4.AnimationName = "portal_dl_spawning";
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
             _wizard.AnimationName = "wizard_d_walk";
-            _player = new Player(_wizard, new Vector2(0, 0));
+            _player = new Wizard(_wizard, new Vector2(0, 0));
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
@@ -121,10 +121,10 @@ namespace WizardsNeverDie.Level
 
         }
 
-        public void Spell(Player player, int forcePower)
+        public void Spell(Wizard player, int forcePower)
         {
             Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2);
-            PlasmaAnimation plasmaSprite = new PlasmaAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Plasma\\plasma"), new StreamReader(@"Content/Sprites/Plasma/plasma.txt"));
+            WizardPlasmaAnimation plasmaSprite = new WizardPlasmaAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Plasma\\plasma"), new StreamReader(@"Content/Sprites/Plasma/plasma.txt"));
             plasmaSprite.AnimationName = "plasma_d_attack";
             SpriteAnimation animation = (SpriteAnimation)player.SpriteManager;
             Vector2 force = new Vector2();
@@ -168,7 +168,7 @@ namespace WizardsNeverDie.Level
                 force = new Vector2(forcePower, -forcePower);
                 plasmaPosition = new Vector2(_player.Position.X + 1, _player.Position.Y - 1);
             }
-            _plasma.Add(new Plasma(plasmaSprite, plasmaPosition, force));
+            _plasma.Add(new WizardPlasma(plasmaSprite, plasmaPosition, force));
 
 
         }
@@ -203,20 +203,21 @@ namespace WizardsNeverDie.Level
                 if (spawnerAnimation.CheckIfrit == true)
                 {
                     Orientation orientation;
-                    EnemyAnimation _creatureAnimation = new EnemyAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
+                    MeleeRedIfritAnimation _creatureAnimation = new MeleeRedIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
                     _creatureAnimation.AnimationName = "ifrit_d_walk";
                     orientation = spawnerAnimation.GetOrientation();
                     if (orientation == Orientation.Down)
                     {
-                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(0, 3), 1.5f, 1.5f, 15F));
+                        _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawner[i].Position + new Vector2(0, 3), 1.5f, 1.5f, 15F));
                     }
                     else if (orientation == Orientation.DownRight)
                     {
-                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(-3, 0), 1.5f, 1.5f, 15F));
+                        _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawner[i].Position + new Vector2(-3, 0), 1.5f, 1.5f, 15F));
+                        
                     }
                     else if (orientation == Orientation.DownLeft)
                     {
-                        _creatures.Add(new Enemy(_creatureAnimation, _player, _spawner[i].Position + new Vector2(3, 0), 1.5f, 1.5f, 15F));
+                        _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawner[i].Position + new Vector2(3, 0), 1.5f, 1.5f, 15F));
                     }
                     
                     
@@ -240,7 +241,7 @@ namespace WizardsNeverDie.Level
             }
             for (int i = 0; i < _creatures.Count; i++)//(Enemy e in _creatures)
             {
-                EnemyAnimation enemy = (EnemyAnimation)_creatures[i].SpriteManager;
+                MeleeRedIfritAnimation enemy = (MeleeRedIfritAnimation)_creatures[i].SpriteManager;
                 AnimationState s = enemy.GetAnimationState();
                 if (s == AnimationState.Disentegrated && enemy.PreviousAnimationState == AnimationState.Death)
                 {
@@ -274,9 +275,9 @@ namespace WizardsNeverDie.Level
             //if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
             if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.X) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
             {
-                EnemyAnimation _creatureAnimation = new EnemyAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
+                MeleeRedIfritAnimation _creatureAnimation = new MeleeRedIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
                 _creatureAnimation.AnimationName = "ifrit_d_walk";
-                _creatures.Add(new Enemy(_creatureAnimation, _player, ifritPosition, 1.5f, 1.5f, 15F));
+                _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, ifritPosition, 1.5f, 1.5f, 15F));
             }
 
 
@@ -369,11 +370,11 @@ namespace WizardsNeverDie.Level
             {
                 s.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
-            foreach (Enemy e in _creatures)
+            foreach (MeleeRedIfrit e in _creatures)
             {
                 e.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
-            foreach (Plasma p in _plasma)
+            foreach (WizardPlasma p in _plasma)
             {
                 p.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }

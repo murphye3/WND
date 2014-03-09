@@ -14,8 +14,8 @@ namespace WizardsNeverDie.Intelligence
     {
 
         private AbstractCreature player;
-        private List<Enemy> enemy;
-        public PotionExplosionIntelligence(AbstractCreature player, List<Enemy> enemy)
+        private List<MeleeRedIfrit> enemy;
+        public PotionExplosionIntelligence(AbstractCreature player, List<MeleeRedIfrit> enemy)
         {
             this.player = player;
             this.enemy = enemy;
@@ -28,7 +28,7 @@ namespace WizardsNeverDie.Intelligence
             
             for (int i = 0; i < enemy.Count; i++)
             {
-                EnemyAnimation animation = (EnemyAnimation)this.enemy[i].SpriteManager;
+                MeleeRedIfritAnimation animation = (MeleeRedIfritAnimation)this.enemy[i].SpriteManager;
                 float targetDistance = (float)Math.Sqrt(Math.Pow((player.Position.X - enemy[i].Position.X), 2) + Math.Pow((player.Position.Y - enemy[i].Position.Y), 2));
                     if (targetDistance < 4 && !enemy[i].IsDead)
                     {

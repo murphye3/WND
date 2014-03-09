@@ -8,16 +8,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace WizardsNeverDie.Animation
 {
-    public class PlasmaAnimation : SpriteAnimation
+    public class WizardPlasmaAnimation : SpriteAnimation
     {
         private bool spell1 = false, spell2 = false;
-        public PlasmaAnimation(Texture2D Texture, int frames, int animations)
+        public WizardPlasmaAnimation(Texture2D Texture, int frames, int animations)
             : base(Texture, frames, animations)
         {
             this.TimeToUpdate = 5F;
         }
 
-        public PlasmaAnimation(Texture2D texture, StreamReader sr)
+        public WizardPlasmaAnimation(Texture2D texture, StreamReader sr)
             : base(texture, sr)
         {
             this.TimeToUpdate = 5F;
