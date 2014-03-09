@@ -65,5 +65,6 @@ namespace WizardsNeverDie.Physics
             _isDead = true;
             return false;
         }
+
     }
 }
