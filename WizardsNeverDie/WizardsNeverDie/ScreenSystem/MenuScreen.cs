@@ -161,8 +161,8 @@ namespace WizardsNeverDie.ScreenSystem
                     ScreenManager.AddScreen(_menuEntries[_selectedEntry].Screen);
                     if (_menuEntries[_selectedEntry].Screen is IDemoScreen)
                     {
-                        ScreenManager.AddScreen(
-                            new MessageBoxScreen((_menuEntries[_selectedEntry].Screen as IDemoScreen).GetDetails()));
+                        //ScreenManager.AddScreen(
+                            //new MessageBoxScreen((_menuEntries[_selectedEntry].Screen as IDemoScreen).GetDetails()));
                     }
                 }
             }
