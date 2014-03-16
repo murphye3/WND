@@ -125,6 +125,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Materials\Level1_1.png">
+      <Name>Level1_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="Sprites\Explosion\explosion.txt">
       <Name>explosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

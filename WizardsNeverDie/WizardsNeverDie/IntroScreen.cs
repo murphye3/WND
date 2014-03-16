@@ -68,7 +68,7 @@ namespace WizardsNeverDie
             //_textures.Add("CannonBall", Content.Load<Texture2D>("Sprite\\ball")); 
 
             IfritDemo ifritDemo = new IfritDemo();
-            Level1 level1 = new Level1();
+            Level1_0 level1 = new Level1_0();
             MenuScreen menuScreen = new MenuScreen("");
 
             //menuScreen.AddMenuItem("Levels", EntryType.Separator, null);
