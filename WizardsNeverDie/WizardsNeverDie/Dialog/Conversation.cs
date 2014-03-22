@@ -113,24 +113,12 @@ namespace WizardsNeverDie.Dialog
         /// Starts a new Conversation
         /// </summary>
         /// <param name="conversationID">Conversation ID to use</param>
-        public static void StartConversation(string str1, string str2)
+        public static void StartConversation()
         {
             // TODO: Load ID, then run createbox etc
             currentSpeakerIndex = 0;
-            ConversationSpeakers.Add(new Speaker(0, constrainText(str1)));
-            ConversationSpeakers.Add(new Speaker(1, str2));
-            //ConversationSpeakers.Add(new Speaker(0, constrainText("rofl who the hell are these fools voting woot \nas the best demoman?  At what point did smart \nplay and good aim become overlooked in favor of \nrandom mouse flicking and laying stickies ")));
-            //ConversationSpeakers.Add(new Speaker(1,
-            //"everywhere in between constant failed jumps on the enemy medic." +
-            //"  Obviously a better teammate than destro or solid, " +
-            //"who actually attempt to do damage rather than just cleanup garbage frags." +
-
-            //"here is a fun game: download a woot demo or stv of his team and attempt to count the number of shots which are aimed. " +
-            //"Place bets with friends in mumble over how many times he will stickyjump " +
-            //"into the other team to make up for his lack of dming ability. I know it's tempting to spec sureshot " +
-            //"carrying him but take the time to truly observe this demoman and try to decipher what exactly he is " +
-            //"attempting to do for his team at any given time. and if you still think he is good go to steam, " +
-            //"right click tf2, select delete local content and take up a mw2 gaming career."));
+            //ConversationSpeakers.Add(new Speaker(0, constrainText(str1)));
+            //ConversationSpeakers.Add(new Speaker(1, str2));
             CreateBox(ConversationSpeakers[currentSpeakerIndex].Message,
                 new Rectangle(100, 200, 600, 150),
                 new Rectangle(250, 215, 445, 115),
@@ -234,7 +222,7 @@ namespace WizardsNeverDie.Dialog
         {
             // TOOD: File Location
             XmlSerializer serializer = new XmlSerializer(typeof(List<Speaker>));
-            using (TextWriter textWriter = new StreamWriter(ConversationFileLocation + @"conversation.xml"))
+            using (TextWriter textWriter = new StreamWriter(ConversationFileLocation))
             {
                 serializer.Serialize(textWriter, ConversationSpeakers);
             }
@@ -243,13 +231,13 @@ namespace WizardsNeverDie.Dialog
         /// <summary>
         /// Loads a Conversation File
         /// </summary>
-        public static void LoadConversation()
+        public static void LoadConversation(string fileName)
         {
             // TODO: File Location
             try
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(List<Speaker>));
-                using (TextReader textReader = new StreamReader(ConversationFileLocation + @"conversation.xml"))
+                using (TextReader textReader = new StreamReader(ConversationFileLocation + "\\" + fileName))
                 {
                     ConversationSpeakers = (List<Speaker>)deserializer.Deserialize(textReader);
                 }

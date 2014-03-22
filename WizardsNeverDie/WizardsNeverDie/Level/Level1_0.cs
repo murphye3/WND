@@ -121,25 +121,25 @@ namespace WizardsNeverDie.Level
             SwitchLevelAction nextLevel = new SwitchLevelAction(ScreenManager, this, new Level1_1());
             _actions3.Add(nextLevel);
 
-            string str1 = "Oh No, I can't believe <INSERT PLOT HERE>!!!\nI better use my magic powers.";
-            string str2 = "Don't worry I have my staff set to stun.";
-            string str3 = "rofl who the hell are these fools voting woot \nas the best demoman?  At what point did smart \nplay and good aim become overlooked in favor of \nrandom mouse flicking and laying stickies ";
-            string str4 = "everywhere in between constant failed jumps on the enemy medic." +
-            "  Obviously a better teammate than destro or solid, " +
-            "who actually attempt to do damage rather than just cleanup garbage frags." +
+            //string str1 = "Oh No, I can't believe <INSERT PLOT HERE>!!!\nI better use my magic powers.";
+            //string str2 = "Don't worry I have my staff set to stun.";
+            //string str3 = "rofl who the hell are these fools voting woot \nas the best demoman?  At what point did smart \nplay and good aim become overlooked in favor of \nrandom mouse flicking and laying stickies ";
+            //string str4 = "everywhere in between constant failed jumps on the enemy medic." +
+            //"  Obviously a better teammate than destro or solid, " +
+            //"who actually attempt to do damage rather than just cleanup garbage frags." +
 
-            "here is a fun game: download a woot demo or stv of his team and attempt to count the number of shots which are aimed. " +
-            "Place bets with friends in mumble over how many times he will stickyjump " +
-            "into the other team to make up for his lack of dming ability. I know it's tempting to spec sureshot " +
-            "carrying him but take the time to truly observe this demoman and try to decipher what exactly he is " +
-            "attempting to do for his team at any given time. and if you still think he is good go to steam, " +
-            "right click tf2, select delete local content and take up a mw2 gaming career.";
+            //"here is a fun game: download a woot demo or stv of his team and attempt to count the number of shots which are aimed. " +
+            //"Place bets with friends in mumble over how many times he will stickyjump " +
+            //"into the other team to make up for his lack of dming ability. I know it's tempting to spec sureshot " +
+            //"carrying him but take the time to truly observe this demoman and try to decipher what exactly he is " +
+            //"attempting to do for his team at any given time. and if you still think he is good go to steam, " +
+            //"right click tf2, select delete local content and take up a mw2 gaming career.";
 
             //I got it set to stun
-            MessageAction wAction = new MessageAction(ScreenManager, str1, str2, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"));
+            MessageAction wAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"), "conversation1.xml");
 
             //Best Demoman NA and Enable Spawners
-            MessageAction mAction = new MessageAction(ScreenManager, str3, str4, ScreenManager.Content.Load<Texture2D>(@"Avatar\IfritAvatar"));
+            MessageAction mAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\IfritAvatar"), "conversation2.xml");
             SpawnerAction sAction = new SpawnerAction(_spawners);
 
 
