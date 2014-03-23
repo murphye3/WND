@@ -125,6 +125,23 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Materials\Level1_1.png">
+      <Name>Level1_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <None Include="Conversations\conversation1.xml">
+      <Name>conversation1</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Conversations\conversation2.xml">
+      <Name>conversation2</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Sprites\Explosion\explosion.txt">
       <Name>explosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -147,6 +164,15 @@
       <Name>metalslugexplosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Sprites\Gotfraggon\gotfraggon.png">
+      <Name>gotfraggon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <None Include="Sprites\Gotfraggon\gotfraggon.txt">
+      <Name>gotfraggon</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Sprites\Health\health.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>health</Name>
@@ -255,9 +281,7 @@
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Conversations\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

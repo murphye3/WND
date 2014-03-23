@@ -15,12 +15,14 @@ namespace WizardsNeverDie.Trigger
         private bool _isDead = false;
         private ScreenManager _screenManager;
         private bool _firstTime = true;
-        private string _str1, _str2;
+        private string _fileName;
+
         private Texture2D _avatar;
 
-        public MessageAction(ScreenManager screenManager, string str1, string str2, Texture2D avatar)
+        public MessageAction(ScreenManager screenManager, Texture2D avatar, string fileName)
         {
             _screenManager = screenManager;
+            _fileName = fileName;
             Conversation.Initialize(_screenManager.Content.Load<SpriteFont>(@"Fonts\Segoe"),
                 _screenManager.Content.Load<SoundEffect>(@"SoundEffects\ContinueDialogue"),
                 _screenManager.Content.Load<Texture2D>(@"Common\DialogueBoxBackground"),
@@ -31,8 +33,17 @@ namespace WizardsNeverDie.Trigger
                 _screenManager.Content.Load<Texture2D>(@"Common\ConversationContinueIcon"),
                 _screenManager.Content.RootDirectory + @"\Conversations\");
             _avatar = avatar;
-            _str1 = str1;
-            _str2 = str2;
+        }
+        public string FileName
+        {
+            get
+            {
+                return _fileName;
+            }
+            set
+            {
+                _fileName = value;
+            }
         }
         public Texture2D Avatar
         {
@@ -43,20 +54,6 @@ namespace WizardsNeverDie.Trigger
             set
             {
                 _avatar = value;
-            }
-        }
-        public string Str1
-        {
-            get
-            {
-                return _str1;
-            }
-        }
-        public string Str2
-        {
-            get
-            {
-                return _str2;
             }
         }
         public void Draw()

@@ -72,6 +72,11 @@ namespace WizardsNeverDie.Entities
                 this._isDead = true;
                 return false;
             }
+            if (collidedWith is Gotfraggon)
+            {
+                this._isDead = true;
+                return false;
+            }
             this._isDead = true;
             return true;
         }

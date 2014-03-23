@@ -80,11 +80,11 @@ namespace WizardsNeverDie.Physics
                 if (_actions[i] is MessageAction)
                 {
                     MessageAction test = (MessageAction)_actions[i];
-                    Conversation.ClearConversation();
                     Conversation.Avatars.Clear();
                     Conversation.Avatars.Add(test.Avatar);
                     Conversation.Avatars.Add(test.Avatar);
-                    Conversation.StartConversation(test.Str1, test.Str2);
+                    Conversation.LoadConversation(test.FileName);
+                    Conversation.StartConversation();
                 }
                 this.Bodies[0].CollidesWith = Category.None;
             }

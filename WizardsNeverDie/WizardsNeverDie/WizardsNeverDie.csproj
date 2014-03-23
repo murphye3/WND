@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Animation\AnimationClass.cs" />
     <Compile Include="Animation\BasicSprite.cs" />
+    <Compile Include="Animation\GotfraggonAnimation.cs" />
     <Compile Include="Animation\MeleeRedIfritAnimation.cs" />
     <Compile Include="Animation\ExplosionAnimation.cs" />
     <Compile Include="Animation\FrameAnimation.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Entities\AbstractCreature.cs" />
     <Compile Include="Entities\AbstractEntity.cs" />
     <Compile Include="Entities\AbstractSprite.cs" />
+    <Compile Include="Entities\Gotfraggon.cs" />
     <Compile Include="Entities\MeleeRedIfrit.cs" />
     <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\Health.cs" />
@@ -113,10 +115,14 @@
     <Compile Include="Farseer\PhysicsBody.cs" />
     <Compile Include="Farseer\PlasmaBody.cs" />
     <Compile Include="Farseer\StaticBody.cs" />
+    <Compile Include="Intelligence\GotfraggonIntelligence.cs" />
+    <Compile Include="Level\Level1_1.cs" />
+    <Compile Include="Level\TestLevel.cs" />
     <Compile Include="Trigger\IAction.cs" />
     <Compile Include="Trigger\MessageAction.cs" />
     <Compile Include="Trigger\SpawnerAction.cs" />
-    <Compile Include="Trigger\SpawnIfritAction.cs" />
+    <Compile Include="Trigger\SwitchLevelAction.cs" />
+	<Compile Include="Trigger\SpawnIfritAction.cs" />
     <Compile Include="Trigger\TriggerBody.cs" />
     <Compile Include="Farseer\World.cs" />
     <Compile Include="Intelligence\AbstractIntelligence.cs" />
@@ -128,7 +134,7 @@
     <Compile Include="IntroScreen.cs" />
     <Compile Include="Level\BaseLevel.cs" />
     <Compile Include="Level\IfritDemo.cs" />
-    <Compile Include="Level\Level1.cs" />
+    <Compile Include="Level\Level1_0.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ScreenSystem\BackgroundScreen.cs" />

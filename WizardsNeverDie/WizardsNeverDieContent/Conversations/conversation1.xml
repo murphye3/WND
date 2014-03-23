@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSpeaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Speaker>
+    <AvatarIndex>0</AvatarIndex>
+    <Message>Oh No, I can't believe &lt;INSERT PLOT HERE&gt;!!!
+I better use my magic powers. </Message>
+  </Speaker>
+  <Speaker>
+    <AvatarIndex>1</AvatarIndex>
+    <Message>Don't worry I have my staff set to stun.</Message>
+  </Speaker>
+</ArrayOfSpeaker>

@@ -24,13 +24,14 @@ namespace WizardsNeverDie.Entities
         public RangedPurplePlasma(SpriteAnimation animation, Vector2 position, Vector2 force)
         {
             this.spriteManager = animation;
+            spriteManager.Animations[animation.AnimationName].Scale = 3f;
             animation.Position = position;
             animation.SetAnimationState(AnimationState.Attack);
-            this.body = new PlasmaBody(this, position, force, .5f);
+            this.body = new PlasmaBody(this, position, force, 1.5f);
         }
         public void Update(GameTime gameTime)
         {
-            spriteManager.Position = new Vector2(body.Position.X, body.Position.Y);
+            spriteManager.Position = new Vector2(body.Position.X - (float)(1.5), body.Position.Y - (float)(1.5));
             spriteManager.Update(gameTime);
         }
 
@@ -84,6 +85,10 @@ namespace WizardsNeverDie.Entities
             {
                 this._isDead = false;
 
+                return false;
+            }
+            if (collidedWith is Gotfraggon)
+            {
                 return false;
             }
             this._isDead = true;

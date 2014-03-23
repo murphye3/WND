@@ -20,7 +20,7 @@ using WizardsNeverDie.Trigger;
 
 namespace WizardsNeverDie.Level
 {
-    class Level1 : BaseLevel
+    class Level1_0 : BaseLevel
     {
         private RangedPurpleIfrit _purple;
         private Wizard _player;
@@ -36,6 +36,7 @@ namespace WizardsNeverDie.Level
         private List<TriggerBody> _triggers = new List<TriggerBody>();
         private List<Potions> _potion = new List<Potions>();
         private List<PotionExplosion> _potionExplosion = new List<PotionExplosion>();
+        private List<IAction> _actions4  = new List<IAction>();
         private HealthAnimation _healthSprite;
         PotionExplosionAnimation potionExplosionAnimation;
         private Health _health;
@@ -56,7 +57,7 @@ namespace WizardsNeverDie.Level
         Stopwatch animationTimer = new Stopwatch();
         Boolean animationFinished = true;
 
-        public Level1()
+        public Level1_0()
         {
             int test = initialTime.Seconds;
             levelDetails = "Level 1";
@@ -109,7 +110,7 @@ namespace WizardsNeverDie.Level
         {
             World world = Farseer.Instance.World;
             Body wallLeft = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(2048), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 16, 0)));
-            Body wallRight = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(2048), 1f, ConvertUnits.ToSimUnits(new Vector2((2048 / 2) - 16, 0)));
+            //Body wallRight = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(2048), 1f, ConvertUnits.ToSimUnits(new Vector2((2048 / 2) - 16, 0)));
             Body wallTop = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(2048), ConvertUnits.ToSimUnits(32), 1f, ConvertUnits.ToSimUnits(new Vector2(0, -(2048 / 2) + 16)));
             Body wallBottom = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(2048), ConvertUnits.ToSimUnits(32), 1f, ConvertUnits.ToSimUnits(new Vector2(0, (2048 / 2) - 16)));
             Body wall1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(1600), 1f, ConvertUnits.ToSimUnits(new Vector2(-(1024 - 576 - 16), -((2048 - 1600) / 2) + 32)));
@@ -137,28 +138,25 @@ namespace WizardsNeverDie.Level
             List<IAction> _actions1 = new List<IAction>();
             List<IAction> _actions2 = new List<IAction>();
             List<IAction> _actions3 = new List<IAction>();
-            List<IAction> _actions4 = new List<IAction>();
-            string str1 = "Oh No, I can't believe <INSERT PLOT HERE>!!!\nI should try to get more information on these creatures.";
-            string str2 = "Don't worry I have my staff set to stun.";
-            string str3 = "Hm, an area of effect potion, I should save this for a dire situation...";
-            string str4 = "*Hit Q to use the area of effect potion.*";
-
+            List<IAction> _actions5 = new List<IAction>();
             //I got it set to stun
-            MessageAction wAction = new MessageAction(ScreenManager, str1, str2, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"));
+            MessageAction wAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"), "conversation1.xml");
 
             //Best Demoman NA and Enable Spawners
-            MessageAction mAction = new MessageAction(ScreenManager, str3, str4, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"));
+            MessageAction mAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\IfritAvatar"), "conversation2.xml");
             SpawnerAction sAction = new SpawnerAction(_spawners);
             _spawnIfritAction = new SpawnIfritAction(_explosionAnimation, ref _spawnedExplosions, _player, ScreenManager, _spawnedExplosionVectors, ref _creatures);
-
+            SwitchLevelAction nextLevel = new SwitchLevelAction(ScreenManager, this, new Level1_1());
             _actions1.Add(mAction);
             _actions2.Add(wAction);
             _actions3.Add(sAction);
             _actions4.Add(_spawnIfritAction);
+            _actions5.Add(nextLevel);
             _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(552), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 608 + (552 / 2), -(2048 / 2) + (50 / 2) + 1582)), 1f, _actions3));
             _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(31), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 111 + (96 / 2), -(2048 / 2) + (31 / 2) + 465)), 1f, _actions2));
             _triggers.Add(new TriggerBody(1f, 1f, ConvertUnits.ToSimUnits(-(2048 / 2) + 891, -(2048 / 2) + 125), 1f, _actions1));
             _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(384), ConvertUnits.ToSimUnits(30), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1464 + (384/ 2), -(2048 / 2) + (30 / 2) + 748)), 1f, _actions4));
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(2048), ConvertUnits.ToSimUnits(new Vector2((2048 / 2) - 16, 0)), 1f, _actions5));
         }
 
         private void GenereateCreatures()
@@ -581,6 +579,8 @@ namespace WizardsNeverDie.Level
                     _spawners[i].Update(gameTime);
                 }
             }
+            
+            //SWITCH NEXT LEVEL
             
             for (int i = 0; i < _triggers.Count; i++)
             {

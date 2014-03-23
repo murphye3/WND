@@ -190,7 +190,7 @@ namespace WizardsNeverDie.Level
             WizardAnimation wizard = (WizardAnimation)_player.SpriteManager;
             lastGamepadState = gamepadState;
             gamepadState = GamePad.GetState(PlayerIndex.One);
-            ExplosionAnimation explosionSprite = new ExplosionAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Explosion\\explosion"), new StreamReader(@"Content/Sprites/Explosion/explosion.txt"));
+            ExplosionAnimation explosionSprite = new ExplosionAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Explosion\\explosion"), new StreamReader(@"Content/Sprites/Explosion/explosion.txt"), 12f);
             if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space) || gamepadState.Buttons.X == ButtonState.Pressed)
             {
          
