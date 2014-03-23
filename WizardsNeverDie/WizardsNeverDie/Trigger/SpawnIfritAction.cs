@@ -38,7 +38,7 @@ namespace WizardsNeverDie.Trigger
                 for (int i = 0; i < _explosionAnimation.Count; i++)
                 {
                     _explosions.Add(new Explosion(_explosionAnimation[i], _spawnVectors[i], .01f, .01f));
-                    _explosions[_explosions.Count - 1].SpriteManager.Animations[_explosionAnimation[0].AnimationName].Scale = 2f;
+                    _explosions[_explosions.Count - 1].SpriteManager.Animations[_explosionAnimation[i].AnimationName].Scale = 2f;
                 }
                 _firstTime = false;
             }
