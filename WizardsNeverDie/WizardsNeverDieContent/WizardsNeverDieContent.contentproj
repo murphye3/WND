@@ -155,6 +155,15 @@
       <Name>metalslugexplosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Sprites\Gotfraggon\gotfraggon.png">
+      <Name>gotfraggon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <None Include="Sprites\Gotfraggon\gotfraggon.txt">
+      <Name>gotfraggon</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Sprites\Health\health.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>health</Name>

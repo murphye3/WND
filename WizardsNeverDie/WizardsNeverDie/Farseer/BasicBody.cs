@@ -28,7 +28,15 @@ namespace WizardsNeverDie.Physics
             this.size = size;
 
             World world = Farseer.Instance.World;
-            Body body = BodyFactory.CreateCircle(world, size, 1f);
+            Body body;
+            if(entity is Gotfraggon)
+            {
+                body = BodyFactory.CreateRectangle(world, 10f, 18f, 1f);
+            }
+            else
+            {
+                body = BodyFactory.CreateCircle(world, size, 1f);
+            }
             Bodies.Add(body);
             foreach (Fixture fixture in body.FixtureList)
                 fixture.UserData = entity;
