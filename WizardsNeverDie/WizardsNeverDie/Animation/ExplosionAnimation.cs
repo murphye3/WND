@@ -13,6 +13,7 @@ namespace WizardsNeverDie.Animation
     {
         private bool _isDead = false;
         private bool _onSpawner = false;
+        private bool _spawnIfrit = false;
         public ExplosionAnimation()
         {
 
@@ -27,9 +28,10 @@ namespace WizardsNeverDie.Animation
             this.TimeToUpdate = 6F;
         }
 
-        public ExplosionAnimation(Texture2D texture, StreamReader sr)
+        public ExplosionAnimation(Texture2D texture, StreamReader sr, float timeToUpdate)
             : base(texture, sr)
         {
+            this.TimeToUpdate = timeToUpdate;
             _frameIndex = 0;
             IsMoving = true;
             InChainAnimation = true;
@@ -54,6 +56,14 @@ namespace WizardsNeverDie.Animation
                 if (this.FrameIndex == 20)
                 {
                     this.IsDead = true;
+                }
+                if (_frameIndex == 5)
+                {
+                    this.SpawnIfrit = true;
+                }
+                else
+                {
+                    this.SpawnIfrit = false;
                 }
                 if (_frameIndex > Animations[AnimationName].NumOfFrames - 1)
                 {
@@ -119,6 +129,18 @@ namespace WizardsNeverDie.Animation
             set
             {
                 _onSpawner = value;
+            }
+        }
+
+        public bool SpawnIfrit
+        {
+            get
+            {
+                return _spawnIfrit;
+            }
+            set
+            {
+                _spawnIfrit = value;
             }
         }
 

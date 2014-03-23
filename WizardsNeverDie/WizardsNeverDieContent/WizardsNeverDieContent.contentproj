@@ -134,6 +134,15 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\Explosion\ifritspawnexplosion.png">
+      <Name>ifritspawnexplosion</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\Explosion\ifritspawnexplosion.txt">
+      <Name>ifritspawnexplosion</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Explosion\metalslugexplosion.txt">
       <Name>metalslugexplosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

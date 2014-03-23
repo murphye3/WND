@@ -39,12 +39,12 @@ namespace WizardsNeverDie.Level
         private HealthAnimation _healthSprite;
         PotionExplosionAnimation potionExplosionAnimation;
         private Health _health;
-
+        private SpawnIfritAction _spawnIfritAction;
         private MessageBoxScreen _mbs;
-
+        private List<ExplosionAnimation> _explosionAnimation = new List<ExplosionAnimation>();
+        private List<Explosion> _spawnedExplosions = new List<Explosion>();
         private SpriteAnimation _potionSprite;
-        private SpriteAnimation _potionSprite2;
-        private SpriteAnimation _potionSprite3;
+        private List<Vector2> _spawnedExplosionVectors = new List<Vector2>();
         private Texture2D _gameover;
         private Vector2 _gameOverVector;
         private bool isGameOver = false;
@@ -75,7 +75,27 @@ namespace WizardsNeverDie.Level
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
             _gameover = ScreenManager.Content.Load<Texture2D>("Common\\gameover");
-
+            for (int i = 0; i < 13; i++)
+            {
+                _explosionAnimation.Add(new ExplosionAnimation((ScreenManager.Content.Load<Texture2D>("Sprites\\Explosion\\ifritspawnexplosion")), new StreamReader(@"Content/Sprites/Explosion/ifritspawnexplosion.txt"), 3f));
+            }
+            for (int i = 0; i < _explosionAnimation.Count; i++)
+            {
+                _explosionAnimation[i].AnimationName = "ifritspawnexplosion_d_explosion";
+            }
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1492 + (1.5f), -(2048 / 2) + (1.5f) + 603)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1592 + (1.5f), -(2048 / 2) + (1.5f) + 603)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1692 + (1.5f), -(2048 / 2) + (1.5f) + 603)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1792 + (1.5f), -(2048 / 2) + (1.5f) + 603)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1492 + (1.5f), -(2048 / 2) + (1.5f) + 879)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1592 + (1.5f), -(2048 / 2) + (1.5f) + 879)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1692 + (1.5f), -(2048 / 2) + (1.5f) + 879)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1792 + (1.5f), -(2048 / 2) + (1.5f) + 879)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1792 + (1.5f), -(2048 / 2) + (1.5f) + 879)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1792 + (1.5f), -(2048 / 2) + (1.5f) + 800)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1792 + (1.5f), -(2048 / 2) + (1.5f) + 682)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1492 + (1.5f), -(2048 / 2) + (1.5f) + 800)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1492 + (1.5f), -(2048 / 2) + (1.5f) + 682)));
             GenerateWalls();
             GenereateCreatures();
             GenereateSpawners();
@@ -116,34 +136,29 @@ namespace WizardsNeverDie.Level
             Body trees8 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(201), ConvertUnits.ToSimUnits(640), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1847 + (201 / 2), -(2048 / 2) + (640 / 2) + 598)));
             List<IAction> _actions1 = new List<IAction>();
             List<IAction> _actions2 = new List<IAction>();
-
-            string str1 = "Oh No, I can't believe <INSERT PLOT HERE>!!!\nI better use my magic powers.";
+            List<IAction> _actions3 = new List<IAction>();
+            List<IAction> _actions4 = new List<IAction>();
+            string str1 = "Oh No, I can't believe <INSERT PLOT HERE>!!!\nI should try to get more information on these creatures.";
             string str2 = "Don't worry I have my staff set to stun.";
-            string str3 = "rofl who the hell are these fools voting woot \nas the best demoman?  At what point did smart \nplay and good aim become overlooked in favor of \nrandom mouse flicking and laying stickies ";
-            string str4 = "everywhere in between constant failed jumps on the enemy medic." +
-            "  Obviously a better teammate than destro or solid, " +
-            "who actually attempt to do damage rather than just cleanup garbage frags." +
-
-            "here is a fun game: download a woot demo or stv of his team and attempt to count the number of shots which are aimed. " +
-            "Place bets with friends in mumble over how many times he will stickyjump " +
-            "into the other team to make up for his lack of dming ability. I know it's tempting to spec sureshot " +
-            "carrying him but take the time to truly observe this demoman and try to decipher what exactly he is " +
-            "attempting to do for his team at any given time. and if you still think he is good go to steam, " +
-            "right click tf2, select delete local content and take up a mw2 gaming career.";
+            string str3 = "Hm, an area of effect potion, I should save this for a dire situation...";
+            string str4 = "*Hit Q to use the area of effect potion.*";
 
             //I got it set to stun
             MessageAction wAction = new MessageAction(ScreenManager, str1, str2, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"));
 
             //Best Demoman NA and Enable Spawners
-            MessageAction mAction = new MessageAction(ScreenManager, str3, str4, ScreenManager.Content.Load<Texture2D>(@"Avatar\IfritAvatar"));
+            MessageAction mAction = new MessageAction(ScreenManager, str3, str4, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"));
             SpawnerAction sAction = new SpawnerAction(_spawners);
-
+            _spawnIfritAction = new SpawnIfritAction(_explosionAnimation, ref _spawnedExplosions, _player, ScreenManager, _spawnedExplosionVectors, ref _creatures);
 
             _actions1.Add(mAction);
-            _actions1.Add(sAction);
             _actions2.Add(wAction);
-            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(552), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 608 + (552 / 2), -(2048 / 2) + (50 / 2) + 1582)), 1f, _actions1));
+            _actions3.Add(sAction);
+            _actions4.Add(_spawnIfritAction);
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(552), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 608 + (552 / 2), -(2048 / 2) + (50 / 2) + 1582)), 1f, _actions3));
             _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(31), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 111 + (96 / 2), -(2048 / 2) + (31 / 2) + 465)), 1f, _actions2));
+            _triggers.Add(new TriggerBody(1f, 1f, ConvertUnits.ToSimUnits(-(2048 / 2) + 891, -(2048 / 2) + 125), 1f, _actions1));
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(384), ConvertUnits.ToSimUnits(30), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1464 + (384/ 2), -(2048 / 2) + (30 / 2) + 748)), 1f, _actions4));
         }
 
         private void GenereateCreatures()
@@ -315,9 +330,9 @@ namespace WizardsNeverDie.Level
             WizardAnimation wizard = (WizardAnimation)_player.SpriteManager;
             lastGamepadState = gamepadState;
             gamepadState = GamePad.GetState(PlayerIndex.One);
-            ExplosionAnimation explosionSprite = new ExplosionAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Explosion\\explosion"), new StreamReader(@"Content/Sprites/Explosion/explosion.txt"));
+            ExplosionAnimation explosionSprite = new ExplosionAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Explosion\\explosion"), new StreamReader(@"Content/Sprites/Explosion/explosion.txt"), 12f);
             ExplosionAnimation metalSlugExplosionSprite = 
-                new ExplosionAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Explosion\\metalslugexplosion"), new StreamReader(@"Content/Sprites/Explosion/metalslugexplosion.txt"));
+                new ExplosionAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Explosion\\metalslugexplosion"), new StreamReader(@"Content/Sprites/Explosion/metalslugexplosion.txt"), 12f);
             if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space) || gamepadState.Buttons.X == ButtonState.Pressed)
             {
 
@@ -398,6 +413,18 @@ namespace WizardsNeverDie.Level
                 else
                 {
                     _explosions[i].Update(gameTime);
+                }
+            }
+            for (int i = 0; i < _spawnedExplosions.Count; i++)
+            {
+                ExplosionAnimation explosion = (ExplosionAnimation)_spawnedExplosions[i].SpriteManager;
+                if (explosion.IsDead)
+                {
+                    _spawnedExplosions.Remove(_spawnedExplosions[i]);
+                }
+                else
+                {
+                    _spawnedExplosions[i].Update(gameTime);
                 }
             }
             if (_mbs != null)
@@ -630,6 +657,10 @@ namespace WizardsNeverDie.Level
                 _health.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
             foreach (Explosion e in _explosions)
+            {
+                e.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
+            foreach (Explosion e in _spawnedExplosions)
             {
                 e.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
