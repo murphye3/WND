@@ -12,13 +12,17 @@ using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using WizardsNeverDie.Trigger;
 
 namespace WizardsNeverDie.Level
 {
     public class Level1_1: BaseLevel
     {
+        Body oracleCutSceneBlock;
         private Wizard _player;
         private WizardAnimation _wizard;
+        private OracleAnimation _oracleAnimation;
+        private List<Oracle> _oracle = new List<Oracle>();
         private HealthAnimation _healthSprite;
         private Health _health;
         private List<Brick> _bricks = new List<Brick>();
@@ -40,6 +44,7 @@ namespace WizardsNeverDie.Level
         Boolean animationFinished = true;
         private bool isGameOver = false;
         private int _creaturesKilled = 0;
+        private TriggerBody _trigger;
 
         public Level1_1()
         {
@@ -57,7 +62,9 @@ namespace WizardsNeverDie.Level
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
-
+            _oracleAnimation = new OracleAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Oracle\\oracle"), new StreamReader(@"Content/Sprites/Oracle/oracle.txt"), 6f);
+            _oracleAnimation.AnimationName = "oracle_d_walk";
+            _oracle.Add(new Oracle(_oracleAnimation,  ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1020 + (1f / 2), -(2048 / 2) + (1f / 2) + 1019))));
             GenerateWalls();
             GenereateCreatures();
             GenereateSpawners();
@@ -79,6 +86,7 @@ namespace WizardsNeverDie.Level
             Body treesBottomRight2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(769), ConvertUnits.ToSimUnits(174), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1279 + (769 / 2), -(2048 / 2) + (174 / 2) + 1065)));
             Body leftBridgeWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(227), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 968 + (16 / 2), -(2048 / 2) + (227 / 2) + 86)));
             Body rightBridgeWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(227), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1064 + (16 / 2), -(2048 / 2) + (227 / 2) + 86)));
+            oracleCutSceneBlock = BodyFactory.CreateRectangle( world, ConvertUnits.ToSimUnits(24), ConvertUnits.ToSimUnits(80), 1f,  ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 761 + (24 / 2), -(2048 / 2) + (80 / 2) + 986)));
             //Body topPlatformWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 961)));
             //Body bottomPlatformWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 1072)));
             //Body backPlatformWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(128), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1055 + (17 / 2), -(2048 / 2) + (128 / 2) + 961)));
@@ -87,7 +95,14 @@ namespace WizardsNeverDie.Level
             PlasmaWall bottomPlatformWall2 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 967 + (25 / 2), -(2048 / 2) + (23 / 2) + 1049)), ConvertUnits.ToSimUnits(25), ConvertUnits.ToSimUnits(23));
             PlasmaWall bottomPlatformWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 1072)), ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17));
             PlasmaWall topPlatformWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 961)), ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17));
+            _trigger = new TriggerBody(ConvertUnits.ToSimUnits(24), ConvertUnits.ToSimUnits(80),ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 761 + (24 / 2), -(2048 / 2) + (80 / 2) + 986)), 1f);
+            List<IAction> _actions1 = new List<IAction>();
+            //I got it set to stun
+            MessageAction oAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\OracleAvatar"), "conversation3.xml");
+            _actions1.Add(oAction);
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(24), ConvertUnits.ToSimUnits(80), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 761 + (24 / 2), -(2048 / 2) + (80 / 2) + 986)), 1f, _actions1));
         }
+
 
         public void GenereateCreatures()
         {
@@ -151,58 +166,58 @@ namespace WizardsNeverDie.Level
             _plasma.Add(new WizardPlasma(plasmaSprite, plasmaPosition, force));
         }
 
-        //public void PurpleSpell(RangedPurpleIfrit enemy, int forcePower)
-        //{
-        //    forcePower = 500;
-        //    Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2);
-        //    WizardPlasmaAnimation plasmaSprite = new WizardPlasmaAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Plasma\\plasma"), new StreamReader(@"Content/Sprites/Plasma/plasma.txt"));
-        //    plasmaSprite.AnimationName = "plasma_d_attack";
-        //    SpriteAnimation animation = (SpriteAnimation)enemy.SpriteManager;
-        //    Vector2 force = new Vector2();
-        //    //for (int i = 0; i < _purpleCreatures.Count; i++)
-        //    //{
-        //    if (animation.GetOrientation() == Orientation.Down)
-        //    {
-        //        force = new Vector2(0, forcePower);
-        //        plasmaPosition = new Vector2(enemy.Position.X, enemy.Position.Y + 2);
-        //    }
-        //    else if (animation.GetOrientation() == Orientation.DownLeft)
-        //    {
-        //        force = new Vector2(-forcePower, forcePower);
-        //        plasmaPosition = new Vector2(enemy.Position.X - 1, enemy.Position.Y + 1);
-        //    }
-        //    else if (animation.GetOrientation() == Orientation.DownRight)
-        //    {
-        //        force = new Vector2(forcePower, forcePower);
-        //        plasmaPosition = new Vector2(enemy.Position.X + 1, enemy.Position.Y + 1);
-        //    }
-        //    else if (animation.GetOrientation() == Orientation.Left)
-        //    {
-        //        force = new Vector2(-forcePower, 0);
-        //        plasmaPosition = new Vector2(enemy.Position.X - 2, enemy.Position.Y);
-        //    }
-        //    else if (animation.GetOrientation() == Orientation.Right)
-        //    {
-        //        force = new Vector2(forcePower, 0);
-        //        plasmaPosition = new Vector2(enemy.Position.X + 2, enemy.Position.Y);
-        //    }
-        //    else if (animation.GetOrientation() == Orientation.Up)
-        //    {
-        //        plasmaPosition = new Vector2(enemy.Position.X, enemy.Position.Y - 2);
-        //        force = new Vector2(0, -forcePower);
-        //    }
-        //    else if (animation.GetOrientation() == Orientation.UpLeft)
-        //    {
-        //        force = new Vector2(-forcePower, -forcePower);
-        //        plasmaPosition = new Vector2(enemy.Position.X - 1, enemy.Position.Y - 1);
-        //    }
-        //    else if (animation.GetOrientation() == Orientation.UpRight)
-        //    {
-        //        force = new Vector2(forcePower, -forcePower);
-        //        plasmaPosition = new Vector2(enemy.Position.X + 1, enemy.Position.Y - 1);
-        //    }
-        //    _purplePlasma.Add(new RangedPurplePlasma(plasmaSprite, plasmaPosition, force));
-        //    //}
+        public void PurpleSpell(RangedPurpleIfrit enemy, int forcePower)
+        {
+            forcePower = 500;
+            Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2);
+            WizardPlasmaAnimation plasmaSprite = new WizardPlasmaAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Plasma\\plasma"), new StreamReader(@"Content/Sprites/Plasma/plasma.txt"));
+            plasmaSprite.AnimationName = "plasma_d_attack";
+            SpriteAnimation animation = (SpriteAnimation)enemy.SpriteManager;
+            Vector2 force = new Vector2();
+            //for (int i = 0; i < _purpleCreatures.Count; i++)
+            //{
+            if (animation.GetOrientation() == Orientation.Down)
+            {
+                force = new Vector2(0, forcePower);
+                plasmaPosition = new Vector2(enemy.Position.X, enemy.Position.Y + 2);
+            }
+            else if (animation.GetOrientation() == Orientation.DownLeft)
+            {
+                force = new Vector2(-forcePower, forcePower);
+                plasmaPosition = new Vector2(enemy.Position.X - 1, enemy.Position.Y + 1);
+            }
+            else if (animation.GetOrientation() == Orientation.DownRight)
+            {
+                force = new Vector2(forcePower, forcePower);
+                plasmaPosition = new Vector2(enemy.Position.X + 1, enemy.Position.Y + 1);
+            }
+            else if (animation.GetOrientation() == Orientation.Left)
+            {
+                force = new Vector2(-forcePower, 0);
+                plasmaPosition = new Vector2(enemy.Position.X - 2, enemy.Position.Y);
+            }
+            else if (animation.GetOrientation() == Orientation.Right)
+            {
+                force = new Vector2(forcePower, 0);
+                plasmaPosition = new Vector2(enemy.Position.X + 2, enemy.Position.Y);
+            }
+            else if (animation.GetOrientation() == Orientation.Up)
+            {
+                plasmaPosition = new Vector2(enemy.Position.X, enemy.Position.Y - 2);
+                force = new Vector2(0, -forcePower);
+            }
+            else if (animation.GetOrientation() == Orientation.UpLeft)
+            {
+                force = new Vector2(-forcePower, -forcePower);
+                plasmaPosition = new Vector2(enemy.Position.X - 1, enemy.Position.Y - 1);
+            }
+            else if (animation.GetOrientation() == Orientation.UpRight)
+            {
+                force = new Vector2(forcePower, -forcePower);
+                plasmaPosition = new Vector2(enemy.Position.X + 1, enemy.Position.Y - 1);
+            }
+            _purplePlasma.Add(new RangedPurplePlasma(plasmaSprite, plasmaPosition, force));
+            }
 
 
         //}
@@ -240,7 +255,7 @@ namespace WizardsNeverDie.Level
                     }
                 }
             }
-
+            
             for (int i = 0; i < _creatures.Count; i++)//(Enemy e in _creatures)
             {
                 MeleeRedIfritAnimation enemy = (MeleeRedIfritAnimation)_creatures[i].SpriteManager;
@@ -272,7 +287,7 @@ namespace WizardsNeverDie.Level
                 }
                 else if (enemy.CheckEndSpell == true)
                 {
-                    //PurpleSpell(_purpleCreatures[i], 500);
+                    PurpleSpell(_purpleCreatures[i], 300);
                     _purpleCreatures[i].Update(gameTime);
                 }
                 else
@@ -427,6 +442,35 @@ namespace WizardsNeverDie.Level
                     _triggers.Remove(_triggers[i]);
                 }
             }
+            //oracle stufffff
+            if (_trigger.IsDead)
+            {
+                WizardPlasmaAnimation plasmaSprite = new WizardPlasmaAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Plasma\\plasma"), new StreamReader(@"Content/Sprites/Plasma/plasma.txt"));
+                plasmaSprite.AnimationName = "plasma_d_attack";
+                _oracleAnimation.SetAnimationState(AnimationState.Talking);
+                _oracleAnimation.Update(gameTime);
+                _purplePlasma.Add(new RangedPurplePlasma(plasmaSprite,  ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1470 + (1f / 2), -(2048 / 2) + (1f / 2) + 1019)), new Vector2(-85, 0)));
+                Farseer.Instance.World.RemoveBody(_trigger.Bodies[0]);
+                _trigger.IsDead = false;
+            }
+            for (int i = 0; i < _oracle.Count; i++)
+            {
+                if (_oracle[i].IsDead)
+                {
+                    oracleCutSceneBlock.Dispose();
+                    explosionSprite.AnimationName = "ifrit_d_explosion";
+                    _explosions.Add(new Explosion(explosionSprite, _oracle[i].Position + new Vector2(0, -1), .01f, .01f));
+                    Farseer.Instance.World.RemoveBody(_oracle[i].getBody().Bodies[0]);
+                    _oracle.Remove(_oracle[i]);
+                    RangedPurpleIfritAnimation _purpleCreatureAnimation = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                        new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+                    _purpleCreatureAnimation.AnimationName = "ifrit_d_walk";
+                    _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation, _player, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1470 + (1f / 2), -(2048 / 2) + (1f / 2) + 1019)), 1.5f, 1.5f, 100F, 20f));
+                }else
+                {
+                    _oracle[i].Update(gameTime);
+                }
+            }
             for (int i = 0; i < _potion.Count; i++)
             {
                 if (_potion[i].IsCollected == true)
@@ -448,6 +492,7 @@ namespace WizardsNeverDie.Level
         {
             ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
             //Draw stuff in here
+            
             foreach (Brick b in _bricks)
             {
                 b.SpriteManager.Draw(ScreenManager.SpriteBatch);
@@ -480,8 +525,13 @@ namespace WizardsNeverDie.Level
             {
                 pE.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
+            foreach(Oracle o in _oracle)
+            {
+                o.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
             if (!isGameOver)
             {
+                
                 _player.SpriteManager.Draw(ScreenManager.SpriteBatch);
                 _health.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
@@ -501,11 +551,14 @@ namespace WizardsNeverDie.Level
             ScreenManager.SpriteBatch.Begin();
             for (int i = 0; i < _triggers.Count; i++)
             {
-                if (_triggers[i].IsDead == true)
+                if (_triggers[i].IsDead)
                 {
-                    for (int j = 0; j < _triggers[i].ActionList.Count; j++)
+                    if (_oracle.Count == 1)
                     {
-                        _triggers[i].ActionList[j].Draw();
+                        for (int j = 0; j < _triggers[i].ActionList.Count; j++)
+                        {
+                            _triggers[i].ActionList[j].Draw();
+                        }
                     }
                 }
             }

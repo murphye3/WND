@@ -19,7 +19,7 @@ using FarseerPhysics.Dynamics.Contacts;
 
 namespace WizardsNeverDie.Entities
 {
-    class RangedPurpleIfrit : AbstractCreature
+    public class RangedPurpleIfrit : AbstractCreature
     {
         private bool _isDead = false;
 

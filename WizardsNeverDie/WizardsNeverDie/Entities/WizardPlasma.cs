@@ -50,6 +50,13 @@ namespace WizardsNeverDie.Entities
                 this.IsDeadOnEnemy = true;
                 return false;
             }
+            if (collidedWith is Oracle)
+            {
+                Oracle oracle = (Oracle)collidedWith;
+                oracle.IsDead = false;
+                this.IsDead = true;
+                return false;
+            }
             if (collidedWith is Wizard)
             {
                 return false;

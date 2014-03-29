@@ -49,6 +49,30 @@ namespace WizardsNeverDie.Physics
             body.Awake = true;
             body.OnCollision += new OnCollisionEventHandler(onCollision);
         }
+
+
+        public TriggerBody(float width, float height, Vector2 position, float size)
+            : base()
+        {
+            this._position = position;
+            this._size = size;
+
+
+            World world = Farseer.Instance.World;
+            Body body = BodyFactory.CreateRectangle(world, width, height, 1f, position);
+            Bodies.Add(body);
+
+            //body.UserData = entity;
+            body.Position = position;
+            body.Friction = float.MaxValue;
+            body.Restitution = 0.3f;
+            body.BodyType = BodyType.Static;
+            body.SleepingAllowed = false;
+            body.CollisionCategories = Category.Cat1;
+            body.CollidesWith = Category.Cat1;
+            body.Awake = true;
+            body.OnCollision += new OnCollisionEventHandler(onCollision2);
+        }
         public bool IsDead
         {
             get
@@ -88,6 +112,13 @@ namespace WizardsNeverDie.Physics
                 }
                 this.Bodies[0].CollidesWith = Category.None;
             }
+            return false;
+        }
+
+        bool onCollision2(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
+        {
+            _isDead = true;
+            this.Bodies[0].CollidesWith = Category.None;
             return false;
         }
     }

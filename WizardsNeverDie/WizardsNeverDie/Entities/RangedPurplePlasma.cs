@@ -24,19 +24,24 @@ namespace WizardsNeverDie.Entities
         public RangedPurplePlasma(SpriteAnimation animation, Vector2 position, Vector2 force)
         {
             this.spriteManager = animation;
-            spriteManager.Animations[animation.AnimationName].Scale = 3f;
             animation.Position = position;
             animation.SetAnimationState(AnimationState.Attack);
-            this.body = new PlasmaBody(this, position, force, 1.5f);
+            this.body = new PlasmaBody(this, position, force, .5f);
         }
         public void Update(GameTime gameTime)
         {
-            spriteManager.Position = new Vector2(body.Position.X - (float)(1.5), body.Position.Y - (float)(1.5));
+            spriteManager.Position = new Vector2(body.Position.X, body.Position.Y);
             spriteManager.Update(gameTime);
         }
 
         public override bool WillCollide(AbstractEntity collidedWith)
         {
+
+            if (collidedWith is PlasmaWall)
+            {
+                this._isDead = false;
+                return false;
+            }
             if (collidedWith is MeleeRedIfrit)
             {
                 MeleeRedIfrit enemy = (MeleeRedIfrit)collidedWith;
@@ -49,6 +54,13 @@ namespace WizardsNeverDie.Entities
                 RangedPurpleIfrit enemy = (RangedPurpleIfrit)collidedWith;
                 enemy.IsDead = false;
                 this.IsDeadOnEnemy = false;
+                return false;
+            }
+            if (collidedWith is Oracle)
+            {
+                Oracle oracle = (Oracle)collidedWith;
+                oracle.IsDead = true;
+                this.IsDeadOnEnemy = true;
                 return false;
             }
             if (collidedWith is Wizard)

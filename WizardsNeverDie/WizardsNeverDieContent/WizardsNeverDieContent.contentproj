@@ -130,6 +130,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Avatar\OracleAvatar.png">
+      <Name>OracleAvatar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="Conversations\conversation1.xml">
       <Name>conversation1</Name>
       <Importer>XmlImporter</Importer>
@@ -143,6 +148,12 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Conversations\conversation3.xml">
+      <Name>conversation3</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\Explosion\explosion.txt">
       <Name>explosion</Name>
@@ -203,6 +214,15 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\Oracle\oracle.png">
+      <Name>oracle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\Oracle\oracle.txt">
+      <Name>oracle</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Plasma\plasma.txt">
       <Name>plasma</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

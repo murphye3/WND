@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSpeaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Speaker>
+    <AvatarIndex>0</AvatarIndex>
+    <Message>
+      I am The Great Oracle! I see all! I hear all!
+      I know all! No evil can slip past my eye.
+    </Message>
+  </Speaker>
+  <Speaker>
+    <AvatarIndex>1</AvatarIndex>
+    <Message>
+      Come hither, master wizard, and let me
+      bestow upon you great knowledge that I
+      have foreseen.
+    </Message>
+  </Speaker>
+  <Speaker>
+    <AvatarIndex>1</AvatarIndex>
+    <Message>
+      I, The Great Oracle, have
+      seen a future with a very grave outcome.
+    </Message>
+  </Speaker>
+  <Speaker>
+    <AvatarIndex>1</AvatarIndex>
+    <Message>
+      The enemy has thought they could slip past
+      my eternal gaze, but they are wrong!
+    </Message>
+  </Speaker>
+  <Speaker>
+    <AvatarIndex>1</AvatarIndex>
+    <Message>
+      With my almighty powers, I will grant you
+      the knowledge to smite your foes with
+      great ease.
+    </Message>
+  </Speaker>
+</ArrayOfSpeaker>
