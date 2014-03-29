@@ -103,6 +103,7 @@
     <Compile Include="Entities\MeleeRedIfrit.cs" />
     <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\Health.cs" />
+    <Compile Include="Entities\PlasmaWall.cs" />
     <Compile Include="Entities\WizardPlasma.cs" />
     <Compile Include="Entities\Wizard.cs" />
     <Compile Include="Entities\Brick.cs" />
@@ -122,7 +123,7 @@
     <Compile Include="Trigger\MessageAction.cs" />
     <Compile Include="Trigger\SpawnerAction.cs" />
     <Compile Include="Trigger\SwitchLevelAction.cs" />
-	<Compile Include="Trigger\SpawnIfritAction.cs" />
+    <Compile Include="Trigger\SpawnIfritAction.cs" />
     <Compile Include="Trigger\TriggerBody.cs" />
     <Compile Include="Farseer\World.cs" />
     <Compile Include="Intelligence\AbstractIntelligence.cs" />

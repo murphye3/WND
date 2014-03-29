@@ -130,18 +130,20 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <None Include="Conversations\conversation1.xml">
+    <Content Include="Conversations\conversation1.xml">
       <Name>conversation1</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Conversations\conversation2.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Conversations\conversation2.xml">
       <Name>conversation2</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Sprites\Explosion\explosion.txt">
       <Name>explosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -3,10 +3,11 @@
   <Speaker>
     <AvatarIndex>0</AvatarIndex>
     <Message>Oh No, I can't believe &lt;INSERT PLOT HERE&gt;!!!
-I better use my magic powers. </Message>
+I should try to find out more information
+about these monsters. </Message>
   </Speaker>
   <Speaker>
     <AvatarIndex>1</AvatarIndex>
-    <Message>Don't worry I have my staff set to stun.</Message>
+    <Message>Okay, I've set my staff to stun.</Message>
   </Speaker>
 </ArrayOfSpeaker>

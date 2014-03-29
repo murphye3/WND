@@ -77,6 +77,12 @@ namespace WizardsNeverDie.Entities
                 this._isDead = true;
                 return false;
             }
+
+            if (collidedWith is PlasmaWall)
+            {
+                this._isDead = false;
+                return false;
+            }
             this._isDead = true;
             return true;
         }

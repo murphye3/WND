@@ -10,6 +10,8 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 
 namespace WizardsNeverDie.Level
 {
@@ -66,8 +68,27 @@ namespace WizardsNeverDie.Level
         }
         public void GenerateWalls()
         {
-            ;
+            World world = Farseer.Instance.World;
+            Body treesTopLeft1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(961), ConvertUnits.ToSimUnits(546), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (961 / 2), -(2048 / 2) + (546 / 2) + 265)));
+            Body treesTopLeft2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(769), ConvertUnits.ToSimUnits(174), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (769 / 2), -(2048 / 2) + (174 / 2) + 811)));
+            Body treesBottomLeft1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(961), ConvertUnits.ToSimUnits(810), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (961 / 2), -(2048 / 2) + (810 / 2) + 1238)));
+            Body treesBottomLeft2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(769), ConvertUnits.ToSimUnits(174), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (769 / 2), -(2048 / 2) + (174 / 2) + 1065)));
+            Body treesTopRight1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(961), ConvertUnits.ToSimUnits(546), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1086 + (961 / 2), -(2048 / 2) + (546 / 2) + 265)));
+            Body treesTopRight2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(769), ConvertUnits.ToSimUnits(174), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1279 + (769 / 2), -(2048 / 2) + (174 / 2) + 811)));
+            Body treesBottomRight1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(961), ConvertUnits.ToSimUnits(810), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1087 + (961 / 2), -(2048 / 2) + (810 / 2) + 1238)));
+            Body treesBottomRight2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(769), ConvertUnits.ToSimUnits(174), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1279 + (769 / 2), -(2048 / 2) + (174 / 2) + 1065)));
+            Body leftBridgeWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(227), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 968 + (16 / 2), -(2048 / 2) + (227 / 2) + 86)));
+            Body rightBridgeWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(227), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1064 + (16 / 2), -(2048 / 2) + (227 / 2) + 86)));
+            //Body topPlatformWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 961)));
+            //Body bottomPlatformWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 1072)));
+            //Body backPlatformWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(128), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1055 + (17 / 2), -(2048 / 2) + (128 / 2) + 961)));
+            //Body bottomPlatformWall2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(25), ConvertUnits.ToSimUnits(23), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 967 + (25 / 2), -(2048 / 2) + (23 / 2) + 1049)));
+            PlasmaWall backPlatformWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1055 + (17 / 2), -(2048 / 2) + (128 / 2) + 961)), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(128));
+            PlasmaWall bottomPlatformWall2 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 967 + (25 / 2), -(2048 / 2) + (23 / 2) + 1049)), ConvertUnits.ToSimUnits(25), ConvertUnits.ToSimUnits(23));
+            PlasmaWall bottomPlatformWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 1072)), ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17));
+            PlasmaWall topPlatformWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 961)), ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17));
         }
+
         public void GenereateCreatures()
         {
             ;

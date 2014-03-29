@@ -143,7 +143,7 @@ namespace WizardsNeverDie.Level
             MessageAction wAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"), "conversation1.xml");
 
             //Best Demoman NA and Enable Spawners
-            MessageAction mAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\IfritAvatar"), "conversation2.xml");
+            MessageAction mAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"), "conversation2.xml");
             SpawnerAction sAction = new SpawnerAction(_spawners);
             _spawnIfritAction = new SpawnIfritAction(_explosionAnimation, ref _spawnedExplosions, _player, ScreenManager, _spawnedExplosionVectors, ref _creatures);
             SwitchLevelAction nextLevel = new SwitchLevelAction(ScreenManager, this, new Level1_1());
