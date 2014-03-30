@@ -24,7 +24,9 @@ namespace WizardsNeverDie.Animation
         NotSpawning,
         PotionExplosion,
         PurpleSpell,
-        Talking
+        Talking,
+        Open,
+        Lock
     }
 
     [Flags]
@@ -217,6 +219,12 @@ namespace WizardsNeverDie.Animation
                     break;
                 case AnimationState.Talking:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "talking";
+                    break;
+                case AnimationState.Lock:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "lock";
+                    break;
+                case AnimationState.Open:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "open";
                     break;
             }
         }

@@ -27,7 +27,7 @@ namespace WizardsNeverDie.Entities
         {
             this.spriteManager = spriteManager;
             this.body = new BasicBody(this, position, 1f);
-            this.intelligence = new PurpleCreatureIntelligence(this, target, .05f, targetDistance, attackDistance);
+            this.intelligence = new PurpleCreatureIntelligence(this, target, .1f, targetDistance, attackDistance);
         }
         public void Update(GameTime gameTime)
         {

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace WizardsNeverDie.Entities
 {
-    class Oracle : AbstractEntity
+    public class Oracle : AbstractEntity
     {
         private bool _isDead;
 

@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Animation\AnimationClass.cs" />
     <Compile Include="Animation\BasicSprite.cs" />
+    <Compile Include="Animation\GateAnimation.cs" />
     <Compile Include="Animation\GotfraggonAnimation.cs" />
     <Compile Include="Animation\MeleeRedIfritAnimation.cs" />
     <Compile Include="Animation\ExplosionAnimation.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Entities\AbstractCreature.cs" />
     <Compile Include="Entities\AbstractEntity.cs" />
     <Compile Include="Entities\AbstractSprite.cs" />
+    <Compile Include="Entities\Gate.cs" />
     <Compile Include="Entities\Gotfraggon.cs" />
     <Compile Include="Entities\MeleeRedIfrit.cs" />
     <Compile Include="Entities\Explosion.cs" />

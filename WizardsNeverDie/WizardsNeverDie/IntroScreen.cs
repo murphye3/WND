@@ -69,13 +69,14 @@ namespace WizardsNeverDie
 
             IfritDemo ifritDemo = new IfritDemo();
             Level1_0 level1 = new Level1_0();
-            TestLevel testLevel = new TestLevel();
+            Level1_1 testLevel = new Level1_1();
             MenuScreen menuScreen = new MenuScreen("");
 
             //menuScreen.AddMenuItem("Levels", EntryType.Separator, null);
             menuScreen.AddMenuItem(ifritDemo.GetTitle(), EntryType.Screen, ifritDemo);
             menuScreen.AddMenuItem(level1.GetTitle(), EntryType.Screen, level1);
             menuScreen.AddMenuItem(testLevel.GetTitle(), EntryType.Screen, testLevel);
+
             ScreenManager.AddScreen(new BackgroundScreen("Common/title_screen"));
             ScreenManager.AddScreen(menuScreen);
             ScreenManager.AddScreen(new LogoScreen(TimeSpan.FromSeconds(3.0)));

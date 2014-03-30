@@ -20,6 +20,9 @@ namespace WizardsNeverDie.Level
     {
         Body oracleCutSceneBlock;
         private Wizard _player;
+        private int _greenKeys = 1;
+        private int _blueKeys = 1;
+        private int _redKeys = 1;
         private WizardAnimation _wizard;
         private OracleAnimation _oracleAnimation;
         private List<Oracle> _oracle = new List<Oracle>();
@@ -36,6 +39,10 @@ namespace WizardsNeverDie.Level
         private List<TriggerBody> _triggers = new List<TriggerBody>();
         private List<Potions> _potion = new List<Potions>();
         private List<PotionExplosion> _potionExplosion = new List<PotionExplosion>();
+        bool firstTime = true;
+        GateAnimation greenGateAnimation;
+        GateAnimation blueGateAnimation;
+        GateAnimation redGateAnimation;
         Stopwatch timer = new Stopwatch();
         TimeSpan initialTime;
         TimeSpan animationTimeSpan;
@@ -45,7 +52,9 @@ namespace WizardsNeverDie.Level
         private bool isGameOver = false;
         private int _creaturesKilled = 0;
         private TriggerBody _trigger;
-
+        private List<Gate> _greenGates = new List<Gate>();
+        private List<Gate> _blueGates = new List<Gate>();
+        private List<Gate> _redGates = new List<Gate>();
         public Level1_1()
         {
             int test = initialTime.Seconds;
@@ -69,7 +78,7 @@ namespace WizardsNeverDie.Level
             GenereateCreatures();
             GenereateSpawners();
             GeneratePotions();
-
+            GenerateGates();
             this.Camera.EnableTracking = true;
             this.Camera.TrackingBody = _player.getBody().Bodies[0];
         }
@@ -87,6 +96,10 @@ namespace WizardsNeverDie.Level
             Body leftBridgeWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(227), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 968 + (16 / 2), -(2048 / 2) + (227 / 2) + 86)));
             Body rightBridgeWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(16), ConvertUnits.ToSimUnits(227), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1064 + (16 / 2), -(2048 / 2) + (227 / 2) + 86)));
             oracleCutSceneBlock = BodyFactory.CreateRectangle( world, ConvertUnits.ToSimUnits(24), ConvertUnits.ToSimUnits(80), 1f,  ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 761 + (24 / 2), -(2048 / 2) + (80 / 2) + 986)));
+            Body blueLeftNub = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(15), ConvertUnits.ToSimUnits(15), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 965 + (24 / 2), -(2048 / 2) + (80 / 2) + 1775)));
+            Body blueRightNub = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(15), ConvertUnits.ToSimUnits(15), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1060 + (24 / 2), -(2048 / 2) + (80 / 2) + 1775)));
+            Body redTopNub = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(15), ConvertUnits.ToSimUnits(15), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1795 + (24 / 2), -(2048 / 2) + (80 / 2) + 945)));
+            Body redBottomNub = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(15), ConvertUnits.ToSimUnits(15), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1795 + (24 / 2), -(2048 / 2) + (80 / 2) + 1025)));
             //Body topPlatformWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 961)));
             //Body bottomPlatformWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 1072)));
             //Body backPlatformWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(128), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1055 + (17 / 2), -(2048 / 2) + (128 / 2) + 961)));
@@ -115,6 +128,23 @@ namespace WizardsNeverDie.Level
         public void GeneratePotions()
         {
             ;
+        }
+        public void GenerateGates()
+        {//ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 968 + (16 / 2), -(2048 / 2) + (227 / 2) + 86)))
+            greenGateAnimation = new GateAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Gates\\gates"), new StreamReader(@"Content/Sprites/Gates/gates.txt"), 1f);
+            greenGateAnimation.AnimationName = "greengate_d_lock";
+            _greenGates.Add(new Gate(greenGateAnimation, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1015 + (16 / 2), -(2048 / 2) + (227 / 2) + 190)), 4f, 1f, 1f));
+
+            blueGateAnimation = new GateAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Gates\\gates"), new StreamReader(@"Content/Sprites/Gates/gates.txt"), 1f);
+            blueGateAnimation.AnimationName = "bluegate_d_lock";
+            _blueGates.Add(new Gate(blueGateAnimation, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1015 + (16 / 2), -(2048 / 2) + (227 / 2) + 1700)), 4f, 1f, 1f));
+
+            redGateAnimation = new GateAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Gates\\gates"), new StreamReader(@"Content/Sprites/Gates/gates.txt"), 1f);
+            redGateAnimation.AnimationName = "redgate_dl_lock";
+            
+            _redGates.Add(new Gate(redGateAnimation, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1800 + (16 / 2), -(2048 / 2) + (227 / 2) + 922)), 1f, 4f, .75f));
+            _redGates[_redGates.Count - 1].SpriteManager.Animations[redGateAnimation.AnimationName].Scale = .75f;
+            _redGates[_redGates.Count - 1].SpriteManager.Animations["redgate_dl_open"].Scale = .75f;
         }
         public void Spell(Wizard player, int forcePower)
         {
@@ -256,6 +286,65 @@ namespace WizardsNeverDie.Level
                 }
             }
             
+            for(int i = 0; i < _greenGates.Count;i++)
+            {
+                if (_greenGates[i].Unlock && _greenKeys > 0)
+                {
+                    greenGateAnimation.SetAnimationState(AnimationState.Open);
+                    greenGateAnimation.Update(gameTime);
+                    if (_greenGates[i].GateCollideFirstTime)
+                    {
+                        Farseer.Instance.World.RemoveBody(_greenGates[i].getBody().Bodies[0]);
+                        _greenGates[i].GateCollideFirstTime = false;
+                        _greenKeys--;
+                    }
+                }
+                else
+                {
+                    _greenGates[i].Update(gameTime);
+                }
+                
+            }
+
+            for (int i = 0; i < _blueGates.Count; i++)
+            {
+                if (_blueGates[i].Unlock && _blueKeys > 0)
+                {
+                    blueGateAnimation.SetAnimationState(AnimationState.Open);
+                    blueGateAnimation.Update(gameTime);
+                    if (_blueGates[i].GateCollideFirstTime)
+                    {
+                        Farseer.Instance.World.RemoveBody(_blueGates[i].getBody().Bodies[0]);
+                        _blueGates[i].GateCollideFirstTime = false;
+                        _blueKeys--;
+                    }
+                }
+                else
+                {
+                    _blueGates[i].Update(gameTime);
+                }
+            }
+
+            for (int i = 0; i < _redGates.Count; i++)
+            {
+                if (_redGates[i].Unlock && _redKeys > 0)
+                {
+
+                    redGateAnimation.SetAnimationState(AnimationState.Open);
+                    redGateAnimation.Update(gameTime);
+                    if (_redGates[i].GateCollideFirstTime)
+                    {
+                        Farseer.Instance.World.RemoveBody(_redGates[i].getBody().Bodies[0]);
+                        _redGates[i].GateCollideFirstTime = false;
+                        _redKeys--;
+                    }
+                }
+                else
+                {
+                    _redGates[i].Update(gameTime);
+                }
+            }
+
             for (int i = 0; i < _creatures.Count; i++)//(Enemy e in _creatures)
             {
                 MeleeRedIfritAnimation enemy = (MeleeRedIfritAnimation)_creatures[i].SpriteManager;
@@ -465,7 +554,7 @@ namespace WizardsNeverDie.Level
                     RangedPurpleIfritAnimation _purpleCreatureAnimation = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
                         new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
                     _purpleCreatureAnimation.AnimationName = "ifrit_d_walk";
-                    _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation, _player, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1470 + (1f / 2), -(2048 / 2) + (1f / 2) + 1019)), 1.5f, 1.5f, 100F, 20f));
+                    _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation, _player, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1470 + (1f / 2), -(2048 / 2) + (1f / 2) + 1019)), 1.5f, 1.5f, 100F, 10f));
                 }else
                 {
                     _oracle[i].Update(gameTime);
@@ -492,7 +581,18 @@ namespace WizardsNeverDie.Level
         {
             ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
             //Draw stuff in here
-            
+            foreach (Gate g in _greenGates)
+            {
+                g.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
+            foreach (Gate b in _blueGates)
+            {
+                b.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
+            foreach (Gate r in _redGates)
+            {
+                r.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
             foreach (Brick b in _bricks)
             {
                 b.SpriteManager.Draw(ScreenManager.SpriteBatch);
@@ -539,6 +639,7 @@ namespace WizardsNeverDie.Level
             {
                 e.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
+            
 
             //if (isGameOver)
             //{
