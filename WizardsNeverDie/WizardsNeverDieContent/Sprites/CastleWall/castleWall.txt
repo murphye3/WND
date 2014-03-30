@@ -1,0 +1,2 @@
+castleWall_d_attack-1 = 1 1 1095 176
+castleWall_u_attack-1 = 1 178 992 176

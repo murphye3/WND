@@ -142,6 +142,20 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="Materials\Level1_4.png">
+      <Name>Level1_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\CastleWall\castleWall.png">
+      <Name>castleWall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <None Include="Sprites\CastleWall\castleWall.txt">
+      <Name>castleWall</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Sprites\Explosion\explosion.txt">
       <Name>explosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
