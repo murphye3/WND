@@ -90,6 +90,11 @@ namespace WizardsNeverDie.Entities
                 this._isDead = false;
                 return false;
             }
+            if (collidedWith is Odin)
+            {
+                this._isDeadOnEnemy = true;
+                return false;
+            }
             this._isDead = true;
             return true;
         }

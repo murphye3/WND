@@ -69,7 +69,7 @@ namespace WizardsNeverDie
 
             IfritDemo ifritDemo = new IfritDemo();
             Level1_0 level1 = new Level1_0();
-            Level1_1 testLevel = new Level1_1();
+            Level1_2 testLevel = new Level1_2();
             MenuScreen menuScreen = new MenuScreen("");
 
             //menuScreen.AddMenuItem("Levels", EntryType.Separator, null);

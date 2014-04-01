@@ -52,7 +52,7 @@ namespace WizardsNeverDie.Animation
 
         private void PurpleSpell(GameTime gameTime)
         {
-            TimeToUpdate = 8f;
+            TimeToUpdate = 7f;
             if (timeElapsed > TimeToUpdate)
             {
                 _frameIndex++;

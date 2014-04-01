@@ -26,7 +26,9 @@ namespace WizardsNeverDie.Animation
         PurpleSpell,
         Talking,
         Open,
-        Lock
+        Lock,
+        Rotating,
+        Revived
     }
 
     [Flags]
@@ -225,6 +227,12 @@ namespace WizardsNeverDie.Animation
                     break;
                 case AnimationState.Open:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "open";
+                    break;
+                case AnimationState.Rotating:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "rotating";
+                    break;
+                case AnimationState.Revived:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "revive";
                     break;
             }
         }
