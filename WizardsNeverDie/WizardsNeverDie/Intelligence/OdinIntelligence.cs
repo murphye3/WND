@@ -104,14 +104,23 @@ namespace WizardsNeverDie.Intelligence
             TimeSpan runTimeElapsed = attackTimer.Elapsed;
             int totalAttackTime = attackTimeElapsed.Seconds - attackTimeStart.Seconds;
             int totalRunTime = runTimeElapsed.Seconds - runTimeStart.Seconds;
-            if (totalAttackTime > 8)
+            if (totalAttackTime > 5)
             {
                 attack = true;
                 attackTimer.Stop();
                 attackTimer.Reset();
+                
+            }
+            if (e.GetAnimationState() == AnimationState.Attack)
+            {
+                attackTimer.Stop();
+                attackTimer.Reset();
+                attack = false;
+                attackTimer.Start();
             }
             if (attack == false && e.GetAnimationState() != AnimationState.Death && e.GetAnimationState() != AnimationState.Revived && runTimer.ElapsedMilliseconds < 200)
             {
+                
                 if (!runTimer.IsRunning)
                 {
                     
@@ -259,6 +268,18 @@ namespace WizardsNeverDie.Intelligence
                 e.SetAnimationState(AnimationState.Stop);
             }
         }
-           
+
+
+        public bool AttackState
+        {
+            get
+            {
+                return this.attack;
+            }
+            set
+            {
+                this.attack = value;
+            }
+        }
     }
 }

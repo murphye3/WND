@@ -22,18 +22,21 @@ namespace WizardsNeverDie.Entities
     class Odin : AbstractCreature
     {
         private bool _isDead = false;
-        
+        OdinIntelligence o;
         public Odin(OdinAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height, float targetDistance)
         {
             this.spriteManager = spriteManager;
             this.body = new BasicBody(this, position, 1f);
-            this.intelligence = new OdinIntelligence(this, target, .25f, targetDistance);
+            o = new OdinIntelligence(this, target, .25f, targetDistance);
+            this.intelligence = o;
+            
         }
         public void Update(GameTime gameTime)
         {
-            intelligence.Update(gameTime);
+            
             spriteManager.Position = body.Position;
             spriteManager.Update(gameTime);
+            o.Update(gameTime);
         }
         public AbstractCreature Target
         {
@@ -48,22 +51,32 @@ namespace WizardsNeverDie.Entities
         }
         public override bool WillCollide(AbstractEntity collidedWith)
         {
-
+            
+            
             OdinAnimation animation = (OdinAnimation)this.SpriteManager;
             if (collidedWith is Wizard && animation.GetAnimationState() != AnimationState.Death)
             {
                 Wizard player = (Wizard)collidedWith;
-                animation.SetAnimationState(AnimationState.Attack);
+                WizardAnimation a = (WizardAnimation)player.SpriteManager;
+                player = (Wizard)collidedWith;
+                if (a.GetAnimationState() != AnimationState.Revived)
+                {
+                    animation.SetAnimationState(AnimationState.Attack);
+                }
                 //if (animation.PreviousAnimationState = AnimationState.Walk && animation.GetAnimationState() == AnimationState.Walk)
-                //{
                     if (player.Health == HealthAnimation.HealthState.Health100)
+                        player.Health = HealthAnimation.HealthState.Health50;
+                    else if (player.Health == HealthAnimation.HealthState.Health50)
                         player.Health = HealthAnimation.HealthState.Health0;
                 //}
             }
             if(collidedWith is WizardPlasma)
             {
                 WizardPlasma plasma = (WizardPlasma)collidedWith;
-                animation.SetAnimationState(AnimationState.Death);
+                if (animation.GetAnimationState() != AnimationState.Revived && o.AttackState == true)
+                {
+                    animation.SetAnimationState(AnimationState.Death);
+                }
                 return false;
             }
             if (collidedWith is MeleeRedIfrit)

@@ -303,6 +303,21 @@ namespace WizardsNeverDie.Level
                 _player.Update(gameTime);
                 _health.Update(gameTime);
             }
+
+            if (_player.Health == HealthAnimation.HealthState.Health0 && !isGameOver && !wizard.CheckEndRevive)
+            {
+                wizard.SetAnimationState(AnimationState.Revived);
+                _player.getBody().Bodies[0].Position =  ConvertUnits.ToSimUnits(-(2048 / 2) + 47, -(2048 / 2) + 1025);
+                _player.Update(gameTime);
+
+            }
+            if (wizard.CheckEndRevive)
+            {
+                _player.Health = HealthAnimation.HealthState.Health100;
+                _health.Update(gameTime);
+                wizard.SetAnimationState(AnimationState.Walk);
+                _player.Update(gameTime);
+            }
             for (int i = 0; i < _triggers.Count; i++)
             {
                 if (_triggers[i].IsDead == true)

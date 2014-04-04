@@ -29,6 +29,7 @@ namespace WizardsNeverDie.Entities
         }
         public void Update(GameTime gameTime)
         {
+            
             intelligence.Update(gameTime);
             spriteManager.Position = new Vector2(body.Position.X, body.Position.Y);
             spriteManager.Update(gameTime);
@@ -38,6 +39,16 @@ namespace WizardsNeverDie.Entities
             base.Draw(spriteBatch);
         }
 
+        public override bool WillCollide(AbstractEntity collidedWith)
+        {
+
+            if (collidedWith is Odin)
+            {
+                
+                return false;
+            }
+            return true;
+        }
         public WizardsNeverDie.Animation.HealthAnimation.HealthState Health
         {
             get

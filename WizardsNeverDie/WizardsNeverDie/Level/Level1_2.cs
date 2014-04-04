@@ -65,7 +65,7 @@ namespace WizardsNeverDie.Level
         private List<Gate> _redGates = new List<Gate>();
         private static SoundEffect _soundEffect;
         private static SoundEffect _futureSound;
-        Body chatBody;
+        PlasmaWall chatBody;
         public Level1_2()
         {
             int test = initialTime.Seconds;
@@ -91,12 +91,12 @@ namespace WizardsNeverDie.Level
             GenerateKeys();
             this.Camera.EnableTracking = true;
             this.Camera.TrackingBody = _player.getBody().Bodies[0];
-            _soundEffect = ScreenManager.Content.Load<SoundEffect>("SoundEffects\\YEEAAAAH!");
+            _soundEffect = ScreenManager.Content.Load<SoundEffect>("SoundEffects\\YEEAAAAH");
             
         }
         public void GenerateWalls()
         {
-             World world = Farseer.Instance.World;
+            World world = Farseer.Instance.World;
             PlasmaWall leftWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 985 + (10 / 2), -(2048 / 2) + (1079 / 2) + 0)), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(1079));
             PlasmaWall rightWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1085 + (10 / 2), -(2048 / 2) + (1079 / 2) + 0)), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(1079));
             Body circleArena = BodyFactory.CreateEdge(world, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 871 + (1), -(2048 / 2) + (1) + 1099)),
@@ -139,8 +139,8 @@ namespace WizardsNeverDie.Level
             _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 80)), 1f, _actions1));
             MessageAction oAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\OdinAvatar"), "conversation6.xml");
             _actions2.Add(oAction);
-            _triggers2.Add(new TriggerBody(ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 800)), 1f, _actions2));
-            chatBody = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17),1f,  ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 800)));
+            _triggers2.Add(new TriggerBody(ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1050)), 1f, _actions2));
+            chatBody = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1050)), ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17));
         }
 
 
@@ -158,7 +158,7 @@ namespace WizardsNeverDie.Level
             
             OdinAnimation odinAnimation = new OdinAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Odin\\odin"), new StreamReader(@"Content/Sprites/Odin/odin.txt"));
             odinAnimation.AnimationName = "odin_u_walk";
-            _odin.Add(new Odin(odinAnimation, _player, _player.Position + new Vector2(0, 58), 3f, 3f, 20f));
+            _odin.Add(new Odin(odinAnimation, _player, _player.Position + new Vector2(0, 55), 3f, 3f, 12f));
         }
         public void GenereateSpawners()
         {
@@ -304,6 +304,20 @@ namespace WizardsNeverDie.Level
             {
                 _player.Update(gameTime);
                 _health.Update(gameTime);
+            }
+            if (_player.Health == HealthAnimation.HealthState.Health0 && !isGameOver && !wizard.CheckEndRevive)
+            {
+                wizard.SetAnimationState(AnimationState.Revived);
+                _player.getBody().Bodies[0].Position = ConvertUnits.ToSimUnits(-(2048 / 2) + 1040, -(2048 / 2) + 70);
+                _player.Update(gameTime);
+                
+            }
+            if (wizard.CheckEndRevive)
+            {
+                _player.Health = HealthAnimation.HealthState.Health100;
+                _health.Update(gameTime);
+                wizard.SetAnimationState(AnimationState.Walk);
+                _player.Update(gameTime);  
             }
             for (int i = 0; i < _triggers.Count; i++)
             {
@@ -457,9 +471,7 @@ namespace WizardsNeverDie.Level
             //if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
             if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.X) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
             {
-                MeleeRedIfritAnimation _creatureAnimation = new MeleeRedIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
-                _creatureAnimation.AnimationName = "ifrit_d_walk";
-                _creatures.Add(new MeleeRedIfrit(_creatureAnimation, _player, ifritPosition, 1.5f, 1.5f, 15F));
+                _player.Health = HealthAnimation.HealthState.Health0;
             }
 
             if (wizard.CheckEndSpell == true)
@@ -600,7 +612,7 @@ namespace WizardsNeverDie.Level
                 {
                     Farseer.Instance.World.RemoveBody(_triggers2[i].Bodies[0]);
                     _triggers2.Remove(_triggers2[i]);
-                    chatBody.Dispose();
+                    Farseer.Instance.World.RemoveBody(chatBody.getBody().Bodies[0]);
                     
                 }
             }
