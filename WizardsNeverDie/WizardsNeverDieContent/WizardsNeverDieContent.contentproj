@@ -164,6 +164,7 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Compile Include="Materials\level1_2.png">
       <Name>level1_2</Name>
@@ -199,6 +200,12 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
+    <Content Include="Conversations\conversation7.xml">
+      <Name>conversation7</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Explosion\explosion.txt">
       <Name>explosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -110,6 +110,7 @@
     <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\Health.cs" />
     <Compile Include="Entities\Odin.cs" />
+    <Compile Include="Entities\OdinHealth.cs" />
     <Compile Include="Entities\Oracle.cs" />
     <Compile Include="Entities\PlasmaWall.cs" />
     <Compile Include="Entities\WizardPlasma.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Entities\RangedPurpleIfrit.cs" />
     <Compile Include="Entities\RangedPurplePlasma.cs" />
     <Compile Include="Entities\Spawner.cs" />
+    <Compile Include="Entities\WizardWall.cs" />
     <Compile Include="Farseer\BasicBody.cs" />
     <Compile Include="Farseer\PhysicsBody.cs" />
     <Compile Include="Farseer\PlasmaBody.cs" />

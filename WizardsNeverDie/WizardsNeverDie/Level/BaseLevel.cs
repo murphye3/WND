@@ -19,7 +19,9 @@ namespace WizardsNeverDie.Level
         private BackgroundScreen test;
         public Vector2 ifritPosition = new Vector2(0, -20);
         public int potionCount;
-
+        public int _greenKeyCount = 0;
+        public int _blueKeyCount = 0;
+        public int _redKeyCount = 0;
         public override void LoadContent()
         {
             base.LoadContent();

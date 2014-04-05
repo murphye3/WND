@@ -415,10 +415,10 @@ namespace WizardsNeverDie.Level
                     KeyAnimation keyAnimation = new KeyAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Keys\\keys"), new StreamReader(@"Content/Sprites/Keys/keys.txt"), 9f);
                     keyAnimation.AnimationName = "keyblue_d_rotating";
                     keyAnimation.SetAnimationState(AnimationState.Rotating);
+                    _blueKey.Add(new Key(keyAnimation, _purpleCreatures[i].Position, ConvertUnits.ToSimUnits(5), ConvertUnits.ToSimUnits(15)));
                     MessageAction wAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"), "conversation4.xml");
                     _actions1.Add(wAction);
                     _triggers2.Add(new TriggerBody(ConvertUnits.ToSimUnits(5), ConvertUnits.ToSimUnits(15),_purpleCreatures[i].Position,1f, _actions1));
-                    _blueKey.Add(new Key(keyAnimation, _purpleCreatures[i].Position, ConvertUnits.ToSimUnits(5), ConvertUnits.ToSimUnits(15)));
                     explosionSprite.AnimationName = "ifrit_d_explosion";
                     _explosions.Add(new Explosion(explosionSprite, _purpleCreatures[i].Position + new Vector2(0, -1), .01f, .01f));
                     Farseer.Instance.World.RemoveBody(_purpleCreatures[i].getBody().Bodies[0]);

@@ -8,8 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 using WizardsNeverDie.Entities;
 namespace WizardsNeverDie.Animation
 {
-    class OdinAnimation : SpriteAnimation
+    public class OdinAnimation : SpriteAnimation
     {
+        private bool _odinIsDead;
         private AnimationState _previousAnimation;
         public OdinAnimation()
         {
@@ -49,6 +50,10 @@ namespace WizardsNeverDie.Animation
             if (this.GetAnimationState() == AnimationState.Revived)
             {
                 Revived(gameTime);
+            }
+            if (this.GetAnimationState() == AnimationState.OdinDeath)
+            {
+                OdinDeath(gameTime);
             }
         }
         public void Attack(GameTime gameTime)
@@ -155,6 +160,44 @@ namespace WizardsNeverDie.Animation
             }
         }
 
+        public void OdinDeath(GameTime gameTime)
+        {
+
+            if (timeElapsed > TimeToUpdate)
+            {
+                IsMoving = true;
+                InChainAnimation = true;
+                _frameIndex++;
+                if (_frameIndex > Animations[AnimationName].NumOfFrames - 1)
+                {
+                    InChainAnimation = false;
+                    _frameIndex = 0;
+                    OdinIsDead = true;
+                }
+                else
+                {
+                    if (_frameIndex < 4)
+                    {
+                        this.TimeToUpdate = 5f;
+                    }
+                    else
+                    {
+                        this.TimeToUpdate = 5f;
+                    }
+                    timeElapsed -= TimeToUpdate;
+                    _frameIndex %= Animations[AnimationName].NumOfFrames;
+                }
+
+                //else
+                //{
+                //    //FrameIndex %= Animations[this.Animation].NumOfFrames;
+                //    // Keep the Frame between 0 and the total frames, minus one.
+                //    FrameIndex++;
+                //    timeElapsed -= 1 / this.FramesPerSecond;
+                //}
+            }
+        }
+
         public void Stop(GameTime gameTime)
         {
             _frameIndex = 0;
@@ -193,7 +236,17 @@ namespace WizardsNeverDie.Animation
                     _frameIndex = 0;
                     IsMoving = true;
                     InChainAnimation = true;
-                    
+
+                }
+                else if (state == AnimationState.OdinDeath)
+                {
+                    this.PreviousAnimationState = this.GetAnimationState();
+                    this.TimeToUpdate = 5f;
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "odindeath";
+                    _frameIndex = 0;
+                    IsMoving = true;
+                    InChainAnimation = true;
+
                 }
                 else
                 {
@@ -215,6 +268,17 @@ namespace WizardsNeverDie.Animation
                 _previousAnimation = value;
             }
         }
+        public bool OdinIsDead
+        {
+            get
+            {
+                return _odinIsDead;
+            }
+            set
+            {
+                _odinIsDead = value;
+            }
+        }
         public override AnimationState GetAnimationState()
         {
             if (!IsMoving)
@@ -233,6 +297,10 @@ namespace WizardsNeverDie.Animation
             else if (state == "revive")
             {
                 return AnimationState.Revived;
+            }
+            else if (state == "odindeath")
+            {
+                return AnimationState.OdinDeath;
             }
             else
             {

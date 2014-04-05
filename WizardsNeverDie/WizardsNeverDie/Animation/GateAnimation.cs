@@ -13,7 +13,7 @@ namespace WizardsNeverDie.Animation
         public GateAnimation(Texture2D texture, StreamReader sr, float timeToUpdate)
             : base(texture, sr)
         {
-            this.TimeToUpdate = timeToUpdate;
+            this.TimeToUpdate = 15f;
             _frameIndex = 0;
             IsMoving = true;
             InChainAnimation = false;
@@ -22,6 +22,7 @@ namespace WizardsNeverDie.Animation
 
         public override void Update(GameTime gameTime)
         {
+            
             //if(timeElapsed>TimeToUpdate)
             base.Update(gameTime);
 
@@ -29,12 +30,39 @@ namespace WizardsNeverDie.Animation
             {
                 Open(gameTime);
             }
+            if (this.GetAnimationState() == AnimationState.Close)
+            {
+                Close(gameTime);
+            }
         }
 
         private void Open(GameTime gameTime)
         {
+            
             if (timeElapsed > TimeToUpdate)
             {
+                
+                _frameIndex++;
+                if (_frameIndex > Animations[AnimationName].NumOfFrames - 1)
+                {
+                    _frameIndex = Animations[AnimationName].NumOfFrames - 1;
+                    InChainAnimation = true;
+                    timeElapsed -= TimeToUpdate;
+                }
+                else
+                {
+                    timeElapsed -= TimeToUpdate;
+                    _frameIndex %= Animations[AnimationName].NumOfFrames;
+                }
+
+            }
+        }
+        private void Close(GameTime gameTime)
+        {
+            
+            if (timeElapsed > TimeToUpdate)
+            {
+                
                 _frameIndex++;
                 if (_frameIndex > Animations[AnimationName].NumOfFrames - 1)
                 {
@@ -62,6 +90,13 @@ namespace WizardsNeverDie.Animation
                     _frameIndex = 0;
                     IsMoving = true;
                     InChainAnimation = true;
+                }else if (state == AnimationState.Close)
+                {
+                    //this.FramesPerSecond = 5f;
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "close";
+                    _frameIndex = 0;
+                    IsMoving = true;
+                    InChainAnimation = true;
                 }
                 else
                 {
@@ -82,6 +117,10 @@ namespace WizardsNeverDie.Animation
             if (state == "open")
             {
                 return AnimationState.Open;
+            }
+            else if (state == "close")
+            {
+                return AnimationState.Close;
             }
             else
             {

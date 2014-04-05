@@ -47,6 +47,10 @@ namespace WizardsNeverDie.Entities
                 
                 return false;
             }
+            if (collidedWith is WizardWall)
+            {
+                return false;
+            }
             return true;
         }
         public WizardsNeverDie.Animation.HealthAnimation.HealthState Health
