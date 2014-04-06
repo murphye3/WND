@@ -607,7 +607,7 @@ namespace WizardsNeverDie.Level
                     RangedPurpleIfritAnimation _purpleCreatureAnimation = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
                         new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
                     _purpleCreatureAnimation.AnimationName = "ifrit_d_walk";
-                    _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation, _player, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1470 + (1f / 2), -(2048 / 2) + (1f / 2) + 1019)), 1.5f, 1.5f, 100F, 15f));
+                    _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation, _player, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1470 + (1f / 2), -(2048 / 2) + (1f / 2) + 1019)), 1.5f, 1.5f, 100F, 15f, false));
                 }else
                 {
                     _oracle[i].Update(gameTime);

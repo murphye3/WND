@@ -71,7 +71,11 @@ namespace WizardsNeverDie.Entities
                 //if (animation.PreviousAnimationState = AnimationState.Walk && animation.GetAnimationState() == AnimationState.Walk)
                     if (player.Health == HealthAnimation.HealthState.Health100)
                         player.Health = HealthAnimation.HealthState.Health50;
+                    if (player.Health == HealthAnimation.HealthState.Health75)
+                        player.Health = HealthAnimation.HealthState.Health25;
                     else if (player.Health == HealthAnimation.HealthState.Health50)
+                        player.Health = HealthAnimation.HealthState.Health0;
+                    else if (player.Health == HealthAnimation.HealthState.Health25)
                         player.Health = HealthAnimation.HealthState.Health0;
                 //}
             }

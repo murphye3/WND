@@ -86,7 +86,7 @@ namespace WizardsNeverDie.Level
             
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
             _wizard.AnimationName = "wizard_d_walk";
-            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 1040, -(2048 / 2) + 70));
+            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 1040, -(2048 / 2) + 60));
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
@@ -107,6 +107,22 @@ namespace WizardsNeverDie.Level
             
             PlasmaWall leftWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 985 + (10 / 2), -(2048 / 2) + (1079 / 2) + 0)), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(1079));
             PlasmaWall rightWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1085 + (10 / 2), -(2048 / 2) + (1079 / 2) + 0)), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(1079));
+            PlasmaWall rightIfritWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1180 + (10/2), -(2048 / 2) + 0 + (962/2))), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(962));
+            PlasmaWall leftIfritWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 890 + (10 / 2), -(2048 / 2) + 0 + (962 / 2))), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(962));
+            PlasmaWall rightSideIfritVertWall2 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 290)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall3 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 457)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall4 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 620)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall5 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 787)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall6 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 120)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall7 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 953)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+
+
+            PlasmaWall leftSideIfritVertWall2 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 290)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall3 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 457)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall4 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 620)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall5 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 787)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall6 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 120)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall7 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 953)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
             Body circleArena = BodyFactory.CreateEdge(world, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 871 + (1), -(2048 / 2) + (1) + 1099)),
                 ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 987 + (10 / 2), -(2048 / 2) + (1) + 1074))) ;
             Body circleArena2 = BodyFactory.CreateEdge(world, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 871 + (1), -(2048 / 2) + (1) + 1099)),
@@ -157,15 +173,55 @@ namespace WizardsNeverDie.Level
 
         public void GenereateCreatures()
         {
-            //RangedPurpleIfritAnimation _purpleCreatureAnimation = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
-            //    new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
-            //_purpleCreatureAnimation.AnimationName = "ifrit_d_walk";
-            //_purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1240, -(2048 / 2) + 587), 1.5f, 1.5f, 11F, 10f));
+            RangedPurpleIfritAnimation _purpleCreatureAnimation = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation, _player, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 847 + (50 / 2), -(2048 / 2) + 645 + (50 / 2))), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11F, 10f, true));
 
-            //RangedPurpleIfritAnimation _purpleCreatureAnimation2 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
-            //    new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
-            //_purpleCreatureAnimation2.AnimationName = "ifrit_d_walk";
-            //_purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation2, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 872, -(2048 / 2) + 362), 1.5f, 1.5f, 11F, 10f));
+            RangedPurpleIfritAnimation _purpleCreatureAnimation2 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation2.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation2, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1200 + (50 / 2), -(2048 / 2) + 240 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 9f, 8f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation3 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation3.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation3, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1197 + (50 / 2), -(2048 / 2) + 475 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11F, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation4 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation4.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation4, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1205 + (50 / 2), -(2048 / 2) + 693 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11F, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation5 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation5.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation5, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 843 + (50 / 2), -(2048 / 2) + 243 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 9f, 8f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation6 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation6.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation6, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1212 + (50 / 2), -(2048 / 2) + 400 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11f, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation7 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation7.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation7, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 830 + (50 / 2), -(2048 / 2) + 360 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11f, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation8 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation8.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation8, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 742 + (50 / 2), -(2048 / 2) + 468 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 15f, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation9 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation9.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation9, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1205 + (50 / 2), -(2048 / 2) + 900 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11f, 10f, true));
+            
+            RangedPurpleIfritAnimation _purpleCreatureAnimation10 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+               new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation10.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation10, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 850 + (50 / 2), -(2048 / 2) + 813 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 15f, 10f, true));
             
             odinAnimation = new OdinAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Odin\\odin"), new StreamReader(@"Content/Sprites/Odin/odin.txt"));
             odinAnimation.AnimationName = "odin_u_walk";
@@ -497,12 +553,12 @@ namespace WizardsNeverDie.Level
                     Farseer.Instance.World.RemoveBody(_purpleCreatures[i].getBody().Bodies[0]);
                     _purpleCreatures.Remove(_purpleCreatures[i]);
                     _creaturesKilled = _creaturesKilled++;
-
                 }
                 else if (enemy.CheckEndSpell == true)
                 {
                     PurpleSpell(_purpleCreatures[i], 300);
                     _purpleCreatures[i].Update(gameTime);
+                    enemy.CheckEndSpell = false;
                 }
                 else
                 {

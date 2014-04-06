@@ -10,6 +10,7 @@ using WizardsNeverDie.Physics;
 using WizardsNeverDie.Entities;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using System.Diagnostics;
 namespace WizardsNeverDie.Intelligence
 {
     public class PurpleCreatureIntelligence : AbstractIntelligence
@@ -23,6 +24,7 @@ namespace WizardsNeverDie.Intelligence
         protected TimeSpan swapCooldown = TimeSpan.FromSeconds(6d);
         protected float _targetDistance;
         protected float _attackDistance;
+        Stopwatch swapWatch = new Stopwatch();
         public PurpleCreatureIntelligence(AbstractCreature creature, AbstractCreature target, float speed, float targetDistance, float attackDistance)
         {
             this.creature = creature;
@@ -37,24 +39,31 @@ namespace WizardsNeverDie.Intelligence
         }
         public bool canSwap(Orientation current)
         {
-
+            swapTimer = swapWatch.Elapsed;
             bool canSwap = true;
-            if (swapTimer < swapCooldown)
+            if (swapTimer.Milliseconds < swapCooldown.Milliseconds)
             {
-                switch (current)
-                {
-                    case Orientation.Down: if (lastOrientation == Orientation.DownLeft || lastOrientation == Orientation.DownRight) canSwap = false; break;
-                    case Orientation.Up: if (lastOrientation == Orientation.UpLeft || lastOrientation == Orientation.UpRight) canSwap = false; break;
-                    case Orientation.Left: if (lastOrientation == Orientation.DownLeft || lastOrientation == Orientation.UpLeft) canSwap = false; break;
-                    case Orientation.Right: if (lastOrientation == Orientation.DownRight || lastOrientation == Orientation.UpRight) canSwap = false; break;
-                    case Orientation.DownLeft: if (lastOrientation == Orientation.Left || lastOrientation == Orientation.Down) canSwap = false; break;
-                    case Orientation.DownRight: if (lastOrientation == Orientation.Down || lastOrientation == Orientation.Right) canSwap = false; break;
-                    case Orientation.UpLeft: if (lastOrientation == Orientation.Left || lastOrientation == Orientation.Up) canSwap = false; break;
-                    case Orientation.UpRight: if (lastOrientation == Orientation.Up || lastOrientation == Orientation.Right) canSwap = false; break;
-                    default: break;
-                }
-            }
 
+                //switch (current)
+                //{
+                //    //case Orientation.Down: if (lastOrientation == Orientation.DownLeft || lastOrientation == Orientation.DownRight) canSwap = false; break;
+                //    //case Orientation.Up: if (lastOrientation == Orientation.UpLeft || lastOrientation == Orientation.UpRight) canSwap = false; break;
+                //    //case Orientation.Left: if (lastOrientation == Orientation.DownLeft || lastOrientation == Orientation.UpLeft) canSwap = false; break;
+                //    //case Orientation.Right: if (lastOrientation == Orientation.DownRight || lastOrientation == Orientation.UpRight) canSwap = false; break;
+                //    //case Orientation.DownLeft: if (lastOrientation == Orientation.Left || lastOrientation == Orientation.Down) canSwap = false; break;
+                //    //case Orientation.DownRight: if (lastOrientation == Orientation.Down || lastOrientation == Orientation.Right) canSwap = false; break;
+                //    //case Orientation.UpLeft: if (lastOrientation == Orientation.Left || lastOrientation == Orientation.Up) canSwap = false; break;
+                //    //case Orientation.UpRight: if (lastOrientation == Orientation.Up || lastOrientation == Orientation.Right) canSwap = false; break;
+                //    //default: break;
+
+                //}
+                canSwap = false;
+            }
+            else
+            {
+                swapWatch.Reset();
+                swapWatch.Stop();
+            }
             return canSwap;
         }
 
@@ -90,6 +99,7 @@ namespace WizardsNeverDie.Intelligence
 
         public override void Update(GameTime gameTime)
         {
+            swapWatch.Start();
             if (target == null)
                 return;
             bool canMove = true;
