@@ -30,7 +30,8 @@ namespace WizardsNeverDie.Animation
         Lock,
         Rotating,
         Revived,
-        OdinDeath
+        OdinDeath,
+        TrippinForward
     }
 
     [Flags]
@@ -241,6 +242,9 @@ namespace WizardsNeverDie.Animation
                     break;
                 case AnimationState.OdinDeath:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "odindeath";
+                    break;
+                case AnimationState.TrippinForward:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "forward";
                     break;
             }
         }

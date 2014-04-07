@@ -19,6 +19,7 @@ namespace WizardsNeverDie.Level
 {
     public class Level1_1: BaseLevel
     {
+        private bool _checkTrigger = false;
         List<IAction> _actions1 = new List<IAction>();
         private List<Key> _blueKey = new List<Key>();
         private List<Key> _greenKey = new List<Key>();
@@ -43,6 +44,7 @@ namespace WizardsNeverDie.Level
         private List<Spawner> _spawners = new List<Spawner>();
         private List<TriggerBody> _triggers = new List<TriggerBody>();
         private List<TriggerBody> _triggers2 = new List<TriggerBody>();
+        private List<TriggerBody> _triggers3 = new List<TriggerBody>();
         private List<Potions> _potion = new List<Potions>();
         private List<PotionExplosion> _potionExplosion = new List<PotionExplosion>();
         bool firstTime = true;
@@ -117,7 +119,7 @@ namespace WizardsNeverDie.Level
             PlasmaWall bottomPlatformWall2 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 967 + (25 / 2), -(2048 / 2) + (23 / 2) + 1049)), ConvertUnits.ToSimUnits(25), ConvertUnits.ToSimUnits(23));
             PlasmaWall bottomPlatformWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 1072)), ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17));
             PlasmaWall topPlatformWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 975 + (96 / 2), -(2048 / 2) + (17 / 2) + 961)), ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(17));
-            _trigger = new TriggerBody(ConvertUnits.ToSimUnits(24), ConvertUnits.ToSimUnits(80),ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 761 + (24 / 2), -(2048 / 2) + (80 / 2) + 986)), 1f);
+            _trigger = (new TriggerBody(ConvertUnits.ToSimUnits(24), ConvertUnits.ToSimUnits(80),ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 761 + (24 / 2), -(2048 / 2) + (80 / 2) + 986)), 1f));
             SwitchLevelAction toLevel1_2 = new SwitchLevelAction(ScreenManager, this, new Level1_2());
             List<IAction> nextLevelActions = new List<IAction>();
             nextLevelActions.Add(toLevel1_2);
@@ -570,6 +572,14 @@ namespace WizardsNeverDie.Level
             for (int i = 0; i < _triggers.Count; i++)
             {
                 bool removeTrigger = true;
+                for (int j = 0; j < _plasma.Count; j++)
+                {
+                    _triggers[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                }
+                for (int j = 0; j < _purplePlasma.Count; j++)
+                {
+                    _triggers[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                }
                 for (int j = 0; j < _triggers[i].ActionList.Count; j++)
                 {
                     if (_triggers[i].ActionList[j].IsDead == false)
@@ -579,8 +589,16 @@ namespace WizardsNeverDie.Level
                 }
                 if (removeTrigger)
                 {
+
                     Farseer.Instance.World.RemoveBody(_triggers[i].Bodies[0]);
                     _triggers.Remove(_triggers[i]);
+                }
+            }
+            if (_checkTrigger == false)
+            {
+                for (int i = 0; i < _plasma.Count; i++)
+                {
+                    _trigger.Bodies[0].IgnoreCollisionWith(_plasma[i].getBody().Bodies[0]);
                 }
             }
             //oracle stufffff
@@ -594,6 +612,7 @@ namespace WizardsNeverDie.Level
                 _purplePlasma.Add(new RangedPurplePlasma(plasmaSprite,  ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1470 + (1f / 2), -(2048 / 2) + (1f / 2) + 1019)), new Vector2(-85, 0)));
                 Farseer.Instance.World.RemoveBody(_trigger.Bodies[0]);
                 _trigger.IsDead = false;
+                _checkTrigger = true;
             }
             for (int i = 0; i < _oracle.Count; i++)
             {
@@ -669,6 +688,14 @@ namespace WizardsNeverDie.Level
             for (int i = 0; i < _triggers2.Count; i++)
             {
                 bool removeTrigger = true;
+                for (int j = 0; j < _plasma.Count; j++)
+                {
+                    _triggers2[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                }
+                for (int j = 0; j < _purplePlasma.Count; j++)
+                {
+                    _triggers2[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                }
                 for (int j = 0; j < _triggers2[i].ActionList.Count; j++)
                 {
                     if (_triggers2[i].ActionList[j].IsDead == false)

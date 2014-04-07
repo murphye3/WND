@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -14,50 +19,25 @@ using WizardsNeverDie.Level;
 using WizardsNeverDie.Animation;
 using WizardsNeverDie.Intelligence;
 using System.IO;
-using FarseerPhysics.Dynamics;
-using FarseerPhysics.Factories;
 
 namespace WizardsNeverDie.Entities
 {
-    public class Key : AbstractEntity
+    class TrippinTrees : AbstractEntity
     {
-        private bool _isCollected;
-        public Key(SpriteAnimation animation, Vector2 position, float width, float height)
+        private Vector2 _position;
+        public TrippinTrees(SpriteAnimation animation,  Vector2 position)
         {
             this.spriteManager = animation;
             animation.Position = position;
-            this.body = new StaticBody(this, position, width, height);
-            
         }
         public void Update(GameTime gameTime)
         {
-            spriteManager.Position = new Vector2(body.Position.X, body.Position.Y);
             spriteManager.Update(gameTime);
         }
 
         public override bool WillCollide(AbstractEntity collidedWith)
         {
-            if (collidedWith is Wizard)
-            {
-                this.IsCollected = true;
-            }
-            else
-            {
-                this.IsCollected = false;
-            }
             return false;
-        }
-
-        public bool IsCollected
-        {
-            get
-            {
-                return _isCollected;
-            }
-            set
-            {
-                _isCollected = value;
-            }
         }
     }
 }

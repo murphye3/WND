@@ -90,6 +90,8 @@
     <Compile Include="Animation\HealthAnimation.cs" />
     <Compile Include="Animation\OdinAnimation.cs" />
     <Compile Include="Animation\OracleAnimation.cs" />
+    <Compile Include="Animation\TeleporterAnimation.cs" />
+    <Compile Include="Animation\TrippinTreesAnimation.cs" />
     <Compile Include="Animation\WizardPlasmaAnimation.cs" />
     <Compile Include="Animation\PotionExplosionAnimation.cs" />
     <Compile Include="Animation\RangedPurpleIfritAnimation.cs" />
@@ -113,6 +115,8 @@
     <Compile Include="Entities\OdinHealth.cs" />
     <Compile Include="Entities\Oracle.cs" />
     <Compile Include="Entities\PlasmaWall.cs" />
+    <Compile Include="Entities\Teleporter.cs" />
+    <Compile Include="Entities\TrippinTrees.cs" />
     <Compile Include="Entities\WizardPlasma.cs" />
     <Compile Include="Entities\Wizard.cs" />
     <Compile Include="Entities\Brick.cs" />
@@ -130,6 +134,7 @@
     <Compile Include="Intelligence\OdinIntelligence.cs" />
     <Compile Include="Level\Level1_1.cs" />
     <Compile Include="Level\Level1_2.cs" />
+    <Compile Include="Level\Level1_3.cs" />
     <Compile Include="Level\TestLevel.cs" />
     <Compile Include="Trigger\IAction.cs" />
     <Compile Include="Trigger\MessageAction.cs" />

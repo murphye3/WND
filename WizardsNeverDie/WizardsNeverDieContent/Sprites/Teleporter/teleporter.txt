@@ -1,0 +1,12 @@
+blueteleporter_d_open-1 = 8 6 95 110
+blueteleporter_d_open-2 = 114 5 95 110
+blueteleporter_d_open-3 = 217 4 95 110
+redteleporter_d_open-1 = 8 118 95 110
+redteleporter_d_open-2 = 114 117 95 110
+redteleporter_d_open-3 = 217 116 95 110
+greenteleporter_d_open-1 = 8 229 95 110
+greenteleporter_d_open-2 = 114 228 95 110
+greenteleporter_d_open-3 = 217 227 95 110
+yellowteleporter_d_open-1 = 8 362 95 110
+yellowteleporter_d_open-2 = 114 361 95 110
+yellowteleporter_d_open-3 = 217 360 95 110

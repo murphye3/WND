@@ -70,6 +70,14 @@ namespace WizardsNeverDie.Entities
                 this.IsDeadOnEnemy = true;
                 return false;
             }
+            if (collidedWith is Teleporter)
+            {
+                Teleporter teleporter = (Teleporter)collidedWith;
+                teleporter.PlasmaCollided = true;
+                this.IsDead = false;
+                this.IsDeadOnEnemy = true;
+                return false;
+            }
             if (collidedWith is WizardPlasma)
             {
                 return false;
@@ -77,7 +85,7 @@ namespace WizardsNeverDie.Entities
             if (collidedWith is RangedPurplePlasma)
             {
                 this._isDead = true;
-                return false;
+                return true;
             }
             if (collidedWith is Gotfraggon)
             {
@@ -96,7 +104,7 @@ namespace WizardsNeverDie.Entities
                 this._isDeadOnEnemy = true;
                 return false;
             }
-            this._isDead = true;
+            this.IsDead = true;
             return true;
         }
 

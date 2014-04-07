@@ -51,6 +51,15 @@ namespace WizardsNeverDie.Entities
             {
                 return false;
             }
+            if (collidedWith is Teleporter)
+            {
+                Teleporter teleporter = (Teleporter)collidedWith;
+                teleporter.Collided = true;
+            }
+            if (collidedWith is RangedPurplePlasma)
+            {
+                return false;
+            }
             return true;
         }
         public WizardsNeverDie.Animation.HealthAnimation.HealthState Health

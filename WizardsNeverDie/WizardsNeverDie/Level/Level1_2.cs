@@ -30,7 +30,7 @@ namespace WizardsNeverDie.Level
         private List<Key> _redKey = new List<Key>();
         private Body oracleCutSceneBlock;
         private Wizard _player;
-        private TriggerBody _checkGate;
+        private List<TriggerBody> _checkGate = new List<TriggerBody>();
         private WizardAnimation _wizard;
         private OracleAnimation _oracleAnimation;
         private List<Oracle> _oracle = new List<Oracle>();
@@ -167,7 +167,7 @@ namespace WizardsNeverDie.Level
             _actions3.Add(oAction2);
             _triggers2.Add(new TriggerBody(ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1045)), 1f, _actions2));
             //chatBody = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1050)), ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17));
-            _checkGate = new TriggerBody(ConvertUnits.ToSimUnits(300), ConvertUnits.ToSimUnits(5), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1015 + (24 / 2), -(2048 / 2) + (86 / 2) + 1100)), 1f);
+            _checkGate.Add(new TriggerBody(ConvertUnits.ToSimUnits(300), ConvertUnits.ToSimUnits(5), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1015 + (24 / 2), -(2048 / 2) + (86 / 2) + 1100)), 1f));
         }
 
 
@@ -356,19 +356,8 @@ namespace WizardsNeverDie.Level
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            if (_checkGate.IsDead)
-            {
-                Farseer.Instance.World.RemoveBody(_checkGate.Bodies[0]);
-                _blockGate = BodyFactory.CreateRectangle(world, 4f, 1f, 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1031 + (16 / 2), -(2048 / 2) + (227 / 2) + 975)));
-                _checkGate.IsDead = false;
-                blueGateAnimation.AnimationName = _blueGates[0].SpriteManager.AnimationName.Split('_')[0] + '_' + _blueGates[0].SpriteManager.AnimationName.Split('_')[1] + '_' + "close";
-                blueGateAnimation.SetAnimationState(AnimationState.Close);
-                blueGateAnimation.TimeToUpdate = 50f;
-                blueGateAnimation.FrameIndex = 0;
-                blueGateAnimation.Update(gameTime);
-                _blueGates[0].Update(gameTime);
-                _odin.TargetDistance = 50f; 
-            }
+            
+        
             
             if (odinAnimation.OdinIsDead)
             {
@@ -648,20 +637,22 @@ namespace WizardsNeverDie.Level
 
             for (int i = 0; i < _plasma.Count; i++)//(Plasma p in _plasma)
             {
-                if (_plasma[i].IsDead)
-                {
-                    explosionSprite.AnimationName = "ifrit_d_explosion";
-                    _explosions.Add(new Explosion(explosionSprite, _plasma[i].Position + new Vector2(0, -1), .01f, .01f));
-                    Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
-                    _plasma.Remove(_plasma[i]);
-                }
-                else if (_plasma[i].IsDeadOnEnemy)
-                {
-                    Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
-                    _plasma.Remove(_plasma[i]);
-                }
-                else
-                    _plasma[i].Update(gameTime);
+
+
+                    if (_plasma[i].IsDead)
+                    {
+                        explosionSprite.AnimationName = "ifrit_d_explosion";
+                        _explosions.Add(new Explosion(explosionSprite, _plasma[i].Position + new Vector2(0, -1), .01f, .01f));
+                        Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
+                        _plasma.Remove(_plasma[i]);
+                    }
+                    else if (_plasma[i].IsDeadOnEnemy)
+                    {
+                        Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
+                        _plasma.Remove(_plasma[i]);
+                    }
+                    else
+                        _plasma[i].Update(gameTime);
             }
             for (int i = 0; i < _purplePlasma.Count; i++)//(Plasma p in _plasma)
             {
@@ -697,9 +688,45 @@ namespace WizardsNeverDie.Level
                     _spawners[i].Update(gameTime);
                 }
             }
+            for (int i = 0; i < _checkGate.Count; i++)
+            {
+                for (int j = 0; j < _plasma.Count; j++)
+                {
+                    _checkGate[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                }
+                for (int j = 0; j < _purplePlasma.Count; j++)
+                {
+                    _checkGate[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                }
+                if (_checkGate[i].IsDead)
+                {
+                    Farseer.Instance.World.RemoveBody(_checkGate[i].Bodies[0]);
+                    _blockGate = BodyFactory.CreateRectangle(world, 4f, 1f, 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1031 + (16 / 2), -(2048 / 2) + (227 / 2) + 975)));
+                    _checkGate[i].IsDead = false;
+                    blueGateAnimation.AnimationName = _blueGates[0].SpriteManager.AnimationName.Split('_')[0] + '_' + _blueGates[0].SpriteManager.AnimationName.Split('_')[1] + '_' + "close";
+                    blueGateAnimation.SetAnimationState(AnimationState.Close);
+                    blueGateAnimation.TimeToUpdate = 50f;
+                    blueGateAnimation.FrameIndex = 0;
+                    blueGateAnimation.Update(gameTime);
+                    _blueGates[0].Update(gameTime);
+                    _odin.TargetDistance = 50f;
+                    _checkGate.Remove(_checkGate[i]);
+                }
+                else
+                {
 
+                }
+            }
             for (int i = 0; i < _triggers.Count; i++)
             {
+                for (int j = 0; j < _plasma.Count; j++)
+                {
+                    _triggers[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                }
+                for (int j = 0; j < _purplePlasma.Count; j++)
+                {
+                    _triggers[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                }
                 bool removeTrigger = true;
                 for (int j = 0; j < _triggers[i].ActionList.Count; j++)
                 {
@@ -721,6 +748,14 @@ namespace WizardsNeverDie.Level
             for (int i = 0; i < _triggers2.Count; i++)
             {
                 bool removeTrigger = true;
+                for (int j = 0; j < _plasma.Count; j++)
+                {
+                    _triggers2[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                }
+                for (int j = 0; j < _purplePlasma.Count; j++)
+                {
+                    _triggers2[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                }
                 for (int j = 0; j < _triggers2[i].ActionList.Count; j++)
                 {
                     if (_triggers2[i].ActionList[j].IsDead == false)
@@ -739,6 +774,14 @@ namespace WizardsNeverDie.Level
 
             for (int i = 0; i < _triggers3.Count; i++)
             {
+                for (int j = 0; j < _plasma.Count; j++)
+                {
+                    _triggers3[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                }
+                for (int j = 0; j < _purplePlasma.Count; j++)
+                {
+                    _triggers3[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                }
                 bool removeTrigger = true;
                 for (int j = 0; j < _triggers3[i].ActionList.Count; j++)
                 {
@@ -816,7 +859,7 @@ namespace WizardsNeverDie.Level
                     _redKey[i].Update(gameTime);
                 }
             }
-
+            
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
