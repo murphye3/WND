@@ -37,7 +37,7 @@ namespace WizardsNeverDie.Entities
         }
         public void Update(GameTime gameTime)
         {
-            
+            this.getBody().Bodies[0].ResetDynamics();
             spriteManager.Position = body.Position;
             spriteManager.Update(gameTime);
             o.TargetDistance = this.TargetDistance;

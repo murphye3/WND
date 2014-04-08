@@ -25,6 +25,7 @@ namespace WizardsNeverDie.Entities
         
         public MeleeRedIfrit(MeleeRedIfritAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height, float targetDistance)
         {
+            this.getBody().Bodies[0].ResetDynamics();
             this.spriteManager = spriteManager;
             this.body = new BasicBody(this, position, 1f);
             this.intelligence = new CreatureIntelligence(this, target, .05f, targetDistance);

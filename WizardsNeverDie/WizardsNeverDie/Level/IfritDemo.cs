@@ -32,7 +32,7 @@ namespace WizardsNeverDie.Level
         private List<Spawner> _spawner = new List<Spawner>();
         private List<SpriteAnimation> _wallSprites;
         private List<WizardPlasma> _plasma = new List<WizardPlasma>();
-
+        private List<List<TriggerBody>> _allTriggers;
         private HealthAnimation _healthSprite;
         private Health _health;
 
@@ -68,7 +68,7 @@ namespace WizardsNeverDie.Level
             _spawnerSprite4.AnimationName = "portal_dl_spawning";
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
             _wizard.AnimationName = "wizard_d_walk";
-            _player = new Wizard(_wizard, new Vector2(0, 0));
+            _player = new Wizard(_wizard, new Vector2(0, 0), _plasma);
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);

@@ -32,6 +32,7 @@ namespace WizardsNeverDie.Entities
         {
             spriteManager.Position = new Vector2(body.Position.X, body.Position.Y);
             spriteManager.Update(gameTime);
+            
         }
 
         public override bool WillCollide(AbstractEntity collidedWith)
@@ -103,6 +104,11 @@ namespace WizardsNeverDie.Entities
                 
                 this._isDeadOnEnemy = true;
                 return false;
+            }
+            if (collidedWith is BouncingWall)
+            {
+                this.IsDead = false;
+                return true;
             }
             this.IsDead = true;
             return true;

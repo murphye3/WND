@@ -66,24 +66,28 @@ namespace WizardsNeverDie.Level
         int forcePower = 500;
         Stopwatch animationTimer = new Stopwatch();
         Boolean animationFinished = true;
-
+        private List<List<TriggerBody>> _allTriggers = new List<List<TriggerBody>>();
+        private SpriteManager _topOfLog;
         public Level1_3()
         {
             random = new Random();
             int test = initialTime.Seconds;
             levelDetails = "Level 1";
-            levelName = "Start Game: 1";
-            this.backgroundTextureStr = "Materials/Level1_Background";
+            levelName = "Level: 4";
+            this.backgroundTextureStr = "Materials/Level1_3";
         }
 
         public override void LoadContent()
         {
+            _topOfLog = new SpriteAnimation(ScreenManager.Content.Load<Texture2D>(("Materials\\MapSprites\\TopLog")), new StreamReader(@"Content/Materials/MapSprites/TopLog.txt"));
+            _topOfLog.AnimationName = "toplog_d_yolo";
             
             base.LoadContent();
             Farseer.Instance.World.ContactManager.OnBroadphaseCollision += MyOnBroadphaseCollision;
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
-            _wizard.AnimationName = "wizard_d_walk";
-            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 430, -(2048 / 2) + 135));
+            _wizard.AnimationName = "wizard_dr_walk";
+            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 80 + (50/2), -(2048 / 2) + 990 + (50/2)), _plasma);
+            _topOfLog.Position = _player.Position + new Vector2(64.8f, .15f);
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
@@ -239,7 +243,36 @@ namespace WizardsNeverDie.Level
         }
         private void GenerateWalls()
         {
-            
+            World world = Farseer.Instance.World;
+            Body bottomLeftTrees1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(444), ConvertUnits.ToSimUnits(85), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (444 / 2), -(2048 / 2) + (85 / 2) + 1066)));
+            Body bottomLeftTrees2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(66), ConvertUnits.ToSimUnits(263), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 378 + (66 / 2), -(2048 / 2) + (263 / 2) + 1150)));
+            Body bottomLeftTrees3 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(60), ConvertUnits.ToSimUnits(287), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (60 / 2), -(2048 / 2) + (287 / 2) + 1130)));
+            Body topLeftTrees1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(375), ConvertUnits.ToSimUnits(81), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (375 / 2), -(2048 / 2) + (81 / 2) + 900)));
+            Body topLeftTrees2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(72), ConvertUnits.ToSimUnits(335), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 374 + (72 / 2), -(2048 / 2) + (335 / 2) + 611)));
+            Body topLeftTrees3 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(67), ConvertUnits.ToSimUnits(287), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (67 / 2), -(2048 / 2) + (287 / 2) + 612)));
+            Body bottomRighTrees1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(67), ConvertUnits.ToSimUnits(350), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 825 + (67 / 2), -(2048 / 2) + (350 / 2) + 1065)));
+            Body bottomRightTrees2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(316), ConvertUnits.ToSimUnits(82), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 893 + (316 / 2), -(2048 / 2) + (82 / 2) + 1069)));
+            Body bottomRightTrees3 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(447), ConvertUnits.ToSimUnits(352), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1210 + (447 / 2), -(2048 / 2) + (352 / 2) + 1065)));
+            Body topRightTrees1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(67), ConvertUnits.ToSimUnits(361), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 823 + (67 / 2), -(2048 / 2) + (361 / 2) + 606)));
+            Body topRightTrees2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(311), ConvertUnits.ToSimUnits(78), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 891 + (311 / 2), -(2048 / 2) + (78 / 2) + 901)));
+            Body topRightTrees3 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(456), ConvertUnits.ToSimUnits(356), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1200 + (456 / 2), -(2048 / 2) + (356 / 2) + 612)));
+            Body yellowTree = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(65), ConvertUnits.ToSimUnits(78), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 475 + (65 / 2), -(2048 / 2) + (78 / 2) + 667)));
+            Body greenTree = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(65), ConvertUnits.ToSimUnits(78), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 729 + (65 / 2), -(2048 / 2) + (78 / 2) + 665)));
+            Body redTree = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(65), ConvertUnits.ToSimUnits(78), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 479 + (65 / 2), -(2048 / 2) + (78 / 2) + 1267)));
+            Body blueTree = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(65), ConvertUnits.ToSimUnits(78), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 731 + (65 / 2), -(2048 / 2) + (78 / 2) + 1270)));
+            Body statue1 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(54), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 619 + (32 / 2), -(2048 / 2) + (54 / 2) + 728)));
+            Body statue2 = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(54), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 619 + (32 / 2), -(2048 / 2) + (54 / 2) + 1240)));
+            Body bottomTrees = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(2050), ConvertUnits.ToSimUnits(634), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (2050 / 2), -(2048 / 2) + (634 / 2) + 1414)));
+            Body topTrees = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(2050), ConvertUnits.ToSimUnits(308), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 0 + (2050 / 2), -(2048 / 2) + (308 / 2) + 316)));
+            PlasmaWall rock = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 757 + (34/ 2), -(2048 / 2) + (32 / 2) + 1148)), ConvertUnits.ToSimUnits(34), ConvertUnits.ToSimUnits(32));
+            PlasmaWall rock2 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1747 + (34 / 2), -(2048 / 2) + (32 / 2) + 916)), ConvertUnits.ToSimUnits(34), ConvertUnits.ToSimUnits(32));
+            PlasmaWall rock3 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1810 + (34 / 2), -(2048 / 2) + (32 / 2) + 1087)), ConvertUnits.ToSimUnits(34), ConvertUnits.ToSimUnits(32));
+            PlasmaWall rockWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1898 + (34 / 2), -(2048 / 2) + (32 / 2) + 890)), ConvertUnits.ToSimUnits(34), ConvertUnits.ToSimUnits(32));
+            Body topLog = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(87), ConvertUnits.ToSimUnits(30), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1610 + (87 / 2), -(2048 / 2) + (30 / 2) + 963)));
+            Body bottomLog = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(84), ConvertUnits.ToSimUnits(36), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1612 + (84 / 2), -(2048 / 2) + (36 / 2) + 1047)));
+            Body topTempleWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(381), ConvertUnits.ToSimUnits(19), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1654 + (381 / 2), -(2048 / 2) + (19 / 2) + 862)));
+            Body bottomTempleWall = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(381), ConvertUnits.ToSimUnits(19), 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1654 + (381 / 2), -(2048 / 2) + (19 / 2) + 1162)));
+            BouncingWall bouncingTempleWall = new BouncingWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 2033 + (20 / 2), -(2048 / 2) + (315 / 2) + 863)), ConvertUnits.ToSimUnits(20), ConvertUnits.ToSimUnits(315));
         }
 
         private void GenereateCreatures()
@@ -260,36 +293,36 @@ namespace WizardsNeverDie.Level
         private void GenerateTeleporters()
         {
             TeleporterAnimation teleporterAnimation = new TeleporterAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Teleporter\\teleporter"), new StreamReader(@"Content/Sprites/Teleporter/teleporter.txt"), 15f);
-            teleporterAnimation.AnimationName = "blueteleporter_d_open";
-            _blueTeleporters.Add(new Teleporter(teleporterAnimation, _player.Position + new Vector2(-5, -5), 1f, 1f));
+            teleporterAnimation.AnimationName = "standardteleporter_d_open";
+            _blueTeleporters.Add(new Teleporter(teleporterAnimation,ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1140 + (50 / 2), -(2048 / 2) + (50 / 2) + 1290)), 1f, 1f));
 
             TeleporterAnimation teleporterAnimation2 = new TeleporterAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Teleporter\\teleporter"), new StreamReader(@"Content/Sprites/Teleporter/teleporter.txt"), 15f);
             teleporterAnimation2.AnimationName = "blueteleporter_d_open";
-            _blueTeleporters.Add(new Teleporter(teleporterAnimation2, _player.Position + new Vector2(-15, -5), 1f, 1f));
+            _blueTeleporters.Add(new Teleporter(teleporterAnimation2, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 477 + (50 / 2), -(2048 / 2) + (50 / 2) + 850)), 1f, 1f));
 
             TeleporterAnimation teleporterAnimation3 = new TeleporterAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Teleporter\\teleporter"), new StreamReader(@"Content/Sprites/Teleporter/teleporter.txt"), 15f);
-            teleporterAnimation3.AnimationName = "redteleporter_d_open";
-            _redTeleporters.Add(new Teleporter(teleporterAnimation3, _player.Position + new Vector2(20, 10), 1f, 1f));
+            teleporterAnimation3.AnimationName = "standardteleporter_d_open";
+            _redTeleporters.Add(new Teleporter(teleporterAnimation3, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 180 + (50 / 2), -(2048 / 2) + (50 / 2) + 1116)), 1f, 1f));
             
             TeleporterAnimation teleporterAnimation4 = new TeleporterAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Teleporter\\teleporter"), new StreamReader(@"Content/Sprites/Teleporter/teleporter.txt"), 15f);
             teleporterAnimation4.AnimationName = "redteleporter_d_open";
-            _redTeleporters.Add(new Teleporter(teleporterAnimation4, _player.Position + new Vector2(80, 20), 1f, 1f));
+            _redTeleporters.Add(new Teleporter(teleporterAnimation4, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 750 + (50 / 2), -(2048 / 2) + (50 / 2) + 1065)), 1f, 1f));
 
             TeleporterAnimation teleporterAnimation5 = new TeleporterAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Teleporter\\teleporter"), new StreamReader(@"Content/Sprites/Teleporter/teleporter.txt"), 15f);
-            teleporterAnimation5.AnimationName = "greenteleporter_d_open";
-            _greenTeleporters.Add(new Teleporter(teleporterAnimation5, _player.Position + new Vector2(30, 60), 1f, 1f));
+            teleporterAnimation5.AnimationName = "standardteleporter_d_open";
+            _greenTeleporters.Add(new Teleporter(teleporterAnimation5, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1010 + (50 / 2), -(2048 / 2) + (50 / 2) + 635)), 1f, 1f));
 
             TeleporterAnimation teleporterAnimation6 = new TeleporterAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Teleporter\\teleporter"), new StreamReader(@"Content/Sprites/Teleporter/teleporter.txt"), 15f);
             teleporterAnimation6.AnimationName = "greenteleporter_d_open";
-            _greenTeleporters.Add(new Teleporter(teleporterAnimation6, _player.Position + new Vector2(100, 40), 1f, 1f));
+            _greenTeleporters.Add(new Teleporter(teleporterAnimation6, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 476 + (50 / 2), -(2048 / 2) + (50 / 2) + 1065)), 1f, 1f));
 
             TeleporterAnimation teleporterAnimation7 = new TeleporterAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Teleporter\\teleporter"), new StreamReader(@"Content/Sprites/Teleporter/teleporter.txt"), 15f);
-            teleporterAnimation7.AnimationName = "yellowteleporter_d_open";
-            _yellowTeleporters.Add(new Teleporter(teleporterAnimation7, _player.Position + new Vector2(10, 40), 1f, 1f));
+            teleporterAnimation7.AnimationName = "standardteleporter_d_open";
+            _yellowTeleporters.Add(new Teleporter(teleporterAnimation7, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 80 + (50 / 2), -(2048 / 2) + (50 / 2) + 641)), 1f, 1f));
 
             TeleporterAnimation teleporterAnimation8 = new TeleporterAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Teleporter\\teleporter"), new StreamReader(@"Content/Sprites/Teleporter/teleporter.txt"), 15f);
             teleporterAnimation8.AnimationName = "yellowteleporter_d_open";
-            _yellowTeleporters.Add(new Teleporter(teleporterAnimation8, _player.Position + new Vector2(100, 20), 1f, 1f));
+            _yellowTeleporters.Add(new Teleporter(teleporterAnimation8, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 745 + (50 / 2), -(2048 / 2) + (50 / 2) + 850)), 1f, 1f));
         }
 
         public void PotionExplosion(Wizard player)
@@ -299,7 +332,7 @@ namespace WizardsNeverDie.Level
 
         public void Spell(Wizard player, int forcePower)
         {
-            Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2);
+            Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2.2f);
             WizardPlasmaAnimation plasmaSprite = new WizardPlasmaAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Plasma\\plasma"), new StreamReader(@"Content/Sprites/Plasma/plasma.txt"));
             plasmaSprite.AnimationName = "plasma_d_attack";
             SpriteAnimation animation = (SpriteAnimation)player.SpriteManager;
@@ -307,7 +340,7 @@ namespace WizardsNeverDie.Level
             if (animation.GetOrientation() == Orientation.Down)
             {
                 force = new Vector2(0, forcePower);
-                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y + 2);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y + 1);
             }
             else if (animation.GetOrientation() == Orientation.DownLeft)
             {
@@ -322,16 +355,16 @@ namespace WizardsNeverDie.Level
             else if (animation.GetOrientation() == Orientation.Left)
             {
                 force = new Vector2(-forcePower, 0);
-                plasmaPosition = new Vector2(_player.Position.X - 2, _player.Position.Y);
+                plasmaPosition = new Vector2(_player.Position.X - 1, _player.Position.Y);
             }
             else if (animation.GetOrientation() == Orientation.Right)
             {
                 force = new Vector2(forcePower, 0);
-                plasmaPosition = new Vector2(_player.Position.X + 2, _player.Position.Y);
+                plasmaPosition = new Vector2(_player.Position.X + 1, _player.Position.Y);
             }
             else if (animation.GetOrientation() == Orientation.Up)
             {
-                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y - 2);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y - 1);
                 force = new Vector2(0, -forcePower);
             }
             else if (animation.GetOrientation() == Orientation.UpLeft)
@@ -872,6 +905,7 @@ namespace WizardsNeverDie.Level
                 _player.SpriteManager.Draw(ScreenManager.SpriteBatch);
                 _health.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
+            _topOfLog.Draw(ScreenManager.SpriteBatch);
             foreach (Explosion e in _explosions)
             {
                 e.SpriteManager.Draw(ScreenManager.SpriteBatch);
@@ -884,7 +918,6 @@ namespace WizardsNeverDie.Level
             {
                 t.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
-
             //if (isGameOver)
             //{
             //    ScreenManager.SpriteBatch.Draw(_gameover, _gameOverVector, Color.White);
@@ -904,6 +937,8 @@ namespace WizardsNeverDie.Level
                     }
                 }
             }
+            
+
             ScreenManager.SpriteBatch.End();
             base.Draw(gameTime);
         }

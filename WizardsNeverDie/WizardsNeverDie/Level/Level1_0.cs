@@ -57,12 +57,13 @@ namespace WizardsNeverDie.Level
         int forcePower = 500;
         Stopwatch animationTimer = new Stopwatch();
         Boolean animationFinished = true;
+        private List<List<TriggerBody>> _allTriggers = new List<List<TriggerBody>>();
 
         public Level1_0()
         {
             int test = initialTime.Seconds;
             levelDetails = "Level 4";
-            levelName = "Start Game: 1";
+            levelName = "Level: 1";
             this.backgroundTextureStr = "Materials/Level1_0";
         }
 
@@ -72,7 +73,7 @@ namespace WizardsNeverDie.Level
             Farseer.Instance.World.ContactManager.OnBroadphaseCollision += MyOnBroadphaseCollision;
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
             _wizard.AnimationName = "wizard_d_walk";
-            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048/2) + 430, -(2048/2)+135));
+            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048/2) + 430, -(2048/2)+135), _plasma);
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
@@ -154,12 +155,13 @@ namespace WizardsNeverDie.Level
             _actions4.Add(_spawnIfritAction);
             _actions5.Add(nextLevel);
 
-            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(31), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 111 + (96 / 2), -(2048 / 2) + (31 / 2) + 465)), 1f, _actions2));
-            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(552), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 608 + (552 / 2), -(2048 / 2) + (50 / 2) + 1582)), 1f, _actions3));
-            _triggers.Add(new TriggerBody(1f, 1f, ConvertUnits.ToSimUnits(-(2048 / 2) + 891, -(2048 / 2) + 125), 1f, _actions1));
-            
-            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(384), ConvertUnits.ToSimUnits(30), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1464 + (384/ 2), -(2048 / 2) + (30 / 2) + 748)), 1f, _actions4));
-            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(2048), ConvertUnits.ToSimUnits(new Vector2((2048 / 2) - 16, 0)), 1f, _actions5));
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(31), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 111 + (96 / 2), -(2048 / 2) + (31 / 2) + 465)), 1f, _actions2, _plasma));
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(552), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 608 + (552 / 2), -(2048 / 2) + (50 / 2) + 1582)), 1f, _actions3, _plasma));
+            _triggers.Add(new TriggerBody(1f, 1f, ConvertUnits.ToSimUnits(-(2048 / 2) + 891, -(2048 / 2) + 125), 1f, _actions1, _plasma));
+
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(384), ConvertUnits.ToSimUnits(30), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1464 + (384 / 2), -(2048 / 2) + (30 / 2) + 748)), 1f, _actions4, _plasma));
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(32), ConvertUnits.ToSimUnits(2048), ConvertUnits.ToSimUnits(new Vector2((2048 / 2) - 16, 0)), 1f, _actions5, _plasma));
+            _allTriggers.Add(_triggers);
         }
 
         private void GenereateCreatures()
@@ -222,7 +224,7 @@ namespace WizardsNeverDie.Level
 
         public void Spell(Wizard player, int forcePower)
         {
-            Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2);
+            Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2.2f);
             WizardPlasmaAnimation plasmaSprite = new WizardPlasmaAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Plasma\\plasma"), new StreamReader(@"Content/Sprites/Plasma/plasma.txt"));
             plasmaSprite.AnimationName = "plasma_d_attack";
             SpriteAnimation animation = (SpriteAnimation)player.SpriteManager;
@@ -230,7 +232,7 @@ namespace WizardsNeverDie.Level
             if (animation.GetOrientation() == Orientation.Down)
             {
                 force = new Vector2(0, forcePower);
-                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y + 2);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y + 1);
             }
             else if (animation.GetOrientation() == Orientation.DownLeft)
             {
@@ -245,16 +247,16 @@ namespace WizardsNeverDie.Level
             else if (animation.GetOrientation() == Orientation.Left)
             {
                 force = new Vector2(-forcePower, 0);
-                plasmaPosition = new Vector2(_player.Position.X - 2, _player.Position.Y);
+                plasmaPosition = new Vector2(_player.Position.X - 1, _player.Position.Y);
             }
             else if (animation.GetOrientation() == Orientation.Right)
             {
                 force = new Vector2(forcePower, 0);
-                plasmaPosition = new Vector2(_player.Position.X + 2, _player.Position.Y);
+                plasmaPosition = new Vector2(_player.Position.X + 1, _player.Position.Y);
             }
             else if (animation.GetOrientation() == Orientation.Up)
             {
-                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y - 2);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y - 1);
                 force = new Vector2(0, -forcePower);
             }
             else if (animation.GetOrientation() == Orientation.UpLeft)
@@ -321,6 +323,7 @@ namespace WizardsNeverDie.Level
                     plasmaPosition = new Vector2(enemy.Position.X + 1, enemy.Position.Y - 1);
                 }
                 _purplePlasma.Add(new RangedPurplePlasma(plasmaSprite, plasmaPosition, force));
+                
             //}
 
 
@@ -503,7 +506,13 @@ namespace WizardsNeverDie.Level
 
             if (wizard.CheckEndSpell == true)
             {
-
+                for (int i = 0; i < _triggers.Count; i++)
+                {
+                    if (!_triggers[i].IsDead)
+                    {
+                        _triggers[i].Update(gameTime);
+                    }
+                }
                 timer.Stop();
                 TimeSpan endTime = timer.Elapsed;
                 int totalTime = endTime.Seconds - initialTime.Seconds;
@@ -640,13 +649,7 @@ namespace WizardsNeverDie.Level
                         _triggers.Remove(_triggers[i]);
                     }
                 }
-                for (int i = 0; i < _triggers.Count; i++)
-                {
-                    for (int k = 0; k < _plasma.Count; k++)
-                    {
-                        _triggers[i].Bodies[0].IgnoreCollisionWith(_plasma[k].getBody().Bodies[0]);
-                    }
-                }
+                
 
                 
             
@@ -721,6 +724,10 @@ namespace WizardsNeverDie.Level
                     {
                         _triggers[i].ActionList[j].Draw();
                     }
+                }
+                else
+                {
+                    _triggers[i].Update(gameTime);
                 }
             }
             ScreenManager.SpriteBatch.End();

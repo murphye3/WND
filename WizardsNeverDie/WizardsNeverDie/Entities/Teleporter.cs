@@ -27,8 +27,8 @@ namespace WizardsNeverDie.Entities
             this.spriteManager = animation;
             animation.Position = position;
             this.body = new StaticBody(this, position, width, height);
-            Body leftWall = BodyFactory.CreateRectangle(world, .05f, 3.2f, 1f, position + new Vector2(-1.1f, .2f));
-            Body rightWall = BodyFactory.CreateRectangle(world, .05f, 3.2f, 1f, position + new Vector2(1.1f, .2f));
+            Body leftWall = BodyFactory.CreateRectangle(world, .05f, 1.6f, 1f, position + new Vector2(-1.1f, .2f));
+            Body rightWall = BodyFactory.CreateRectangle(world, .05f, 1.6f, 1f, position + new Vector2(1.1f, .2f));
             Body topWall = BodyFactory.CreateRectangle(world, 2f, .05f, 1f, position + new Vector2(.05f, -1.3f));
         }
         public void Update(GameTime gameTime)

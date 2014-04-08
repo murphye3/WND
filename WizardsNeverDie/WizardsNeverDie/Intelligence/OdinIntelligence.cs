@@ -104,7 +104,7 @@ namespace WizardsNeverDie.Intelligence
             TimeSpan runTimeElapsed = attackTimer.Elapsed;
             int totalAttackTime = attackTimeElapsed.Seconds - attackTimeStart.Seconds;
             int totalRunTime = runTimeElapsed.Seconds - runTimeStart.Seconds;
-            if (totalAttackTime > 3)
+            if (totalAttackTime > 4)
             {
                 attack = true;
                 attackTimer.Stop();

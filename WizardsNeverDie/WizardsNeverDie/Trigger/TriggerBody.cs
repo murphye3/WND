@@ -16,23 +16,25 @@ using WizardsNeverDie.Physics;
 using WizardsNeverDie.ScreenSystem;
 using WizardsNeverDie.Trigger;
 using WizardsNeverDie.Dialog;
+using WizardsNeverDie.Entities;
 
 namespace WizardsNeverDie.Physics
 {
-    class TriggerBody : PhysicsBody
+    public class TriggerBody : PhysicsBody
     {
         private Vector2 _position;
         private float _size;
         private bool _isDead = false;
         private List<IAction> _actions;
+        private List<WizardPlasma> _plasma;
 
-        public TriggerBody(float width, float height, Vector2 position, float size, List<IAction>actions)
+        public TriggerBody(float width, float height, Vector2 position, float size, List<IAction>actions, List<WizardPlasma> plasma)
             : base()
         {
             this._position = position;
             this._size = size;
             this._actions = actions;
-
+            _plasma = plasma;
 
             World world = Farseer.Instance.World;
             Body body = BodyFactory.CreateRectangle(world, width, height, 1f, position);
@@ -51,13 +53,13 @@ namespace WizardsNeverDie.Physics
         }
 
 
-        public TriggerBody(float width, float height, Vector2 position, float size)
+        public TriggerBody(float width, float height, Vector2 position, float size, List<WizardPlasma> plasma)
             : base()
         {
             this._position = position;
             this._size = size;
 
-
+            _plasma = plasma;
             World world = Farseer.Instance.World;
             Body body = BodyFactory.CreateRectangle(world, width, height, 1f, position);
             Bodies.Add(body);
@@ -73,6 +75,14 @@ namespace WizardsNeverDie.Physics
             body.Awake = true;
             body.OnCollision += new OnCollisionEventHandler(onCollision2);
         }
+        public void Update(GameTime gameTime)
+        {
+                for (int k = 0; k < _plasma.Count; k++)
+                {
+                    this.Bodies[0].IgnoreCollisionWith(_plasma[k].getBody().Bodies[0]);
+                }
+        }
+
         public bool IsDead
         {
             get

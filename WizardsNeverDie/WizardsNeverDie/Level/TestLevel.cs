@@ -42,7 +42,7 @@ namespace WizardsNeverDie.Level
         private int _creaturesKilled = 0;
         private Gotfraggon _gotfraggon;
         private GotfraggonAnimation _gotfraggonAnimation;
-
+        private List<List<TriggerBody>> _allTriggers = new List<List<TriggerBody>>();
         public TestLevel()
         {
             int test = initialTime.Seconds;
@@ -55,7 +55,7 @@ namespace WizardsNeverDie.Level
             base.LoadContent();
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
             _wizard.AnimationName = "wizard_d_walk";
-            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 47, -(2048 / 2) + 1025));
+            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 47, -(2048 / 2) + 1025), _plasma);
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);

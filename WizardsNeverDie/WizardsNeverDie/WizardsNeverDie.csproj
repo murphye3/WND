@@ -91,6 +91,7 @@
     <Compile Include="Animation\OdinAnimation.cs" />
     <Compile Include="Animation\OracleAnimation.cs" />
     <Compile Include="Animation\TeleporterAnimation.cs" />
+    <Compile Include="Animation\TopLogAnimation.cs" />
     <Compile Include="Animation\TrippinTreesAnimation.cs" />
     <Compile Include="Animation\WizardPlasmaAnimation.cs" />
     <Compile Include="Animation\PotionExplosionAnimation.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Entities\AbstractCreature.cs" />
     <Compile Include="Entities\AbstractEntity.cs" />
     <Compile Include="Entities\AbstractSprite.cs" />
+    <Compile Include="Entities\BouncingWall.cs" />
     <Compile Include="Entities\Gate.cs" />
     <Compile Include="Entities\Gotfraggon.cs" />
     <Compile Include="Entities\Key.cs" />

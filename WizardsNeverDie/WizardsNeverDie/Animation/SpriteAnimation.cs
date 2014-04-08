@@ -31,7 +31,8 @@ namespace WizardsNeverDie.Animation
         Rotating,
         Revived,
         OdinDeath,
-        TrippinForward
+        TrippinForward,
+        Yolo
     }
 
     [Flags]
@@ -245,6 +246,9 @@ namespace WizardsNeverDie.Animation
                     break;
                 case AnimationState.TrippinForward:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "forward";
+                    break;
+                case AnimationState.Yolo:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "yolo";
                     break;
             }
         }
