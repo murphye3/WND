@@ -82,6 +82,7 @@ namespace WizardsNeverDie.Intelligence
 
         public override void Update(GameTime gameTime)
         {
+            WizardAnimation animation = (WizardAnimation)player.SpriteManager;
             lastGamepadState = gamepadState;
             gamepadState = GamePad.GetState(PlayerIndex.One);
             swapTimer = swapTimer.Add(gameTime.ElapsedGameTime);
@@ -93,46 +94,47 @@ namespace WizardsNeverDie.Intelligence
             {
                     spell();
             }
-            if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A)
-                || (gamepadState.IsConnected && (gamepadState.DPad.Down == ButtonState.Pressed && gamepadState.DPad.Left == ButtonState.Pressed)))
+            if ((keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A)
+                || (gamepadState.IsConnected && (gamepadState.DPad.Down == ButtonState.Pressed && gamepadState.DPad.Left == ButtonState.Pressed))) && animation.GetAnimationState() != AnimationState.Revived)
             {
+                
                 swapWalkOrientation(Orientation.DownLeft);
                 body.Move(new Vector2(-speed, speed));
             }
-            else if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D)
-                || (gamepadState.IsConnected && (gamepadState.DPad.Down == ButtonState.Pressed && gamepadState.DPad.Right == ButtonState.Pressed)))
+            else if ((keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D)
+                || (gamepadState.IsConnected && (gamepadState.DPad.Down == ButtonState.Pressed && gamepadState.DPad.Right == ButtonState.Pressed))) && animation.GetAnimationState() != AnimationState.Revived)
             {
                 swapWalkOrientation(Orientation.DownRight);
                 body.Move(new Vector2(speed, speed));
             }
-            else if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A)
-                || (gamepadState.IsConnected && (gamepadState.DPad.Up == ButtonState.Pressed && gamepadState.DPad.Left == ButtonState.Pressed)))
+            else if ((keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A)
+                || (gamepadState.IsConnected && (gamepadState.DPad.Up == ButtonState.Pressed && gamepadState.DPad.Left == ButtonState.Pressed))) && animation.GetAnimationState() != AnimationState.Revived)
             {
                 swapWalkOrientation(Orientation.UpLeft);
                 body.Move(new Vector2(-speed, -speed));
             }
-            else if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D)
-                || (gamepadState.IsConnected && (gamepadState.DPad.Up == ButtonState.Pressed && gamepadState.DPad.Right == ButtonState.Pressed)))
+            else if ((keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D)
+                || (gamepadState.IsConnected && (gamepadState.DPad.Up == ButtonState.Pressed && gamepadState.DPad.Right == ButtonState.Pressed))) && animation.GetAnimationState() != AnimationState.Revived)
             {
                 swapWalkOrientation(Orientation.UpRight);
                 body.Move(new Vector2(speed, -speed));
             }
-            else if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) || (gamepadState.IsConnected && gamepadState.DPad.Up == ButtonState.Pressed))
+            else if ((keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) || (gamepadState.IsConnected && gamepadState.DPad.Up == ButtonState.Pressed)) && animation.GetAnimationState() != AnimationState.Revived)
             {
                 swapWalkOrientation(Orientation.Up);
                 body.Move(new Vector2(0, -speed));
             }
-            else if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) || (gamepadState.IsConnected && gamepadState.DPad.Down == ButtonState.Pressed))
+            else if ((keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) || (gamepadState.IsConnected && gamepadState.DPad.Down == ButtonState.Pressed)) && animation.GetAnimationState() != AnimationState.Revived)
             {
                 swapWalkOrientation(Orientation.Down);
                 body.Move(new Vector2(0, speed));
             }
-            else if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) || (gamepadState.IsConnected && gamepadState.DPad.Left == ButtonState.Pressed))
+            else if ((keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) || (gamepadState.IsConnected && gamepadState.DPad.Left == ButtonState.Pressed)) && animation.GetAnimationState() != AnimationState.Revived)
             {
                 swapWalkOrientation(Orientation.Left);
                 body.Move(new Vector2(-speed, 0));
             }
-            else if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) || (gamepadState.IsConnected && gamepadState.DPad.Right == ButtonState.Pressed))
+            else if ((keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) || (gamepadState.IsConnected && gamepadState.DPad.Right == ButtonState.Pressed)) && animation.GetAnimationState() != AnimationState.Revived)
             {
                 swapWalkOrientation(Orientation.Right);
                 body.Move(new Vector2(speed, 0));

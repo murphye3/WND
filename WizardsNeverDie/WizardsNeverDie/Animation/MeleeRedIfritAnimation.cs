@@ -49,8 +49,7 @@ namespace WizardsNeverDie.Animation
             }
             if (this.GetAnimationState() == AnimationState.Disentegrated)
             {
-                ExplosionAnimation explosion = new ExplosionAnimation();
-                explosion.SetAnimationState(AnimationState.Explosion);
+                
             }
         }
         public void Attack(GameTime gameTime)
@@ -91,7 +90,6 @@ namespace WizardsNeverDie.Animation
                 {
                     this.SetAnimationState(AnimationState.Disentegrated);
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "disentegrated";
-                    
                 }
                 else
                 {

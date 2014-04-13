@@ -81,12 +81,16 @@
   <ItemGroup>
     <Compile Include="Animation\AnimationClass.cs" />
     <Compile Include="Animation\BasicSprite.cs" />
-    <Compile Include="Animation\CastleWallAnimation.cs" />
+	<Compile Include="Animation\CastleWallAnimation.cs" />
+    <Compile Include="Animation\GateAnimation.cs" />
     <Compile Include="Animation\GotfraggonAnimation.cs" />
+    <Compile Include="Animation\KeyAnimation.cs" />
     <Compile Include="Animation\MeleeRedIfritAnimation.cs" />
     <Compile Include="Animation\ExplosionAnimation.cs" />
     <Compile Include="Animation\FrameAnimation.cs" />
     <Compile Include="Animation\HealthAnimation.cs" />
+    <Compile Include="Animation\OdinAnimation.cs" />
+    <Compile Include="Animation\OracleAnimation.cs" />
     <Compile Include="Animation\WizardPlasmaAnimation.cs" />
     <Compile Include="Animation\PotionExplosionAnimation.cs" />
     <Compile Include="Animation\RangedPurpleIfritAnimation.cs" />
@@ -100,11 +104,16 @@
     <Compile Include="Entities\AbstractCreature.cs" />
     <Compile Include="Entities\AbstractEntity.cs" />
     <Compile Include="Entities\AbstractSprite.cs" />
-    <Compile Include="Entities\CastleWall.cs" />
+	<Compile Include="Entities\CastleWall.cs" />
+    <Compile Include="Entities\Gate.cs" />
     <Compile Include="Entities\Gotfraggon.cs" />
+    <Compile Include="Entities\Key.cs" />
     <Compile Include="Entities\MeleeRedIfrit.cs" />
     <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\Health.cs" />
+    <Compile Include="Entities\Odin.cs" />
+    <Compile Include="Entities\Oracle.cs" />
+    <Compile Include="Entities\PlasmaWall.cs" />
     <Compile Include="Entities\WizardPlasma.cs" />
     <Compile Include="Entities\Wizard.cs" />
     <Compile Include="Entities\Brick.cs" />
@@ -118,8 +127,10 @@
     <Compile Include="Farseer\PlasmaBody.cs" />
     <Compile Include="Farseer\StaticBody.cs" />
     <Compile Include="Intelligence\GotfraggonIntelligence.cs" />
+    <Compile Include="Intelligence\OdinIntelligence.cs" />
     <Compile Include="Level\Level1_1.cs" />
-    <Compile Include="Level\Level1_4.cs" />
+	<Compile Include="Level\Level1_4.cs" />
+    <Compile Include="Level\Level1_2.cs" />
     <Compile Include="Level\TestLevel.cs" />
     <Compile Include="Trigger\IAction.cs" />
     <Compile Include="Trigger\MessageAction.cs" />

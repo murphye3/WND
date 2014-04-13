@@ -18,7 +18,7 @@ namespace WizardsNeverDie.Trigger
         private string _fileName;
 
         private Texture2D _avatar;
-
+        private Texture2D _avatar2;
         public MessageAction(ScreenManager screenManager, Texture2D avatar, string fileName)
         {
             _screenManager = screenManager;

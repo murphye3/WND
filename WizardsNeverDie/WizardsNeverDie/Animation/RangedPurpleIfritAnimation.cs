@@ -9,7 +9,7 @@ using WizardsNeverDie.Entities;
 
 namespace WizardsNeverDie.Animation
 {
-    class RangedPurpleIfritAnimation : MeleeRedIfritAnimation
+    public class RangedPurpleIfritAnimation : MeleeRedIfritAnimation
     {
         private bool _checkEndSpell = false;
         public RangedPurpleIfritAnimation(Texture2D Texture, int frames, int animations)
@@ -52,7 +52,7 @@ namespace WizardsNeverDie.Animation
 
         private void PurpleSpell(GameTime gameTime)
         {
-            TimeToUpdate = 15f;
+            TimeToUpdate = 7f;
             if (timeElapsed > TimeToUpdate)
             {
                 _frameIndex++;

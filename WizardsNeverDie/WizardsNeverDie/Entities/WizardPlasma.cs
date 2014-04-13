@@ -50,6 +50,13 @@ namespace WizardsNeverDie.Entities
                 this.IsDeadOnEnemy = true;
                 return false;
             }
+            if (collidedWith is Oracle)
+            {
+                Oracle oracle = (Oracle)collidedWith;
+                oracle.IsDead = false;
+                this.IsDead = true;
+                return false;
+            }
             if (collidedWith is Wizard)
             {
                 return false;
@@ -75,6 +82,17 @@ namespace WizardsNeverDie.Entities
             if (collidedWith is Gotfraggon)
             {
                 this._isDead = true;
+                return false;
+            }
+
+            if (collidedWith is PlasmaWall)
+            {
+                this._isDead = false;
+                return false;
+            }
+            if (collidedWith is Odin)
+            {
+                this._isDeadOnEnemy = true;
                 return false;
             }
             this._isDead = true;

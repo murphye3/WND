@@ -10,6 +10,8 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 
 namespace WizardsNeverDie.Level
 {
@@ -46,7 +48,7 @@ namespace WizardsNeverDie.Level
             int test = initialTime.Seconds;
             levelDetails = "Level 1";
             levelName = "Start Game: 2";
-            this.backgroundTextureStr = "Materials/Level1_Background";
+            this.backgroundTextureStr = "Materials/Level1_2";
         }
         public override void LoadContent()
         {
@@ -65,12 +67,13 @@ namespace WizardsNeverDie.Level
             GenereateCreatures();
             GenereateSpawners();
             GeneratePotions();
-
             this.Camera.EnableTracking = true;
             this.Camera.TrackingBody = _player.getBody().Bodies[0];
         }
         public void GenerateWalls()
         {
+            World world = Farseer.Instance.World;
+            Body faggot = BodyFactory.CreateLineArc(world, (float)(2*Math.PI), 50,  50f, ConvertUnits.ToSimUnits(-(2048 / 2) + 220, -(2048 / 2) + 1025), 200, false);
             ;
         }
         public void GenereateCreatures()

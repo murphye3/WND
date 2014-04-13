@@ -26,7 +26,6 @@ namespace WizardsNeverDie.Physics
         {
             this.entity = entity;
             this.position = position;
-            this.size = size;
             World world = Farseer.Instance.World;
             Body body = BodyFactory.CreateRectangle(world, width, height, size);
             Bodies.Add(body);

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSpeaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Speaker>
+    <AvatarIndex>0</AvatarIndex>
+    <Message>
+Heh............heh............
+heh............
+    </Message>
+  </Speaker>
+  <Speaker>
+    <AvatarIndex>0</AvatarIndex>
+    <Message>
+Foolish wizard...how dare you
+challenge me, the great Odin.
+Turn back while you still have
+a chance, or suffer the same
+fate as these pitiful villagers.
+    </Message>
+  </Speaker>
+</ArrayOfSpeaker>

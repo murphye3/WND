@@ -143,7 +143,7 @@ namespace WizardsNeverDie.Level
             MessageAction wAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"), "conversation1.xml");
 
             //Best Demoman NA and Enable Spawners
-            MessageAction mAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\IfritAvatar"), "conversation2.xml");
+            MessageAction mAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatar"), "conversation2.xml");
             SpawnerAction sAction = new SpawnerAction(_spawners);
             _spawnIfritAction = new SpawnIfritAction(_explosionAnimation, ref _spawnedExplosions, _player, ScreenManager, _spawnedExplosionVectors, ref _creatures);
             SwitchLevelAction nextLevel = new SwitchLevelAction(ScreenManager, this, new Level1_1());
@@ -345,6 +345,21 @@ namespace WizardsNeverDie.Level
                 _player.Update(gameTime);
                 _health.Update(gameTime);
             }
+            if (_player.Health == HealthAnimation.HealthState.Health0 && !isGameOver && !wizard.CheckEndRevive)
+            {
+                wizard.SetAnimationState(AnimationState.Revived);
+                _player.getBody().Bodies[0].Position = (ConvertUnits.ToSimUnits(-(2048 / 2) + 430, -(2048 / 2) + 135));
+                
+                _player.Update(gameTime);
+
+            }
+            if (wizard.CheckEndRevive)
+            {
+                _player.Health = HealthAnimation.HealthState.Health100;
+                _health.Update(gameTime);
+                wizard.SetAnimationState(AnimationState.Walk);
+                _player.Update(gameTime);
+            }
             for (int i = 0; i < _triggers.Count; i++)
             {
                 if (_triggers[i].IsDead == true)
@@ -356,11 +371,7 @@ namespace WizardsNeverDie.Level
                     }
                 }
             }
-            if (_player.Health == HealthAnimation.HealthState.Health0 && isGameOver == false)
-            {
-                isGameOver = true;
-                _gameOverVector = new Vector2((int)ConvertUnits.ToDisplayUnits(_player.Position.X - 8), (int)ConvertUnits.ToDisplayUnits(_player.Position.Y - 5.5F));
-            }
+
             for (int i = 0; i < _creatures.Count; i++)//(Enemy e in _creatures)
             {
                 MeleeRedIfritAnimation enemy = (MeleeRedIfritAnimation)_creatures[i].SpriteManager;

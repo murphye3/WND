@@ -130,18 +130,35 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <None Include="Conversations\conversation1.xml">
+    <Compile Include="Avatar\OracleAvatar.png">
+      <Name>OracleAvatar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Avatar\WizardAvatarSunglasses.png">
+      <Name>WizardAvatarSunglasses</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Avatar\OdinAvatar.png">
+      <Name>OdinAvatar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Conversations\conversation1.xml">
       <Name>conversation1</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Conversations\conversation2.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Conversations\conversation2.xml">
       <Name>conversation2</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+      <SubType>Designer</SubType>
+    </Content>
     <Compile Include="Materials\Level1_4.png">
       <Name>Level1_4</Name>
       <Importer>TextureImporter</Importer>
@@ -156,6 +173,46 @@
       <Name>castleWall</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Conversations\conversation3.xml">
+      <Name>conversation3</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Conversations\conversation4.xml">
+      <Name>conversation4</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Conversations\conversation5.xml">
+      <Name>conversation5</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="SoundEffects\Future.wav">
+      <Name>Future</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Content Include="Conversations\conversation6.xml">
+      <Name>conversation6</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Compile Include="SoundEffects\YEEAAAAH.wav">
+      <Name>YEEAAAAH</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Materials\level1_2.png">
+      <Name>level1_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="Sprites\Explosion\explosion.txt">
       <Name>explosion</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -187,6 +244,15 @@
       <Name>gotfraggon</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="Sprites\Gates\gates.png">
+      <Name>gates</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\Gates\gates.txt">
+      <Name>gates</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Health\health.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>health</Name>
@@ -215,6 +281,33 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\Oracle\oracle.png">
+      <Name>oracle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Keys\keys.png">
+      <Name>keys</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\Keys\keys.txt">
+      <Name>keys</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="Sprites\Odin\odin.png">
+      <Name>odin</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\Odin\odin.txt">
+      <Name>odin</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sprites\Oracle\oracle.txt">
+      <Name>oracle</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Plasma\plasma.txt">
       <Name>plasma</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
