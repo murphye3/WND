@@ -10,11 +10,11 @@ namespace WizardsNeverDie.Entities
 {
     class CastleWall : AbstractEntity
     {
-        public CastleWall(SpriteAnimation animation, Vector2 position)
+        public CastleWall(SpriteAnimation animation, Vector2 position, float width, float height)
         {
             this.spriteManager = animation;
             animation.Position = position;
-            this.body = new StaticBody(this, position, 1f, 1f);
+            this.body = new StaticBody(this, position, width, height); 
         }
         public void Update(GameTime gameTime)
         {

@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using WizardsNeverDie.Trigger;
 
 namespace WizardsNeverDie.Level
 {
@@ -32,6 +33,13 @@ namespace WizardsNeverDie.Level
         private List<TriggerBody> _triggers = new List<TriggerBody>();
         private List<Potions> _potion = new List<Potions>();
         private List<PotionExplosion> _potionExplosion = new List<PotionExplosion>();
+        private List<CastleWall> _castleWalls = new List<CastleWall>();
+        private SpawnIfritAction _spawnIfritAction;
+        private List<ExplosionAnimation> _explosionAnimation = new List<ExplosionAnimation>();
+        private List<Vector2> _spawnedExplosionVectors = new List<Vector2>();
+        private List<Explosion> _spawnedExplosions = new List<Explosion>();
+        private bool firstTime = true;
+
         Stopwatch timer = new Stopwatch();
         TimeSpan initialTime;
         TimeSpan animationTimeSpan;
@@ -66,6 +74,7 @@ namespace WizardsNeverDie.Level
             GenereateCreatures();
             GenereateSpawners();
             GeneratePotions();
+            GenerateTriggers();
 
             this.Camera.EnableTracking = true;
             this.Camera.TrackingBody = _player.getBody().Bodies[0];
@@ -120,10 +129,77 @@ namespace WizardsNeverDie.Level
             CreateWall(85, 339, 485, 604);
             CreateWall(835, 79, 33, 306);
             #endregion
+            #region CastleWalls
+            CastleWallAnimation cWallAnimation1 = new CastleWallAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\CastleWall\\castleWall"), new StreamReader(@"Content/Sprites/CastleWall/castleWall.txt"));
+            cWallAnimation1.AnimationName = "castleWall_d_attack";
+            Vector2 pos1 = ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 953 + (1095 / 2), -(2048 / 2) + (176 / 2) + 1024));
+            _castleWalls.Add(new CastleWall(cWallAnimation1, pos1, ConvertUnits.ToSimUnits(1095), ConvertUnits.ToSimUnits(176)));
+
+            CastleWallAnimation cWallAnimation2 = new CastleWallAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\CastleWall\\castleWall"), new StreamReader(@"Content/Sprites/CastleWall/castleWall.txt"));
+            cWallAnimation2.AnimationName = "castleWall_u_attack";
+            Vector2 pos2 = ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 953 + (992 / 2), -(2048 / 2) + (176 / 2) + 1280));
+            _castleWalls.Add(new CastleWall(cWallAnimation2, pos2, ConvertUnits.ToSimUnits(992), ConvertUnits.ToSimUnits(176)));
+
+
+            #endregion
+        }
+        public void GenerateTriggers()
+        {
+            _spawnIfritAction = new SpawnIfritAction(_explosionAnimation, ref _spawnedExplosions, _player, ScreenManager, _spawnedExplosionVectors, ref _creatures);
+            List<IAction> actions1 = new List<IAction>();
+            actions1.Add(_spawnIfritAction);
+            Vector2 pos1 = ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1360 + (17 / 2), -(2048 / 2) + (80 / 2) + 1200));
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(80), pos1, 1f, actions1));
         }
         public void GenereateCreatures()
         {
-            ;
+            for (int i = 0; i < 24; i++)
+            {
+                _explosionAnimation.Add(new ExplosionAnimation((ScreenManager.Content.Load<Texture2D>("Sprites\\Explosion\\ifritspawnexplosion")), new StreamReader(@"Content/Sprites/Explosion/ifritspawnexplosion.txt"), 3f));
+            }
+            for (int i = 0; i < _explosionAnimation.Count; i++)
+            {
+                _explosionAnimation[i].AnimationName = "ifritspawnexplosion_d_explosion";
+            }
+
+            #region Top
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1020 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1088 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1156 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1224 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1292 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1360 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1428 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1496 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1564 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1632 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1700 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1768 + (1.5f), -(2048 / 2) + (1.5f) + 1088)));
+            #endregion
+            #region Bottom
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1020 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1088 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1156 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1224 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1292 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1360 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1428 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1496 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1564 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1632 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1700 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+            _spawnedExplosionVectors.Add(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1768 + (1.5f), -(2048 / 2) + (1.5f) + 1392)));
+            #endregion
         }
         public void GenereateSpawners()
         {
@@ -330,8 +406,32 @@ namespace WizardsNeverDie.Level
                     _explosions[i].Update(gameTime);
                 }
             }
-
-
+            
+            for (int i = 0; i < _spawnedExplosions.Count; i++)
+            {
+                ExplosionAnimation explosion = (ExplosionAnimation)_spawnedExplosions[i].SpriteManager;
+                if (explosion.SpawnIfrit == true && firstTime)
+                {
+                    firstTime = false;
+                    for (int j = 0; j < _castleWalls.Count; j++)
+                    {
+                        if (_castleWalls[j].body.Bodies[0]!=null)
+                            Farseer.Instance.World.RemoveBody(_castleWalls[j].body.Bodies[0]);
+                    }
+                }
+                if (_spawnedExplosions.Count <= 1)
+                {
+                    _castleWalls.Clear();
+                }
+                if (explosion.IsDead)
+                {
+                    _spawnedExplosions.Remove(_spawnedExplosions[i]);
+                }
+                else
+                {
+                    _spawnedExplosions[i].Update(gameTime);
+                }
+            }
 
             //SpawnerAnimation _spawnerAnimation = new SpawnerAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Spawner\\portal"), new StreamReader(@"Content/Sprites/Spawner/portal.txt"));
             //_spawnerAnimation.AnimationName = "spawner_d_spawning";
@@ -447,6 +547,10 @@ namespace WizardsNeverDie.Level
                     _spawners[i].Update(gameTime);
                 }
             }
+            for (int i = 0; i < _castleWalls.Count; i++)
+            {
+                _castleWalls[i].Update(gameTime);
+            }
 
             for (int i = 0; i < _triggers.Count; i++)
             {
@@ -517,12 +621,20 @@ namespace WizardsNeverDie.Level
             {
                 pE.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
+            foreach (CastleWall cW in _castleWalls)
+            {
+                cW.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
             if (!isGameOver)
             {
                 _player.SpriteManager.Draw(ScreenManager.SpriteBatch);
                 _health.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
             foreach (Explosion e in _explosions)
+            {
+                e.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
+            foreach (Explosion e in _spawnedExplosions)
             {
                 e.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }

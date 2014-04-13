@@ -37,7 +37,7 @@ namespace WizardsNeverDie.Trigger
             {
                 for (int i = 0; i < _explosionAnimation.Count; i++)
                 {
-                    _explosions.Add(new Explosion(_explosionAnimation[i], _spawnVectors[i], .01f, .01f));
+                    _explosions.Add(new Explosion(_explosionAnimation[i], new Vector2(_spawnVectors[i].X,_spawnVectors[i].Y-2) , .01f, .01f));
                     _explosions[_explosions.Count - 1].SpriteManager.Animations[_explosionAnimation[i].AnimationName].Scale = 2f;
                 }
                 _firstTime = false;
@@ -49,7 +49,7 @@ namespace WizardsNeverDie.Trigger
                     {
                         MeleeRedIfritAnimation _creatureAnimation = new MeleeRedIfritAnimation(_screenManager.Content.Load<Texture2D>("Sprites\\Ifrit\\ifrit"), new StreamReader(@"Content/Sprites/Ifrit/ifrit.txt"));
                         _creatureAnimation.AnimationName = "ifrit_d_walk";
-                        _ifrits.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawnVectors[i] + new Vector2(1, 0), 1.5f, 1.5f, 10F));
+                        _ifrits.Add(new MeleeRedIfrit(_creatureAnimation, _player, _spawnVectors[i] + new Vector2(1, 0), 1.5f, 1.5f, 30F));
                         _isDead = true;
                     }
                 }
