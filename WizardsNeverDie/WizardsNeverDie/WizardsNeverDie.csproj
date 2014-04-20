@@ -90,6 +90,7 @@
     <Compile Include="Animation\HealthAnimation.cs" />
     <Compile Include="Animation\OdinAnimation.cs" />
     <Compile Include="Animation\OracleAnimation.cs" />
+    <Compile Include="Animation\SwitcherAnimation.cs" />
     <Compile Include="Animation\TeleporterAnimation.cs" />
     <Compile Include="Animation\TopLogAnimation.cs" />
     <Compile Include="Animation\TrippinTreesAnimation.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Entities\OdinHealth.cs" />
     <Compile Include="Entities\Oracle.cs" />
     <Compile Include="Entities\PlasmaWall.cs" />
+    <Compile Include="Entities\Switcher.cs" />
     <Compile Include="Entities\Teleporter.cs" />
     <Compile Include="Entities\TrippinTrees.cs" />
     <Compile Include="Entities\WizardPlasma.cs" />

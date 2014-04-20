@@ -68,6 +68,7 @@ namespace WizardsNeverDie.Entities
             {
                 return false;
             }
+
             return true;
         }
         public WizardsNeverDie.Animation.HealthAnimation.HealthState Health

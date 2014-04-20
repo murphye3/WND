@@ -145,6 +145,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Avatar\ScrollAvatar.png">
+      <Name>ScrollAvatar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="Conversations\conversation1.xml">
       <Name>conversation1</Name>
       <Importer>XmlImporter</Importer>
@@ -216,6 +221,18 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Content Include="Conversations\conversation8.xml">
+      <Name>conversation8</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Conversations\conversation9.xml">
+      <Name>conversation9</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Materials\MapSprites\TopLog.txt">
       <Name>TopLog</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -365,6 +382,15 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\Switch\switch.png">
+      <Name>switch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="Sprites\Switch\switch.txt">
+      <Name>switch</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Teleporter\teleporter.txt">
       <Name>teleporter</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

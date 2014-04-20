@@ -50,6 +50,7 @@ namespace WizardsNeverDie.Level
         private List<TriggerBody> _triggers = new List<TriggerBody>();
         private List<TriggerBody> _triggers2 = new List<TriggerBody>();
         private List<TriggerBody> _triggers3 = new List<TriggerBody>();
+        private List<TriggerBody> _triggers4 = new List<TriggerBody>();
         private List<Potions> _potion = new List<Potions>();
         private List<PotionExplosion> _potionExplosion = new List<PotionExplosion>();
         bool firstTime = true;
@@ -169,6 +170,10 @@ namespace WizardsNeverDie.Level
             _triggers2.Add(new TriggerBody(ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1045)), 1f, _actions2, _plasma));
             //chatBody = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1050)), ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17));
             _checkGate.Add(new TriggerBody(ConvertUnits.ToSimUnits(300), ConvertUnits.ToSimUnits(5), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1015 + (24 / 2), -(2048 / 2) + (86 / 2) + 1100)), 1f, _plasma));
+            SwitchLevelAction switchLevel = new SwitchLevelAction(ScreenManager, this, new Level1_1());
+            List<IAction> switchLevelList = new List<IAction>();
+            switchLevelList.Add(switchLevel);
+            _triggers4.Add(new TriggerBody(4f, 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + -100)), 1f, switchLevelList, _plasma));
         }
 
 
@@ -446,6 +451,17 @@ namespace WizardsNeverDie.Level
                     {
                         if (_triggers3[i].ActionList[j].IsDead == false)
                             _triggers3[i].ActionList[j].Update(gameTime);
+                    }
+                }
+            }
+            for (int i = 0; i < _triggers4.Count; i++)
+            {
+                if (_triggers4[i].IsDead == true)
+                {
+                    for (int j = 0; j < _triggers4[i].ActionList.Count; j++)
+                    {
+                        if (_triggers4[i].ActionList[j].IsDead == false)
+                            _triggers4[i].ActionList[j].Update(gameTime);
                     }
                 }
             }
@@ -777,7 +793,31 @@ namespace WizardsNeverDie.Level
                 }
             }
 
+            for (int i = 0; i < _triggers4.Count; i++)
+            {
+                //for (int j = 0; j < _plasma.Count; j++)
+                //{
+                //    _triggers3[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                //}
+                //for (int j = 0; j < _purplePlasma.Count; j++)
+                //{
+                //    _triggers3[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                //}
+                bool removeTrigger = true;
+                for (int j = 0; j < _triggers4[i].ActionList.Count; j++)
+                {
+                    if (_triggers4[i].ActionList[j].IsDead == false)
+                    {
+                        removeTrigger = false;
+                    }
+                }
+                if (removeTrigger)
+                {
+                    Farseer.Instance.World.RemoveBody(_triggers4[i].Bodies[0]);
+                    _triggers4.Remove(_triggers3[i]);
 
+                }
+            }
 
             for (int i = 0; i < _potion.Count; i++)
             {

@@ -63,7 +63,10 @@ namespace WizardsNeverDie.Physics
             World world = Farseer.Instance.World;
             Body body = BodyFactory.CreateRectangle(world, width, height, 1f, position);
             Bodies.Add(body);
-
+            for (int k = 0; k < _plasma.Count; k++)
+            {
+                this.Bodies[0].IgnoreCollisionWith(_plasma[k].getBody().Bodies[0]);
+            }
             //body.UserData = entity;
             body.Position = position;
             body.Friction = float.MaxValue;

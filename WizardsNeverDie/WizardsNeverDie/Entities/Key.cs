@@ -21,6 +21,7 @@ namespace WizardsNeverDie.Entities
 {
     public class Key : AbstractEntity
     {
+        private bool _collideWithPlasma;
         private bool _isCollected;
         public Key(SpriteAnimation animation, Vector2 position, float width, float height)
         {
@@ -57,6 +58,18 @@ namespace WizardsNeverDie.Entities
             set
             {
                 _isCollected = value;
+            }
+        }
+        public bool CollideWithPlasma
+        {
+            get
+            {
+                return _collideWithPlasma;
+
+            }
+            set
+            {
+                _collideWithPlasma = value;
             }
         }
     }

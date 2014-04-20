@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSpeaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Speaker>
+    <AvatarIndex>0</AvatarIndex>
+    <Message>
+You are wise Master Wizard, but not wise enough.
+With wisdom comes foresight, and when one can
+see so far ahead, they often forget to look
+behind.
+    </Message>
+  </Speaker>
+</ArrayOfSpeaker>
