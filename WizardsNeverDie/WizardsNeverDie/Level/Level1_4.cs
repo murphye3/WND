@@ -54,7 +54,7 @@ namespace WizardsNeverDie.Level
         {
             int test = initialTime.Seconds;
             levelDetails = "Level 4";
-            levelName = "Start Game: 4";
+            levelName = "Level: 4";
             this.backgroundTextureStr = "Materials/Level1_4";
             mapWidth = 2048;
             mapHeight = 2048;

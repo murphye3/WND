@@ -21,6 +21,7 @@ namespace WizardsNeverDie
             _graphics = new GraphicsDeviceManager(this);
 
             _graphics.PreferMultiSampling = true;
+
 #if WINDOWS || XBOX
             _graphics.PreferredBackBufferWidth = 1280;
             _graphics.PreferredBackBufferHeight = 720;
@@ -67,18 +68,19 @@ namespace WizardsNeverDie
             //_textures.Add("Cannon", Content.Load<Texture2D>("Sprite\\cannon"));
             //_textures.Add("CannonBall", Content.Load<Texture2D>("Sprite\\ball")); 
 
-            IfritDemo ifritDemo = new IfritDemo();
-            Level1_0 level1 = new Level1_0();
-            Level1_2 level3 = new Level1_2();
-            Level1_1 level2 = new Level1_1();
-            Level1_3 level4 = new Level1_3();
+            Level1_0 stage0 = new Level1_0();
+            Level1_1 stage1 = new Level1_1();
+            Level1_2 stage2 = new Level1_2();
+            Level1_3 stage3 = new Level1_3();
+            Level1_4 stage4 = new Level1_4();
             MenuScreen menuScreen = new MenuScreen("");
 
-            //menuScreen.AddMenuItem("Levels", EntryType.Separator, null);
-            menuScreen.AddMenuItem(level1.GetTitle(), EntryType.Screen, level1);
-            menuScreen.AddMenuItem(level2.GetTitle(), EntryType.Screen, level2);
-            menuScreen.AddMenuItem(level3.GetTitle(), EntryType.Screen, level3);
-            menuScreen.AddMenuItem(level4.GetTitle(), EntryType.Screen, level4);
+            menuScreen.AddMenuItem(stage0.GetTitle(), EntryType.Screen, stage0);
+            menuScreen.AddMenuItem(stage1.GetTitle(), EntryType.Screen, stage1);
+            menuScreen.AddMenuItem(stage2.GetTitle(), EntryType.Screen, stage2);
+            menuScreen.AddMenuItem(stage3.GetTitle(), EntryType.Screen, stage3);
+            menuScreen.AddMenuItem(stage4.GetTitle(), EntryType.Screen, stage4);
+            menuScreen.AddMenuItem("Exit", EntryType.ExitItem, null);
 
             ScreenManager.AddScreen(new BackgroundScreen("Common/title_screen"));
             ScreenManager.AddScreen(menuScreen);

@@ -84,7 +84,7 @@ namespace WizardsNeverDie.ScreenSystem
             _menuBorderTop += 400; 
 
             _menuOffset = 0f;
-            _maxOffset = Math.Max(0f, (_menuEntries.Count - NumEntries) * _menuBorderMargin);
+            _maxOffset = Math.Max(0f, (_menuEntries.Count ) * _menuBorderMargin);
 
             _scrollUp = new MenuButton(_texScrollButton, false,
                                        new Vector2(scrollBarPos, _menuBorderTop - _texScrollButton.Height), this);

@@ -78,8 +78,8 @@ namespace WizardsNeverDie.Level
         public Level1_2()
         {
             int test = initialTime.Seconds;
-            levelDetails = "Level 1";
-            levelName = "Level: 3";
+            levelDetails = "Level 2";
+            levelName = "Level: 2";
             this.backgroundTextureStr = "Materials/Level1_2";
         }
         public override void LoadContent()

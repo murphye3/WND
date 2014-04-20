@@ -84,8 +84,8 @@ namespace WizardsNeverDie.Level
         {
             random = new Random();
             int test = initialTime.Seconds;
-            levelDetails = "Level 1";
-            levelName = "Level: 4";
+            levelDetails = "Level 3";
+            levelName = "Level: 3";
             this.backgroundTextureStr = "Materials/Level1_3";
         }
 
