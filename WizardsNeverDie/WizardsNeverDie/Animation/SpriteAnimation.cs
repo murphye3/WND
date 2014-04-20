@@ -26,9 +26,15 @@ namespace WizardsNeverDie.Animation
         PurpleSpell,
         Talking,
         Open,
+        Close,
         Lock,
         Rotating,
-        Revived
+        Revived,
+        OdinDeath,
+        TrippinForward,
+        Yolo,
+        On,
+        Off
     }
 
     [Flags]
@@ -228,11 +234,29 @@ namespace WizardsNeverDie.Animation
                 case AnimationState.Open:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "open";
                     break;
+                case AnimationState.Close:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "close";
+                    break;
                 case AnimationState.Rotating:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "rotating";
                     break;
                 case AnimationState.Revived:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "revive";
+                    break;
+                case AnimationState.OdinDeath:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "odindeath";
+                    break;
+                case AnimationState.TrippinForward:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "forward";
+                    break;
+                case AnimationState.Yolo:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "yolo";
+                    break;
+                case AnimationState.On:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "on";
+                    break;
+                case AnimationState.Off:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "off";
                     break;
             }
         }

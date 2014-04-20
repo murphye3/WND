@@ -19,24 +19,28 @@ namespace WizardsNeverDie.Level
 {
     public class Level1_2 : BaseLevel
     {
+        World world = Farseer.Instance.World;
+        OdinAnimation odinAnimation;
+        private bool _odinAlive = true;
         List<IAction> _actions1 = new List<IAction>();
         List<IAction> _actions2 = new List<IAction>();
+        List<IAction> _actions3 = new List<IAction>();
         private List<Key> _blueKey = new List<Key>();
         private List<Key> _greenKey = new List<Key>();
         private List<Key> _redKey = new List<Key>();
         private Body oracleCutSceneBlock;
         private Wizard _player;
-        private int _greenKeyCount = 0;
-        private int _blueKeyCount = 0;
-        private int _redKeyCount = 0;
+        private List<TriggerBody> _checkGate = new List<TriggerBody>();
         private WizardAnimation _wizard;
         private OracleAnimation _oracleAnimation;
         private List<Oracle> _oracle = new List<Oracle>();
         private HealthAnimation _healthSprite;
         private Health _health;
+        private OdinHealth _odinHealth;
+        private HealthAnimation _odinHealthSprite;
         private List<Brick> _bricks = new List<Brick>();
         private List<MeleeRedIfrit> _creatures = new List<MeleeRedIfrit>();
-        private List<Odin> _odin = new List<Odin>();
+        private Odin _odin;
         private List<RangedPurpleIfrit> _purpleCreatures = new List<RangedPurpleIfrit>();
         private List<Explosion> _explosions = new List<Explosion>();
         private List<SpriteAnimation> _wallSprites;
@@ -45,6 +49,8 @@ namespace WizardsNeverDie.Level
         private List<Spawner> _spawners = new List<Spawner>();
         private List<TriggerBody> _triggers = new List<TriggerBody>();
         private List<TriggerBody> _triggers2 = new List<TriggerBody>();
+        private List<TriggerBody> _triggers3 = new List<TriggerBody>();
+        private List<TriggerBody> _triggers4 = new List<TriggerBody>();
         private List<Potions> _potion = new List<Potions>();
         private List<PotionExplosion> _potionExplosion = new List<PotionExplosion>();
         bool firstTime = true;
@@ -65,12 +71,15 @@ namespace WizardsNeverDie.Level
         private List<Gate> _redGates = new List<Gate>();
         private static SoundEffect _soundEffect;
         private static SoundEffect _futureSound;
-        PlasmaWall chatBody;
+        private List<List<TriggerBody>> _allTriggers = new List<List<TriggerBody>>();
+        //PlasmaWall chatBody;
+        private bool _openBecauseISaySo = false;
+        private Body _blockGate;
         public Level1_2()
         {
             int test = initialTime.Seconds;
             levelDetails = "Level 1";
-            levelName = "Start Game: 2";
+            levelName = "Level: 3";
             this.backgroundTextureStr = "Materials/Level1_2";
         }
         public override void LoadContent()
@@ -79,10 +88,11 @@ namespace WizardsNeverDie.Level
             
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
             _wizard.AnimationName = "wizard_d_walk";
-            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 1040, -(2048 / 2) + 70));
+            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 1040, -(2048 / 2) + 60), _plasma);
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
+            
             GenerateWalls();
             GenereateCreatures();
             GenereateSpawners();
@@ -96,9 +106,25 @@ namespace WizardsNeverDie.Level
         }
         public void GenerateWalls()
         {
-            World world = Farseer.Instance.World;
+            
             PlasmaWall leftWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 985 + (10 / 2), -(2048 / 2) + (1079 / 2) + 0)), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(1079));
             PlasmaWall rightWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1085 + (10 / 2), -(2048 / 2) + (1079 / 2) + 0)), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(1079));
+            PlasmaWall rightIfritWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1180 + (10/2), -(2048 / 2) + 0 + (962/2))), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(962));
+            PlasmaWall leftIfritWall = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 890 + (10 / 2), -(2048 / 2) + 0 + (962 / 2))), ConvertUnits.ToSimUnits(10), ConvertUnits.ToSimUnits(962));
+            PlasmaWall rightSideIfritVertWall2 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 290)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall3 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 457)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall4 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 620)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall5 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 787)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall6 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 120)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall rightSideIfritVertWall7 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1190 + (120 / 2), -(2048 / 2) + (15 / 2) + 953)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+
+
+            PlasmaWall leftSideIfritVertWall2 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 290)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall3 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 457)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall4 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 620)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall5 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 787)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall6 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 120)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
+            PlasmaWall leftSideIfritVertWall7 = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 770 + (120 / 2), -(2048 / 2) + (15 / 2) + 953)), ConvertUnits.ToSimUnits(120), ConvertUnits.ToSimUnits(15));
             Body circleArena = BodyFactory.CreateEdge(world, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 871 + (1), -(2048 / 2) + (1) + 1099)),
                 ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 987 + (10 / 2), -(2048 / 2) + (1) + 1074))) ;
             Body circleArena2 = BodyFactory.CreateEdge(world, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 871 + (1), -(2048 / 2) + (1) + 1099)),
@@ -136,29 +162,79 @@ namespace WizardsNeverDie.Level
 
             MessageAction wAction = new MessageAction(ScreenManager,ScreenManager.Content.Load<Texture2D>(@"Avatar\WizardAvatarSunglasses"), "conversation5.xml");
             _actions1.Add(wAction);
-            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 80)), 1f, _actions1));
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 80)), 1f, _actions1, _plasma));
             MessageAction oAction = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\OdinAvatar"), "conversation6.xml");
             _actions2.Add(oAction);
-            _triggers2.Add(new TriggerBody(ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1050)), 1f, _actions2));
-            chatBody = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1050)), ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17));
+            MessageAction oAction2 = new MessageAction(ScreenManager, ScreenManager.Content.Load<Texture2D>(@"Avatar\OdinAvatar"), "conversation7.xml");
+            _actions3.Add(oAction2);
+            _triggers2.Add(new TriggerBody(ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1045)), 1f, _actions2, _plasma));
+            //chatBody = new PlasmaWall(ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + 1050)), ConvertUnits.ToSimUnits(86), ConvertUnits.ToSimUnits(17));
+            _checkGate.Add(new TriggerBody(ConvertUnits.ToSimUnits(300), ConvertUnits.ToSimUnits(5), ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1015 + (24 / 2), -(2048 / 2) + (86 / 2) + 1100)), 1f, _plasma));
+            SwitchLevelAction switchLevel = new SwitchLevelAction(ScreenManager, this, new Level1_1());
+            List<IAction> switchLevelList = new List<IAction>();
+            switchLevelList.Add(switchLevel);
+            _triggers4.Add(new TriggerBody(4f, 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1030 + (24 / 2), -(2048 / 2) + (86 / 2) + -100)), 1f, switchLevelList, _plasma));
         }
 
 
         public void GenereateCreatures()
         {
-            //RangedPurpleIfritAnimation _purpleCreatureAnimation = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
-            //    new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
-            //_purpleCreatureAnimation.AnimationName = "ifrit_d_walk";
-            //_purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1240, -(2048 / 2) + 587), 1.5f, 1.5f, 11F, 10f));
+            RangedPurpleIfritAnimation _purpleCreatureAnimation = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation, _player, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 847 + (50 / 2), -(2048 / 2) + 645 + (50 / 2))), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11F, 10f, true));
 
-            //RangedPurpleIfritAnimation _purpleCreatureAnimation2 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
-            //    new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
-            //_purpleCreatureAnimation2.AnimationName = "ifrit_d_walk";
-            //_purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation2, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 872, -(2048 / 2) + 362), 1.5f, 1.5f, 11F, 10f));
+            RangedPurpleIfritAnimation _purpleCreatureAnimation2 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation2.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation2, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1200 + (50 / 2), -(2048 / 2) + 240 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 9f, 8f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation3 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation3.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation3, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1197 + (50 / 2), -(2048 / 2) + 475 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11F, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation4 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation4.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation4, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1205 + (50 / 2), -(2048 / 2) + 693 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11F, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation5 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation5.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation5, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 843 + (50 / 2), -(2048 / 2) + 243 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 9f, 8f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation6 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation6.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation6, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1212 + (50 / 2), -(2048 / 2) + 400 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11f, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation7 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation7.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation7, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 830 + (50 / 2), -(2048 / 2) + 360 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11f, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation8 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation8.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation8, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 742 + (50 / 2), -(2048 / 2) + 468 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 15f, 10f, true));
+
+            RangedPurpleIfritAnimation _purpleCreatureAnimation9 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+                new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation9.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation9, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 1205 + (50 / 2), -(2048 / 2) + 900 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 11f, 10f, true));
             
-            OdinAnimation odinAnimation = new OdinAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Odin\\odin"), new StreamReader(@"Content/Sprites/Odin/odin.txt"));
+            RangedPurpleIfritAnimation _purpleCreatureAnimation10 = new RangedPurpleIfritAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\PurpleIfrit\\ifrit"),
+               new StreamReader(@"Content/Sprites/PurpleIfrit/ifrit.txt"));
+            _purpleCreatureAnimation10.AnimationName = "ifrit_d_walk";
+            _purpleCreatures.Add(new RangedPurpleIfrit(_purpleCreatureAnimation10, _player, ConvertUnits.ToSimUnits(-(2048 / 2) + 850 + (50 / 2), -(2048 / 2) + 813 + (50 / 2)), ConvertUnits.ToSimUnits(50), ConvertUnits.ToSimUnits(50), 15f, 10f, true));
+            
+            odinAnimation = new OdinAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Odin\\odin"), new StreamReader(@"Content/Sprites/Odin/odin.txt"));
             odinAnimation.AnimationName = "odin_u_walk";
-            _odin.Add(new Odin(odinAnimation, _player, _player.Position + new Vector2(0, 55), 3f, 3f, 12f));
+            _odin = new Odin(odinAnimation, _player, _player.Position + new Vector2(0, 55), 3f, 3f, 10f);
+            _odinHealthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
+            _odinHealthSprite.AnimationName = "health_n_health100";
+            _odinHealth = new OdinHealth(_odinHealthSprite, _odin, _odin.Position);
         }
         public void GenereateSpawners()
         {
@@ -174,11 +250,13 @@ namespace WizardsNeverDie.Level
         }
         public void GenerateGates()
         {//ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 968 + (16 / 2), -(2048 / 2) + (227 / 2) + 86)))
-
+            blueGateAnimation = new GateAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Gates\\gates"), new StreamReader(@"Content/Sprites/Gates/gates.txt"), 1f);
+            blueGateAnimation.AnimationName = "bluegate_d_lock";
+            _blueGates.Add(new Gate(blueGateAnimation, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1031 + (16 / 2), -(2048 / 2) + (227 / 2) + 975)), 4f, 1f, 1f));
         }
         public void Spell(Wizard player, int forcePower)
         {
-            Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2);
+            Vector2 plasmaPosition = plasmaPosition = new Vector2(0, _player.Position.Y + 2.2f);
             WizardPlasmaAnimation plasmaSprite = new WizardPlasmaAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Plasma\\plasma"), new StreamReader(@"Content/Sprites/Plasma/plasma.txt"));
             plasmaSprite.AnimationName = "plasma_d_attack";
             SpriteAnimation animation = (SpriteAnimation)player.SpriteManager;
@@ -186,7 +264,7 @@ namespace WizardsNeverDie.Level
             if (animation.GetOrientation() == Orientation.Down)
             {
                 force = new Vector2(0, forcePower);
-                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y + 2);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y + 1);
             }
             else if (animation.GetOrientation() == Orientation.DownLeft)
             {
@@ -201,16 +279,16 @@ namespace WizardsNeverDie.Level
             else if (animation.GetOrientation() == Orientation.Left)
             {
                 force = new Vector2(-forcePower, 0);
-                plasmaPosition = new Vector2(_player.Position.X - 2, _player.Position.Y);
+                plasmaPosition = new Vector2(_player.Position.X - 1, _player.Position.Y);
             }
             else if (animation.GetOrientation() == Orientation.Right)
             {
                 force = new Vector2(forcePower, 0);
-                plasmaPosition = new Vector2(_player.Position.X + 2, _player.Position.Y);
+                plasmaPosition = new Vector2(_player.Position.X + 1, _player.Position.Y);
             }
             else if (animation.GetOrientation() == Orientation.Up)
             {
-                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y - 2);
+                plasmaPosition = new Vector2(_player.Position.X, _player.Position.Y - 1);
                 force = new Vector2(0, -forcePower);
             }
             else if (animation.GetOrientation() == Orientation.UpLeft)
@@ -284,6 +362,30 @@ namespace WizardsNeverDie.Level
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
+            
+        
+            
+            if (odinAnimation.OdinIsDead)
+            {
+                //well then good
+            }
+            if (!odinAnimation.OdinIsDead)
+            {
+
+                _odin.Update(gameTime);
+                _odinHealth.Update(gameTime);
+            }
+            else if (_odinAlive == true)
+            {
+                KeyAnimation keyAnimation = new KeyAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Keys\\keys"), new StreamReader(@"Content/Sprites/Keys/keys.txt"), 9f);
+                keyAnimation.AnimationName = "keyred_d_rotating";
+                keyAnimation.SetAnimationState(AnimationState.Rotating);
+                _redKey.Add(new Key(keyAnimation, _odin.Position, ConvertUnits.ToSimUnits(5), ConvertUnits.ToSimUnits(15)));
+                Farseer.Instance.World.RemoveBody(_odin.getBody().Bodies[0]);
+                _odinAlive = false;
+                _triggers3.Add(new TriggerBody(1f, 1f, _player.Position, 1f, _actions3, _plasma));
+                
+            }
             WizardAnimation wizard = (WizardAnimation)_player.SpriteManager;
             lastGamepadState = gamepadState;
             gamepadState = GamePad.GetState(PlayerIndex.One);
@@ -308,7 +410,6 @@ namespace WizardsNeverDie.Level
             if (_player.Health == HealthAnimation.HealthState.Health0 && !isGameOver && !wizard.CheckEndRevive)
             {
                 wizard.SetAnimationState(AnimationState.Revived);
-                _player.getBody().Bodies[0].Position = ConvertUnits.ToSimUnits(-(2048 / 2) + 1040, -(2048 / 2) + 70);
                 _player.Update(gameTime);
                 
             }
@@ -342,9 +443,31 @@ namespace WizardsNeverDie.Level
                     }
                 }
             }
+            for (int i = 0; i < _triggers3.Count; i++)
+            {
+                if (_triggers3[i].IsDead == true)
+                {
+                    for (int j = 0; j < _triggers3[i].ActionList.Count; j++)
+                    {
+                        if (_triggers3[i].ActionList[j].IsDead == false)
+                            _triggers3[i].ActionList[j].Update(gameTime);
+                    }
+                }
+            }
+            for (int i = 0; i < _triggers4.Count; i++)
+            {
+                if (_triggers4[i].IsDead == true)
+                {
+                    for (int j = 0; j < _triggers4[i].ActionList.Count; j++)
+                    {
+                        if (_triggers4[i].ActionList[j].IsDead == false)
+                            _triggers4[i].ActionList[j].Update(gameTime);
+                    }
+                }
+            }
             for (int i = 0; i < _greenGates.Count; i++)
             {
-                if (_greenGates[i].Unlock && _greenKeyCount > 0)
+                if ((_greenGates[i].Unlock && _greenKeyCount > 0) || _openBecauseISaySo)
                 {
                     greenGateAnimation.SetAnimationState(AnimationState.Open);
                     greenGateAnimation.Update(gameTime);
@@ -364,7 +487,7 @@ namespace WizardsNeverDie.Level
 
             for (int i = 0; i < _blueGates.Count; i++)
             {
-                if (_blueGates[i].Unlock && _blueKeyCount > 0)
+                if ((_blueGates[i].Unlock && _blueKeyCount > 0) || _openBecauseISaySo)
                 {
                     blueGateAnimation.SetAnimationState(AnimationState.Open);
                     blueGateAnimation.Update(gameTime);
@@ -373,6 +496,10 @@ namespace WizardsNeverDie.Level
                         Farseer.Instance.World.RemoveBody(_blueGates[i].getBody().Bodies[0]);
                         _blueGates[i].GateCollideFirstTime = false;
                         _blueKeyCount--;
+                    }
+                    if (_openBecauseISaySo == true)
+                    {
+                        _openBecauseISaySo = false;
                     }
                 }
                 else
@@ -383,7 +510,7 @@ namespace WizardsNeverDie.Level
 
             for (int i = 0; i < _redGates.Count; i++)
             {
-                if (_redGates[i].Unlock && _redKeyCount > 0)
+                if ((_redGates[i].Unlock && _redKeyCount > 0) || _openBecauseISaySo)
                 {
 
                     redGateAnimation.SetAnimationState(AnimationState.Open);
@@ -419,12 +546,7 @@ namespace WizardsNeverDie.Level
                 }
             }
 
-            for (int i = 0; i < _odin.Count; i++)//(Enemy e in _creatures)
-            {
                 
-                    _odin[i].Update(gameTime);
-                
-            }
 
             for (int i = 0; i < _purpleCreatures.Count; i++)//(Enemy e in _creatures)
             {
@@ -437,12 +559,12 @@ namespace WizardsNeverDie.Level
                     Farseer.Instance.World.RemoveBody(_purpleCreatures[i].getBody().Bodies[0]);
                     _purpleCreatures.Remove(_purpleCreatures[i]);
                     _creaturesKilled = _creaturesKilled++;
-
                 }
                 else if (enemy.CheckEndSpell == true)
                 {
                     PurpleSpell(_purpleCreatures[i], 300);
                     _purpleCreatures[i].Update(gameTime);
+                    enemy.CheckEndSpell = false;
                 }
                 else
                 {
@@ -472,6 +594,10 @@ namespace WizardsNeverDie.Level
             if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.X) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
             {
                 _player.Health = HealthAnimation.HealthState.Health0;
+            }
+            if (keyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.R) && lastKeyBoardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R))
+            {
+                _odin.Health = HealthAnimation.HealthState.Health20;
             }
 
             if (wizard.CheckEndSpell == true)
@@ -528,20 +654,22 @@ namespace WizardsNeverDie.Level
 
             for (int i = 0; i < _plasma.Count; i++)//(Plasma p in _plasma)
             {
-                if (_plasma[i].IsDead)
-                {
-                    explosionSprite.AnimationName = "ifrit_d_explosion";
-                    _explosions.Add(new Explosion(explosionSprite, _plasma[i].Position + new Vector2(0, -1), .01f, .01f));
-                    Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
-                    _plasma.Remove(_plasma[i]);
-                }
-                else if (_plasma[i].IsDeadOnEnemy)
-                {
-                    Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
-                    _plasma.Remove(_plasma[i]);
-                }
-                else
-                    _plasma[i].Update(gameTime);
+
+
+                    if (_plasma[i].IsDead)
+                    {
+                        explosionSprite.AnimationName = "ifrit_d_explosion";
+                        _explosions.Add(new Explosion(explosionSprite, _plasma[i].Position + new Vector2(0, -1), .01f, .01f));
+                        Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
+                        _plasma.Remove(_plasma[i]);
+                    }
+                    else if (_plasma[i].IsDeadOnEnemy)
+                    {
+                        Farseer.Instance.World.RemoveBody(_plasma[i].getBody().Bodies[0]);
+                        _plasma.Remove(_plasma[i]);
+                    }
+                    else
+                        _plasma[i].Update(gameTime);
             }
             for (int i = 0; i < _purplePlasma.Count; i++)//(Plasma p in _plasma)
             {
@@ -577,9 +705,17 @@ namespace WizardsNeverDie.Level
                     _spawners[i].Update(gameTime);
                 }
             }
-
+            
             for (int i = 0; i < _triggers.Count; i++)
             {
+                //for (int j = 0; j < _plasma.Count; j++)
+                //{
+                //    _triggers[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                //}
+                //for (int j = 0; j < _purplePlasma.Count; j++)
+                //{
+                //    _triggers[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                //}
                 bool removeTrigger = true;
                 for (int j = 0; j < _triggers[i].ActionList.Count; j++)
                 {
@@ -601,6 +737,14 @@ namespace WizardsNeverDie.Level
             for (int i = 0; i < _triggers2.Count; i++)
             {
                 bool removeTrigger = true;
+                //for (int j = 0; j < _plasma.Count; j++)
+                //{
+                //    _triggers2[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                //}
+                //for (int j = 0; j < _purplePlasma.Count; j++)
+                //{
+                //    _triggers2[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                //}
                 for (int j = 0; j < _triggers2[i].ActionList.Count; j++)
                 {
                     if (_triggers2[i].ActionList[j].IsDead == false)
@@ -612,8 +756,66 @@ namespace WizardsNeverDie.Level
                 {
                     Farseer.Instance.World.RemoveBody(_triggers2[i].Bodies[0]);
                     _triggers2.Remove(_triggers2[i]);
-                    Farseer.Instance.World.RemoveBody(chatBody.getBody().Bodies[0]);
-                    
+                    //Farseer.Instance.World.RemoveBody(chatBody.getBody().Bodies[0]);
+                    _openBecauseISaySo = true;
+                }
+            }
+
+            for (int i = 0; i < _triggers3.Count; i++)
+            {
+                //for (int j = 0; j < _plasma.Count; j++)
+                //{
+                //    _triggers3[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                //}
+                //for (int j = 0; j < _purplePlasma.Count; j++)
+                //{
+                //    _triggers3[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                //}
+                bool removeTrigger = true;
+                for (int j = 0; j < _triggers3[i].ActionList.Count; j++)
+                {
+                    if (_triggers3[i].ActionList[j].IsDead == false)
+                    {
+                        removeTrigger = false;
+                    }
+                }
+                if (removeTrigger)
+                {
+                    Farseer.Instance.World.RemoveBody(_triggers3[i].Bodies[0]);
+                    _triggers3.Remove(_triggers3[i]);
+                    Farseer.Instance.World.RemoveBody(_blockGate);
+                    blueGateAnimation.AnimationName = _blueGates[0].SpriteManager.AnimationName.Split('_')[0] + '_' + _blueGates[0].SpriteManager.AnimationName.Split('_')[1] + '_' + "open";
+                    blueGateAnimation.SetAnimationState(AnimationState.Open);
+                    blueGateAnimation.TimeToUpdate = 50f;
+                    blueGateAnimation.FrameIndex = 0;
+                    blueGateAnimation.Update(gameTime);
+                    _blueGates[0].Update(gameTime);
+                }
+            }
+
+            for (int i = 0; i < _triggers4.Count; i++)
+            {
+                //for (int j = 0; j < _plasma.Count; j++)
+                //{
+                //    _triggers3[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+                //}
+                //for (int j = 0; j < _purplePlasma.Count; j++)
+                //{
+                //    _triggers3[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                //}
+                bool removeTrigger = true;
+                for (int j = 0; j < _triggers4[i].ActionList.Count; j++)
+                {
+                    if (_triggers4[i].ActionList[j].IsDead == false)
+                    {
+                        removeTrigger = false;
+                    }
+                }
+                if (removeTrigger)
+                {
+                    Farseer.Instance.World.RemoveBody(_triggers4[i].Bodies[0]);
+                    _triggers4.Remove(_triggers3[i]);
+
                 }
             }
 
@@ -670,7 +872,7 @@ namespace WizardsNeverDie.Level
                     _redKey[i].Update(gameTime);
                 }
             }
-
+            
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
@@ -731,6 +933,11 @@ namespace WizardsNeverDie.Level
                 _player.SpriteManager.Draw(ScreenManager.SpriteBatch);
                 _health.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
+            if (!odinAnimation.OdinIsDead)
+            {
+                _odin.SpriteManager.Draw(ScreenManager.SpriteBatch);
+                _odinHealth.SpriteManager.Draw(ScreenManager.SpriteBatch);
+            }
             foreach (Key k in _blueKey)
             {
                 k.SpriteManager.Draw(ScreenManager.SpriteBatch);
@@ -746,10 +953,6 @@ namespace WizardsNeverDie.Level
             foreach (Explosion e in _explosions)
             {
                 e.SpriteManager.Draw(ScreenManager.SpriteBatch);
-            }
-            foreach (Odin o in _odin)
-            {
-                o.SpriteManager.Draw(ScreenManager.SpriteBatch);
             }
 
 
@@ -772,6 +975,10 @@ namespace WizardsNeverDie.Level
                         _triggers[i].ActionList[j].Draw();
                     }
                 }
+                else
+                {
+                    _triggers[i].Update(gameTime);
+                }
             }
             for (int i = 0; i < _triggers2.Count; i++)
             {
@@ -781,6 +988,53 @@ namespace WizardsNeverDie.Level
                     {
                         _triggers2[i].ActionList[j].Draw();
                     }
+                }
+                else
+                {
+                    _triggers2[i].Update(gameTime);
+                }
+            }
+            for (int i = 0; i < _triggers3.Count; i++)
+            {
+                if (_triggers3[i].IsDead == true)
+                {
+                    for (int j = 0; j < _triggers3[i].ActionList.Count; j++)
+                    {
+                        _triggers3[i].ActionList[j].Draw();
+                    }
+                }
+                else
+                {
+                    _triggers3[i].Update(gameTime);
+                }
+            }
+            for (int i = 0; i < _checkGate.Count; i++)
+            {
+            //    for (int j = 0; j < _plasma.Count; j++)
+            //    {
+            //        _checkGate[i].Bodies[0].IgnoreCollisionWith(_plasma[j].getBody().Bodies[0]);
+            //    }
+                //for (int j = 0; j < _purplePlasma.Count; j++)
+                //{
+                //    _checkGate[i].Bodies[0].IgnoreCollisionWith(_purplePlasma[j].getBody().Bodies[0]);
+                //}
+                if (_checkGate[i].IsDead)
+                {
+                    Farseer.Instance.World.RemoveBody(_checkGate[i].Bodies[0]);
+                    _blockGate = BodyFactory.CreateRectangle(world, 4f, 1f, 1f, ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1031 + (16 / 2), -(2048 / 2) + (227 / 2) + 975)));
+                    _checkGate[i].IsDead = false;
+                    blueGateAnimation.AnimationName = _blueGates[0].SpriteManager.AnimationName.Split('_')[0] + '_' + _blueGates[0].SpriteManager.AnimationName.Split('_')[1] + '_' + "close";
+                    blueGateAnimation.SetAnimationState(AnimationState.Close);
+                    blueGateAnimation.TimeToUpdate = 50f;
+                    blueGateAnimation.FrameIndex = 0;
+                    blueGateAnimation.Update(gameTime);
+                    _blueGates[0].Update(gameTime);
+                    _odin.TargetDistance = 50f;
+                    _checkGate.Remove(_checkGate[i]);
+                }
+                else
+                {
+                    _checkGate[i].Update(gameTime);
                 }
             }
             ScreenManager.SpriteBatch.End();

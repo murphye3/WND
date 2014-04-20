@@ -19,9 +19,12 @@ namespace WizardsNeverDie.Entities
 {
     public class Wizard : AbstractCreature
     {
+        private List<List<TriggerBody>> _allTriggers = new List<List<TriggerBody>>();
         private HealthAnimation.HealthState _healthState;
-        public Wizard(SpriteAnimation animation, Vector2 position)
+        private List<WizardPlasma> _plasma;
+        public Wizard(SpriteAnimation animation, Vector2 position, List<WizardPlasma> plasma)
         {
+            _plasma = plasma;
             this.spriteManager = animation;
             this.body = new BasicBody(this, position, 1f);
             this.intelligence = new PlayerIntelligence(this, .15f);
@@ -29,7 +32,12 @@ namespace WizardsNeverDie.Entities
         }
         public void Update(GameTime gameTime)
         {
-            
+            for (int k = 0; k < _plasma.Count; k++)
+            {
+                this.getBody().Bodies[0].IgnoreCollisionWith(_plasma[k].getBody().Bodies[0]);
+
+            }
+            this.getBody().Bodies[0].ResetDynamics();
             intelligence.Update(gameTime);
             spriteManager.Position = new Vector2(body.Position.X, body.Position.Y);
             spriteManager.Update(gameTime);
@@ -47,6 +55,20 @@ namespace WizardsNeverDie.Entities
                 
                 return false;
             }
+            if (collidedWith is WizardWall)
+            {
+                return false;
+            }
+            if (collidedWith is Teleporter)
+            {
+                Teleporter teleporter = (Teleporter)collidedWith;
+                teleporter.Collided = true;
+            }
+            if (collidedWith is RangedPurplePlasma)
+            {
+                return false;
+            }
+
             return true;
         }
         public WizardsNeverDie.Animation.HealthAnimation.HealthState Health

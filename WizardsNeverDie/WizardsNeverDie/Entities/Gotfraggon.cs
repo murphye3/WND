@@ -15,6 +15,7 @@ namespace WizardsNeverDie.Entities
 
         public Gotfraggon(GotfraggonAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height, float targetDistance)
         {
+            this.getBody().Bodies[0].ResetDynamics();
             this.spriteManager = spriteManager;
             this.body = new BasicBody(this, position, 5f);
             this.intelligence = new GotfraggonIntelligence(this, target, .05f, targetDistance);

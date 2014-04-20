@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
@@ -19,16 +16,20 @@ using FarseerPhysics.Factories;
 
 namespace WizardsNeverDie.Entities
 {
-    public class Key : AbstractEntity
+    class Teleporter : AbstractEntity
     {
-        private bool _collideWithPlasma;
-        private bool _isCollected;
-        public Key(SpriteAnimation animation, Vector2 position, float width, float height)
+        private bool _plasmaCollided;
+        World world = Farseer.Instance.World;
+        private bool _collided;
+        private Vector2 _position;
+        public Teleporter(SpriteAnimation animation,  Vector2 position, float width, float height)
         {
             this.spriteManager = animation;
             animation.Position = position;
             this.body = new StaticBody(this, position, width, height);
-            
+            Body leftWall = BodyFactory.CreateRectangle(world, .05f, 1.6f, 1f, position + new Vector2(-1.1f, .2f));
+            Body rightWall = BodyFactory.CreateRectangle(world, .05f, 1.6f, 1f, position + new Vector2(1.1f, .2f));
+            Body topWall = BodyFactory.CreateRectangle(world, 2f, .05f, 1f, position + new Vector2(.05f, -1.3f));
         }
         public void Update(GameTime gameTime)
         {
@@ -38,38 +39,28 @@ namespace WizardsNeverDie.Entities
 
         public override bool WillCollide(AbstractEntity collidedWith)
         {
-            if (collidedWith is Wizard)
-            {
-                this.IsCollected = true;
-            }
-            else
-            {
-                this.IsCollected = false;
-            }
             return false;
         }
-
-        public bool IsCollected
+        public bool Collided
         {
             get
             {
-                return _isCollected;
+                return _collided;
             }
             set
             {
-                _isCollected = value;
+                _collided = value;
             }
         }
-        public bool CollideWithPlasma
+        public bool PlasmaCollided
         {
             get
             {
-                return _collideWithPlasma;
-
+                return _plasmaCollided;
             }
             set
             {
-                _collideWithPlasma = value;
+                _plasmaCollided = value;
             }
         }
     }

@@ -19,6 +19,7 @@ namespace WizardsNeverDie.Entities
 {
     public class WizardPlasma : AbstractEntity
     {
+        private bool _plasmaBounce = false;
         private bool _isDead = false;
         private bool _isDeadOnEnemy = false;
         public WizardPlasma(SpriteAnimation animation, Vector2 position, Vector2 force)
@@ -32,6 +33,7 @@ namespace WizardsNeverDie.Entities
         {
             spriteManager.Position = new Vector2(body.Position.X, body.Position.Y);
             spriteManager.Update(gameTime);
+            
         }
 
         public override bool WillCollide(AbstractEntity collidedWith)
@@ -70,6 +72,14 @@ namespace WizardsNeverDie.Entities
                 this.IsDeadOnEnemy = true;
                 return false;
             }
+            if (collidedWith is Teleporter)
+            {
+                Teleporter teleporter = (Teleporter)collidedWith;
+                teleporter.PlasmaCollided = true;
+                this.IsDead = false;
+                this.IsDeadOnEnemy = true;
+                return false;
+            }
             if (collidedWith is WizardPlasma)
             {
                 return false;
@@ -77,14 +87,21 @@ namespace WizardsNeverDie.Entities
             if (collidedWith is RangedPurplePlasma)
             {
                 this._isDead = true;
-                return false;
+                return true;
             }
             if (collidedWith is Gotfraggon)
             {
                 this._isDead = true;
                 return false;
             }
-
+            if (collidedWith is Key)
+            {
+                Key key = (Key)collidedWith;
+                if (_plasmaBounce == true)
+                {
+                    key.CollideWithPlasma = true;
+                }
+            }
             if (collidedWith is PlasmaWall)
             {
                 this._isDead = false;
@@ -92,13 +109,44 @@ namespace WizardsNeverDie.Entities
             }
             if (collidedWith is Odin)
             {
+                
                 this._isDeadOnEnemy = true;
                 return false;
             }
-            this._isDead = true;
+            if (collidedWith is BouncingWall)
+            {
+                _plasmaBounce = true;
+                this.IsDead = false;
+                return true;
+            }
+            if (collidedWith is Switcher)
+            {
+                this.IsDeadOnEnemy = true;
+                Switcher switcher = (Switcher)collidedWith;
+                if (switcher.IsOn == false)
+                {
+                    switcher.IsOn = true;
+                }
+                else if (switcher.IsOn == true)
+                {
+                    switcher.IsOn = false;
+                }
+                return false;
+            }
+            this.IsDead = true;
             return true;
         }
-
+        public bool PlasmaBounce
+        {
+            get
+            {
+                return _plasmaBounce;
+            }
+            set
+            {
+                _plasmaBounce = value;
+            }
+        }
         public bool IsDead
         {
             get

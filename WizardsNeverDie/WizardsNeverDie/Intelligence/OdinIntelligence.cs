@@ -104,7 +104,7 @@ namespace WizardsNeverDie.Intelligence
             TimeSpan runTimeElapsed = attackTimer.Elapsed;
             int totalAttackTime = attackTimeElapsed.Seconds - attackTimeStart.Seconds;
             int totalRunTime = runTimeElapsed.Seconds - runTimeStart.Seconds;
-            if (totalAttackTime > 5)
+            if (totalAttackTime > 4)
             {
                 attack = true;
                 attackTimer.Stop();
@@ -118,7 +118,7 @@ namespace WizardsNeverDie.Intelligence
                 attack = false;
                 attackTimer.Start();
             }
-            if (attack == false && e.GetAnimationState() != AnimationState.Death && e.GetAnimationState() != AnimationState.Revived && runTimer.ElapsedMilliseconds < 200)
+            if (attack == false && e.GetAnimationState() != AnimationState.Death && e.GetAnimationState() != AnimationState.Revived && e.GetAnimationState() != AnimationState.OdinDeath && runTimer.ElapsedMilliseconds < 200)
             {
                 
                 if (!runTimer.IsRunning)
@@ -203,7 +203,7 @@ namespace WizardsNeverDie.Intelligence
                 return;
             bool canMove = true;
             OdinAnimation animation = (OdinAnimation)this.creature.SpriteManager;
-            if (animation.GetAnimationState() == AnimationState.Attack || animation.GetAnimationState() == AnimationState.Death)
+            if (animation.GetAnimationState() == AnimationState.Attack || animation.GetAnimationState() == AnimationState.Death || animation.GetAnimationState() == AnimationState.OdinDeath)
                 canMove = false;
             float targetDistance = (float)Math.Sqrt(Math.Pow((creature.Position.X - target.Position.X), 2) + Math.Pow((creature.Position.Y - target.Position.Y), 2));
             Vector2 direction = Vector2.Subtract(target.Position, creature.Position);
@@ -279,6 +279,17 @@ namespace WizardsNeverDie.Intelligence
             set
             {
                 this.attack = value;
+            }
+        }
+        public float TargetDistance
+        {
+            get
+            {
+                return _targetDistance;
+            }
+            set
+            {
+                _targetDistance = value;
             }
         }
     }

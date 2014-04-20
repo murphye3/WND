@@ -22,15 +22,18 @@ namespace WizardsNeverDie.Entities
     class MeleeRedIfrit: AbstractCreature
     {
         private bool _isDead = false;
-        
+        private AbstractCreature _player;
         public MeleeRedIfrit(MeleeRedIfritAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height, float targetDistance)
         {
+            _player = target;
             this.spriteManager = spriteManager;
             this.body = new BasicBody(this, position, 1f);
             this.intelligence = new CreatureIntelligence(this, target, .05f, targetDistance);
         }
         public void Update(GameTime gameTime)
         {
+            this.getBody().Bodies[0].ResetDynamics();
+            
             intelligence.Update(gameTime);
             spriteManager.Position = body.Position;
             spriteManager.Update(gameTime);

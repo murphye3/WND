@@ -65,7 +65,7 @@ namespace WizardsNeverDie.Level
             base.LoadContent();
             _wizard = new WizardAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Wizard\\wizard"), new StreamReader(@"Content/Sprites/Wizard/wizard.txt"));
             _wizard.AnimationName = "wizard_d_walk";
-            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 1025, -(2048 / 2) + 2010));
+            _player = new Wizard(_wizard, ConvertUnits.ToSimUnits(-(2048 / 2) + 1025, -(2048 / 2) + 2010), _plasma);
             _healthSprite = new HealthAnimation(ScreenManager.Content.Load<Texture2D>("Sprites\\Health\\health"), new StreamReader(@"Content/Sprites/Health/health.txt"));
             _healthSprite.AnimationName = "health_n_health25";
             _health = new Health(_healthSprite, _player, _player.Position);
@@ -149,7 +149,7 @@ namespace WizardsNeverDie.Level
             List<IAction> actions1 = new List<IAction>();
             actions1.Add(_spawnIfritAction);
             Vector2 pos1 = ConvertUnits.ToSimUnits(new Vector2(-(2048 / 2) + 1360 + (17 / 2), -(2048 / 2) + (80 / 2) + 1200));
-            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(80), pos1, 1f, actions1));
+            _triggers.Add(new TriggerBody(ConvertUnits.ToSimUnits(17), ConvertUnits.ToSimUnits(80), pos1, 1f, actions1, _plasma));
         }
         public void GenereateCreatures()
         {

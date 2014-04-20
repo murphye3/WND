@@ -91,6 +91,10 @@
     <Compile Include="Animation\HealthAnimation.cs" />
     <Compile Include="Animation\OdinAnimation.cs" />
     <Compile Include="Animation\OracleAnimation.cs" />
+    <Compile Include="Animation\SwitcherAnimation.cs" />
+    <Compile Include="Animation\TeleporterAnimation.cs" />
+    <Compile Include="Animation\TopLogAnimation.cs" />
+    <Compile Include="Animation\TrippinTreesAnimation.cs" />
     <Compile Include="Animation\WizardPlasmaAnimation.cs" />
     <Compile Include="Animation\PotionExplosionAnimation.cs" />
     <Compile Include="Animation\RangedPurpleIfritAnimation.cs" />
@@ -105,6 +109,7 @@
     <Compile Include="Entities\AbstractEntity.cs" />
     <Compile Include="Entities\AbstractSprite.cs" />
 	<Compile Include="Entities\CastleWall.cs" />
+    <Compile Include="Entities\BouncingWall.cs" />
     <Compile Include="Entities\Gate.cs" />
     <Compile Include="Entities\Gotfraggon.cs" />
     <Compile Include="Entities\Key.cs" />
@@ -112,8 +117,12 @@
     <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\Health.cs" />
     <Compile Include="Entities\Odin.cs" />
+    <Compile Include="Entities\OdinHealth.cs" />
     <Compile Include="Entities\Oracle.cs" />
     <Compile Include="Entities\PlasmaWall.cs" />
+    <Compile Include="Entities\Switcher.cs" />
+    <Compile Include="Entities\Teleporter.cs" />
+    <Compile Include="Entities\TrippinTrees.cs" />
     <Compile Include="Entities\WizardPlasma.cs" />
     <Compile Include="Entities\Wizard.cs" />
     <Compile Include="Entities\Brick.cs" />
@@ -122,6 +131,7 @@
     <Compile Include="Entities\RangedPurpleIfrit.cs" />
     <Compile Include="Entities\RangedPurplePlasma.cs" />
     <Compile Include="Entities\Spawner.cs" />
+    <Compile Include="Entities\WizardWall.cs" />
     <Compile Include="Farseer\BasicBody.cs" />
     <Compile Include="Farseer\PhysicsBody.cs" />
     <Compile Include="Farseer\PlasmaBody.cs" />
@@ -131,6 +141,7 @@
     <Compile Include="Level\Level1_1.cs" />
 	<Compile Include="Level\Level1_4.cs" />
     <Compile Include="Level\Level1_2.cs" />
+    <Compile Include="Level\Level1_3.cs" />
     <Compile Include="Level\TestLevel.cs" />
     <Compile Include="Trigger\IAction.cs" />
     <Compile Include="Trigger\MessageAction.cs" />

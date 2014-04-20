@@ -15,9 +15,13 @@ namespace WizardsNeverDie.Animation
         public enum HealthState
         {
             Health100 = 100,
+            Health80 = 80,
             Health75 = 75,
+            Health60 = 60,
             Health50 = 50,
+            Health40 = 40,
             Health25 = 25,
+            Health20 = 20,
             Health0 = 0
         }
 
@@ -82,17 +86,33 @@ namespace WizardsNeverDie.Animation
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "health100";
                     _isMoving = true;
                     break;
+                case HealthState.Health80:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "health80";
+                    _isMoving = true;
+                    break;
                 case HealthState.Health75:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "health75";
+                    _isMoving = true;
+                    break;
+                case HealthState.Health60:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "health60";
                     _isMoving = true;
                     break;
                 case HealthState.Health50:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "health50";
                     _isMoving = false;
                     break;
+                case HealthState.Health40:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "health40";
+                    _isMoving = true;
+                    break;
                 case HealthState.Health25:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "health25";
                     _isMoving = false;
+                    break;
+                case HealthState.Health20:
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "health20";
+                    _isMoving = true;
                     break;
                 case HealthState.Health0:
                     AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "health0";

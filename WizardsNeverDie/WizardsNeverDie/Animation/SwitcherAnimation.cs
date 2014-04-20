@@ -8,40 +8,37 @@ using Microsoft.Xna.Framework;
 
 namespace WizardsNeverDie.Animation
 {
-    public class GateAnimation : SpriteAnimation
+    class SwitcherAnimation : SpriteAnimation
     {
-        public GateAnimation(Texture2D texture, StreamReader sr, float timeToUpdate)
+        public SwitcherAnimation(Texture2D texture, StreamReader sr, float timeToUpdate)
             : base(texture, sr)
         {
-            this.TimeToUpdate = 15f;
+            this.TimeToUpdate = timeToUpdate;
             _frameIndex = 0;
             IsMoving = true;
             InChainAnimation = false;
-            
+            this.TimeToUpdate = 6F;
         }
 
         public override void Update(GameTime gameTime)
         {
-            
             //if(timeElapsed>TimeToUpdate)
             base.Update(gameTime);
 
-            if (this.GetAnimationState() == AnimationState.Open)
+            if (this.GetAnimationState() == AnimationState.On)
             {
-                Open(gameTime);
+                On(gameTime);
             }
-            if (this.GetAnimationState() == AnimationState.Close)
+            if (this.GetAnimationState() == AnimationState.Off)
             {
-                Close(gameTime);
+                Off(gameTime);
             }
         }
 
-        private void Open(GameTime gameTime)
+        private void On(GameTime gameTime)
         {
-            
             if (timeElapsed > TimeToUpdate)
             {
-                
                 _frameIndex++;
                 if (_frameIndex > Animations[AnimationName].NumOfFrames - 1)
                 {
@@ -57,16 +54,15 @@ namespace WizardsNeverDie.Animation
 
             }
         }
-        private void Close(GameTime gameTime)
+        private void Off(GameTime gameTime)
         {
-            
             if (timeElapsed > TimeToUpdate)
             {
-                
                 _frameIndex++;
                 if (_frameIndex > Animations[AnimationName].NumOfFrames - 1)
                 {
                     _frameIndex = Animations[AnimationName].NumOfFrames - 1;
+                    _frameIndex = 0;
                     InChainAnimation = true;
                     timeElapsed -= TimeToUpdate;
                 }
@@ -83,17 +79,18 @@ namespace WizardsNeverDie.Animation
         {
             if (state != GetAnimationState() && !InChainAnimation)
             {
-                if (state == AnimationState.Open)
+                if (state == AnimationState.On)
                 {
                     //this.FramesPerSecond = 5f;
-                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "open";
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "on";
                     _frameIndex = 0;
                     IsMoving = true;
                     InChainAnimation = true;
-                }else if (state == AnimationState.Close)
+                }
+                else if (state == AnimationState.Off)
                 {
                     //this.FramesPerSecond = 5f;
-                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "close";
+                    AnimationName = AnimationName.Split('_')[0] + '_' + AnimationName.Split('_')[1] + '_' + "off";
                     _frameIndex = 0;
                     IsMoving = true;
                     InChainAnimation = true;
@@ -114,17 +111,13 @@ namespace WizardsNeverDie.Animation
                 return AnimationState.Stop;
             }
             string state = AnimationName.Split('_')[2];
-            if (state == "open")
+            if (state == "talking")
             {
-                return AnimationState.Open;
-            }
-            else if (state == "close")
-            {
-                return AnimationState.Close;
+                return AnimationState.Talking;
             }
             else
             {
-                return AnimationState.Lock;
+                return base.GetAnimationState(state);
             }
         }
     }

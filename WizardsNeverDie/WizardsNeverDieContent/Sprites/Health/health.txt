@@ -1,6 +1,9 @@
 health_n_health100-1 = 0 0 50 5
+health_n_health80-1 = 0 0 40 5
 health_n_health75-1 = 0 0 37 5
+health_n_health60-1 = 0 0 30 5
 health_n_health50-1 = 0 0 25 5
+health_n_health40-1 = 0 0 20 5
 health_n_health25-1 = 0 0 12 5
-health_n_health25-2 = 0 0 2 5
+health_n_health20-1 = 0 0 10 5
 health_n_health0-1 = 0 0 0 5

@@ -23,7 +23,7 @@ namespace WizardsNeverDie.Entities
     {
         private bool _isDead = false;
 
-        public RangedPurpleIfrit(RangedPurpleIfritAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height, float targetDistance, float attackDistance)
+        public RangedPurpleIfrit(RangedPurpleIfritAnimation spriteManager, AbstractCreature target, Vector2 position, float width, float height, float targetDistance, float attackDistance, bool onlyAttack)
         {
             this.spriteManager = spriteManager;
             this.body = new BasicBody(this, position, 1f);
@@ -31,6 +31,7 @@ namespace WizardsNeverDie.Entities
         }
         public void Update(GameTime gameTime)
         {
+            this.getBody().Bodies[0].ResetDynamics();
             intelligence.Update(gameTime);
             spriteManager.Position = body.Position;
             spriteManager.Update(gameTime);
