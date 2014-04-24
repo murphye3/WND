@@ -34,12 +34,14 @@ namespace WizardsNeverDie.ScreenSystem
         private MenuButton _scrollDown;
         private MenuButton _scrollSlider;
         private bool _scrollLock;
+        private GraphicsDeviceManager _graphics;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public MenuScreen(string menuTitle)
+        public MenuScreen(string menuTitle, GraphicsDeviceManager g)
         {
+            _graphics = g;
             _menuTitle = menuTitle;
 
             TransitionOnTime = TimeSpan.FromSeconds(0.7);
@@ -48,6 +50,12 @@ namespace WizardsNeverDie.ScreenSystem
         }
 
         public void AddMenuItem(string name, EntryType type, GameScreen screen)
+        {
+            MenuEntry entry = new MenuEntry(this, name, type, screen);
+            _menuEntries.Add(entry);
+        }
+
+        public void AddMenuItem(List<string> name, EntryType type, GameScreen screen)
         {
             MenuEntry entry = new MenuEntry(this, name, type, screen);
             _menuEntries.Add(entry);
@@ -165,6 +173,57 @@ namespace WizardsNeverDie.ScreenSystem
                         //    new MessageBoxScreen((_menuEntries[_selectedEntry].Screen as IDemoScreen).GetDetails()));
                     }
                 }
+                else if (_menuEntries[_selectedEntry].IsResolution())
+                {
+                    _menuEntries[_selectedEntry].CurrentIndex = _menuEntries[_selectedEntry].CurrentIndex + 1;
+                    if (_menuEntries[_selectedEntry].CurrentIndex < _menuEntries[_selectedEntry].Texts.Count)
+                        _menuEntries[_selectedEntry].Text = _menuEntries[_selectedEntry].Texts[_menuEntries[_selectedEntry].CurrentIndex];
+                    else
+                    {
+                        _menuEntries[_selectedEntry].CurrentIndex = 0;
+                        _menuEntries[_selectedEntry].Text = _menuEntries[_selectedEntry].Texts[0];
+                    }
+                    if(_menuEntries[_selectedEntry].Text.Equals(Resolution.Res1920x1080.ToString()))
+                    {
+                        _graphics.PreferredBackBufferWidth = 1920;
+                        _graphics.PreferredBackBufferHeight = 1080;
+                        _graphics.ApplyChanges();
+                        Refresh();
+                    }
+                    else if (_menuEntries[_selectedEntry].Text.Equals(Resolution.Res1280x720.ToString()))
+                    {
+                        _graphics.PreferredBackBufferWidth = 1280;
+                        _graphics.PreferredBackBufferHeight = 720;
+                        _graphics.ApplyChanges();
+                        Refresh();
+                    }
+                    else if(_menuEntries[_selectedEntry].Text.Equals(Resolution.Res1600x900.ToString()))
+                    {
+                        _graphics.PreferredBackBufferWidth = 1600;
+                        _graphics.PreferredBackBufferHeight = 900;
+                        _graphics.ApplyChanges();
+                        Refresh();
+                    }
+                }
+                else if (_menuEntries[_selectedEntry].IsFullScreen())
+                {
+                    _menuEntries[_selectedEntry].CurrentIndex = _menuEntries[_selectedEntry].CurrentIndex + 1;
+                    if (_menuEntries[_selectedEntry].CurrentIndex < _menuEntries[_selectedEntry].Texts.Count)
+                        _menuEntries[_selectedEntry].Text = _menuEntries[_selectedEntry].Texts[_menuEntries[_selectedEntry].CurrentIndex];
+                    else
+                    {
+                        _menuEntries[_selectedEntry].CurrentIndex = 0;
+                        _menuEntries[_selectedEntry].Text = _menuEntries[_selectedEntry].Texts[0];
+                    }
+                    if (_menuEntries[_selectedEntry].Text.Equals(Display.FullScreen.ToString()))
+                    {
+                        _graphics.ToggleFullScreen();
+                    }
+                    else if (_menuEntries[_selectedEntry].Text.Equals(Display.NotFullScreen.ToString()))
+                    {
+                        _graphics.ToggleFullScreen();
+                    }
+                }
             }
             else if (input.IsMenuCancel())
             {
@@ -197,6 +256,15 @@ namespace WizardsNeverDie.ScreenSystem
                 _scrollSlider.Hover = true;
                 _menuOffset = Math.Max(Math.Min(((input.Cursor.Y - _menuBorderTop) / (_menuBorderBottom - _menuBorderTop)) * _maxOffset, _maxOffset), 0f);
             }
+        }
+
+        private void Refresh()
+        {
+            GameScreen[] g = ScreenManager.GetScreens();
+            g[0].UnloadContent();
+            g[0].LoadContent();
+            this.UnloadContent();
+            this.LoadContent();
         }
 
         /// <summary>
@@ -306,5 +374,16 @@ namespace WizardsNeverDie.ScreenSystem
             _scrollDown.Draw();
             spriteBatch.End();
         }
+    }
+    public enum Display
+    {
+        NotFullScreen,
+        FullScreen
+    }
+    public enum Resolution
+    {
+        Res1280x720,
+        Res1920x1080,
+        Res1600x900
     }
 }

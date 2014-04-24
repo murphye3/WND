@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace WizardsNeverDie.ScreenSystem
 {
@@ -8,7 +9,9 @@ namespace WizardsNeverDie.ScreenSystem
     {
         Screen,
         Separator,
-        ExitItem
+        ExitItem,
+        Display,
+        Resolution
     }
 
     /// <summary>
@@ -46,7 +49,8 @@ namespace WizardsNeverDie.ScreenSystem
         /// The text rendered for this entry.
         /// </summary>
         private string _text;
-
+        private List<string> _texts;
+        private int _currentIndex;
         private EntryType _type;
         private float _width;
 
@@ -63,6 +67,17 @@ namespace WizardsNeverDie.ScreenSystem
             _alpha = 1.0f;
         }
 
+        public MenuEntry(MenuScreen menu, List<string> text, EntryType type, GameScreen screen)
+        {
+            _texts = text;
+            _text = _texts[0];
+            _screen = screen;
+            _type = type;
+            _menu = menu;
+            _scale = 0.9f;
+            _alpha = 1.0f;
+        }
+
 
         /// <summary>
         /// Gets or sets the text of this menu entry.
@@ -71,6 +86,18 @@ namespace WizardsNeverDie.ScreenSystem
         {
             get { return _text; }
             set { _text = value; }
+        }
+
+        public List<string> Texts
+        {
+            get { return _texts; }
+            set { _texts = value; }
+        }
+
+        public int CurrentIndex
+        {
+            get { return _currentIndex; }
+            set { _currentIndex = value; }
         }
 
         /// <summary>
@@ -106,6 +133,16 @@ namespace WizardsNeverDie.ScreenSystem
         public bool IsExitItem()
         {
             return _type == EntryType.ExitItem;
+        }
+
+        public bool IsFullScreen()
+        {
+            return _type == EntryType.Display;
+        }
+
+        public bool IsResolution()
+        {
+            return _type == EntryType.Resolution;
         }
 
         public bool IsSelectable()

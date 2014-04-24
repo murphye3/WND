@@ -23,8 +23,8 @@ namespace WizardsNeverDie
             _graphics.PreferMultiSampling = true;
 
 #if WINDOWS || XBOX
-            _graphics.PreferredBackBufferWidth = 1280;
-            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = 1080;
             ConvertUnits.SetDisplayUnitToSimUnitRatio(24f);
             IsFixedTimeStep = true;
 #elif WINDOWS_PHONE
@@ -73,18 +73,29 @@ namespace WizardsNeverDie
             Level1_2 stage2 = new Level1_2();
             Level1_3 stage3 = new Level1_3();
             Level1_4 stage4 = new Level1_4();
-            MenuScreen menuScreen = new MenuScreen("");
+            MenuScreen menuScreen = new MenuScreen("", _graphics);
 
             menuScreen.AddMenuItem(stage0.GetTitle(), EntryType.Screen, stage0);
             menuScreen.AddMenuItem(stage1.GetTitle(), EntryType.Screen, stage1);
             menuScreen.AddMenuItem(stage2.GetTitle(), EntryType.Screen, stage2);
             menuScreen.AddMenuItem(stage3.GetTitle(), EntryType.Screen, stage3);
             menuScreen.AddMenuItem(stage4.GetTitle(), EntryType.Screen, stage4);
+            List<string> resolutions = new List<string>();
+            resolutions.Add(Resolution.Res1280x720.ToString());
+            resolutions.Add(Resolution.Res1600x900.ToString());
+            resolutions.Add(Resolution.Res1920x1080.ToString());
+            List<string> fullscreen = new List<string>();
+            fullscreen.Add(Display.NotFullScreen.ToString());
+            fullscreen.Add(Display.FullScreen.ToString());
+
+            menuScreen.AddMenuItem(resolutions, EntryType.Resolution, null);
+            menuScreen.AddMenuItem(fullscreen, EntryType.Display, null);
             menuScreen.AddMenuItem("Exit", EntryType.ExitItem, null);
 
             ScreenManager.AddScreen(new BackgroundScreen("Common/title_screen"));
             ScreenManager.AddScreen(menuScreen);
             ScreenManager.AddScreen(new LogoScreen(TimeSpan.FromSeconds(3.0)));
+
             base.Initialize();
         }
 
